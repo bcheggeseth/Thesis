@@ -14,7 +14,11 @@
 \section{Simulations}
 Compare kmeans, pam with correlation-based metric, PCA (using only the second one vs all) with kmeans with ad hoc estimation
 EM with independence, EM with exponential (cite paper), EM with vertically shifting and exponential, )...
+Rand Index
+Adjusted Rand Index (Hubert and Arabie from Caompring Parititons) assumes a hyptergeometric distribution as the model of randomness
+Misclassification Rate in comparison to the true cluster labels
+We need to be able to compare the cluster results for different simulated data sets. This makes sense when the cluster groups are relatively stable, but it is less than ideal when the clustering results drastically differ. To compare we will switch the cluster labels so that we are comparing the right groups. After trying a small simulation, I decided to use two protocols. For methods that discovered and grouped by shape, I permuted the cluster labels so as to maximize the match between the known groups and the cluster groups. For the methods that doesn't consistently group by shape but rather more by level, I permuted the cluster labels so that the labels describe the groups in increasing order of the mean at the last time period. 
 Do toy example as well as when intercept and level are related....
-Compare pictures (toy example)
+Compare pictures with colored data as well as the gamma distributions.
 
 \end{document}
