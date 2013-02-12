@@ -154,15 +154,24 @@ Just as with the misclassification rate, it is necessary to match the group labe
 Besides detecting group structure in the data, the information of most practical importance is the relationship between baseline factors and the group membership. Once the groups are discovered, the natural question is to ask who are in the groups and how else do they differ? For each condition, method, and replication, the coefficients of the generalized logit, $\{\eta_{k0},\eta_{k1},\eta_{k2}\}$ for $k=1,...,K-1$ are estimated either simultaneously in the model setting or a posterior in the partition methods. To summarize the parameters from all of the replications, we plot the density of the values assuming $K=3$ and compare them to the true generating values. The clustering is unstable if the density plot is multimodal.
 
 \subsection{Results}
-Tables 1, 2, and 3 summarize the simulations in terms of the number of groups, misclassification rate, and the adjusted rand index. It is clear from these tables that the standard K-means algorithm applied to raw data or spline coefficients and the Gaussian mixture model assuming independence do not choose 3 groups as the optimal number of groups. For all the conditions except those that result in five well separated groups, the raw data K-means algorithm obscures any shape differences by vertically splitting the data in half. If the noisy from the data is smoothed first using a spline projection, K-means applied to the coefficients tends to favor 5 groups except in the extreme cases of large measurement error which increases overlap between groups. The standard mixture model is consistent in choosing five groups, the maximum we allow in the simulation, under all conditions. When forced to choose 3 group, only about 50\% of the data is correctly specified in terms of the generating shape groups for these three standard methods. Small values for the adjusted rand index also indicate that these methods do not group trajectories based only on the shape over time. \\
-If the correlation structure of the finite mixture model is generalized to exponential correlation, there is much more variability in the number of groups chosen. When the time-specific measurement error was low, the correct number of groups were chosen about 30\% of the time. Additionally, under these same circumstances, when forced to have 3 groups, there was perfect alignment with the generating shape groups. So even thought this method does not specifically cluster based on shape, having a general enough correlation structure allows it to pick up the correct groups when the number of group is known; however, it does not choose the correct number of groups in the majority of simulations. \\
-Of the known methods that are intended to group on shape, K-means on the raw derivatives can only pick the correct number of groups if the magnitude of the measurement error is small. If the variability around the individual mean is large, the method chooses 2 groups and misclassifies about 38\% of the individuals when forced to have 3 groups. Using the correlation dissimilarity measure with the PAM algorithm gives slightly better results with only 24-28\% misclassification, but the it does not consistently choose a specific number of groups. There is quite a bit of variability with 2 and 5 groups being chosen the most times.\\
-Lastly, we compare the three proposed methods. Using K-means with the derivative spline coefficients is a slight improvement over the raw derivatives such that the true number of groups was chosen much more frequently even under conditions of higher measurement error. However, this method did not decrease the misclassification rate under those same conditions. The multilayer mixture model is only successful in correctly classifying individuals into shape groups when the groups are well separated in terms of small standard deviation for the vertical perturbation and standard deviation of the measurement error. Even though the components are assumed Gaussian, it seems to be robust to some misspecification as the components were not generating as independent Gaussians. Lastly, the method that prevailed amongst the competition is the vertically shifted mixture model. For every condition, the method discovered the shape groups with little misclassification. NEED TO FINISH THIS SIMULATION.
+Tables \ref{tab:freq1}, \ref{tab:freq2}, and \ref{tab:freq3} summarize the simulations in terms of the number of groups, average misclassification rate, and average Adjusted Rand Index. It is clear from these tables that three methods---the standard K-means algorithm applied to raw data, K-means on spline coefficients, and the Gaussian mixture model assuming independence---do not select three groups as the optimal number of groups (Table \ref{tab:freq1}). For all the conditions except the one when $\sigma_{\epsilon}=0.5$ and $\sigma_{\tau}=2$, the raw data K-means algorithm obscures any shape differences in the data by vertically splitting the individuals in half: high and low groups. If the noisy from the data is smoothed using a spline basis, K-means applied to the coefficients tends to favor five groups except in the extreme cases of large standard deviations which results in increased overlap between groups and the algorithm selects two groups. The BIC with the independent mixture model consistently chooses five groups, the maximum we allow in the simulation, under all conditions. All three of these methods do not perform well when forced to choose $K=3$. Only about 50\% of the data is correctly specified in terms of the generating shape groups. Small values for the Adjusted Rand Index also indicate that groups from these methods do not match shape partitions.\\
 
+If the correlation structure of the finite mixture model is generalized from conditional independence to exponential correlation, there is more variability in the number of groups chosen. When the time-specific measurement error was small ($\sigma_{\epsilon}=0.5$), the correct number of groups were chosen about 30\% of the time (Table \ref{tab:freq1}). Additionally, under these same circumstances, when forced to have 3 groups, there was perfect alignment with the generating shape groups. However, when the magnitude of the noise is large ($\sigma_{\epsilon}=2$), three groups was never chosen and shape groups are not discovered when $K=3$. So even though this method does not directly cluster based on shape, having a general enough correlation structure allows  the possibility of the method to pick up the correct groups when the number of group is known and the measurement error is small. It is important to note that it does not choose the correct number of groups in the majority of simulations. \\
+
+Of the established methods that are intended to group on shape, K-means on quotient differences can only pick the correct number of groups if the magnitude of the measurement error is small (Table \ref{tab:freq2}). If the variability around the individual mean is large, the method chooses 2 groups and misclassifies about 38\% of the individuals when forced to have 3 groups. Using the correlation dissimilarity measure with the PAM algorithm gives slightly better results with only 24-28\% misclassification, but the it does not consistently choose three groups. The chosen number is quite variable with 2 and 5 groups being chosen the most.\\
+
+Now, we compare the three proposed methods (Table \ref{tab:freq3}). Using K-means with the derivative spline coefficients is a slight improvement over the raw derivatives such that the true number of groups was chosen much more frequently even under conditions of higher measurement error. However, this method did not decrease the misclassification rate under those same conditions. \\
+
+The multilayer mixture model is only successful in correctly classifying individuals into shape groups when there are distinct subgroups that are well separated in terms of vertical level ($\sigma_{epsilon}=0.5, \sigma_{\tau}=2$). Even though the components are assumed Gaussian, the method seems to be robust to some misspecification as none of the components were generated as independent Gaussians. \\
+
+Lastly, the method that prevailed amongst the competition is the vertically shifted mixture model. For every condition, the method chose three groups as the optimal partition and when forced to $K=3$, the method discovered the shape groups with little misclassification. Only when the measurement error is large ($\sigma_{epsilon}=2$) did the method misclassify 5\% (about 25 individuals) in terms of shape. \\ 
+
+% latex table generated in R 2.15.2 by xtable 1.7-0 package
+% Mon Jan 28 09:13:22 2013
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{ccc|cccccc}
-  \hline &&&\multicolumn{4}{c}{Number of Groups}&Misclassification&Adjusted\\ Distribution of $\tau$&$\sigma_{\epsilon}^2$&$\sigma_{\tau}^2$&$K=2$&$K=3$&$K=4$&$K=5$&Rate&Rand Index\\ \hline\multicolumn{9}{c}{\textbf{K-means on Raw Data}}\\ Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 500.00 & 0.42 & 0.26 \\ 
+  \hline &&&\multicolumn{4}{c}{Number of Groups}&Misclassification&Adjusted\\ Distribution of $\tau$&$\sigma_{\epsilon}$&$\sigma_{\tau}$&$K=2$&$K=3$&$K=4$&$K=5$&Rate&Rand Index\\ \hline\multicolumn{9}{c}{\textbf{K-means on Raw Data}}\\ Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 500.00 & 0.42 & 0.26 \\ 
   Uniform & 2.00 & 2.00 & 492.00 & 0.00 & 0.00 & 8.00 & 0.42 & 0.24 \\ 
   Uniform & 0.50 & 3.00 & 500.00 & 0.00 & 0.00 & 0.00 & 0.51 & 0.09 \\ 
   Uniform & 2.00 & 3.00 & 500.00 & 0.00 & 0.00 & 0.00 & 0.51 & 0.09 \\ 
@@ -170,7 +179,7 @@ Lastly, we compare the three proposed methods. Using K-means with the derivative
   Gaussian & 2.00 & 2.00 & 273.00 & 0.00 & 0.00 & 227.00 & 0.40 & 0.29 \\ 
   Gaussian & 0.50 & 3.00 & 412.00 & 0.00 & 0.00 & 88.00 & 0.46 & 0.16 \\ 
   Gaussian & 2.00 & 3.00 & 500.00 & 0.00 & 0.00 & 0.00 & 0.47 & 0.14 \\ 
-   \multicolumn{9}{c}{\textbf{K-means on Splines Coefficients}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 500.00 & 0.46 & 0.19 \\ 
+   \\ \multicolumn{9}{c}{\textbf{K-means on Splines Coefficients}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 500.00 & 0.46 & 0.19 \\ 
   Uniform & 2.00 & 2.00 & 31.00 & 0.00 & 1.00 & 468.00 & 0.47 & 0.18 \\ 
   Uniform & 0.50 & 3.00 & 189.00 & 0.00 & 10.00 & 301.00 & 0.48 & 0.17 \\ 
   Uniform & 2.00 & 3.00 & 500.00 & 0.00 & 0.00 & 0.00 & 0.48 & 0.15 \\ 
@@ -178,24 +187,34 @@ Lastly, we compare the three proposed methods. Using K-means with the derivative
   Gaussian & 2.00 & 2.00 & 0.00 & 0.00 & 0.00 & 500.00 & 0.45 & 0.20 \\ 
   Gaussian & 0.50 & 3.00 & 1.00 & 0.00 & 0.00 & 499.00 & 0.46 & 0.18 \\ 
   Gaussian & 2.00 & 3.00 & 490.00 & 0.00 & 0.00 & 10.00 & 0.47 & 0.16 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Independent Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 2.00 & 498.00 & 0.44 & 0.22 \\ 
+  Uniform & 2.00 & 2.00 & 0.00 & 0.00 & 2.00 & 498.00 & 0.40 & 0.28 \\ 
+  Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 1.00 & 499.00 & 0.49 & 0.12 \\ 
+  Uniform & 2.00 & 3.00 & 0.00 & 0.00 & 2.00 & 498.00 & 0.49 & 0.12 \\ 
+  Gaussian & 0.50 & 2.00 & 0.00 & 0.00 & 10.00 & 490.00 & 0.41 & 0.25 \\ 
+  Gaussian & 2.00 & 2.00 & 0.00 & 0.00 & 24.00 & 476.00 & 0.39 & 0.29 \\ 
+  Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 1.00 & 499.00 & 0.45 & 0.17 \\ 
+  Gaussian & 2.00 & 3.00 & 0.00 & 0.00 & 5.00 & 495.00 & 0.45 & 0.17 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Exponential Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 65.00 & 171.00 & 264.00 & 0.00 & 1.00 \\ 
+  Uniform & 2.00 & 2.00 & 0.00 & 0.00 & 23.00 & 477.00 & 0.40 & 0.40 \\ 
+  Uniform & 0.50 & 3.00 & 0.00 & 113.00 & 157.00 & 230.00 & 0.00 & 1.00 \\ 
+  Uniform & 2.00 & 3.00 & 0.00 & 0.00 & 37.00 & 463.00 & 0.41 & 0.35 \\ 
+  Gaussian & 0.50 & 2.00 & 0.00 & 114.00 & 136.00 & 250.00 & 0.00 & 1.00 \\ 
+  Gaussian & 2.00 & 2.00 & 0.00 & 0.00 & 34.00 & 466.00 & 0.41 & 0.38 \\ 
+  Gaussian & 0.50 & 3.00 & 0.00 & 141.00 & 121.00 & 238.00 & 0.00 & 1.00 \\ 
+  Gaussian & 2.00 & 3.00 & 0.00 & 1.00 & 40.00 & 459.00 & 0.41 & 0.35 \\ 
    \hline\end{tabular}
-\caption{Frequency table of the number of groups chosen, average misclassification rate ($K=3$), and average adjusted rand index ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
-\label{fig:se}
+\caption{Frequency table of the number of groups chosen, average misclassification rate ($K=3$), and average Adjusted Rand Index ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
+\label{tab:freq1}
 \end{center}
 \end{table}
 
+% latex table generated in R 2.15.2 by xtable 1.7-0 package
+% Mon Jan 28 09:13:38 2013
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{ccc|cccccc}
-  \hline &&&\multicolumn{4}{c}{Number of Groups}&Misclassification&Adjusted\\ Distribution of $\tau$&$\sigma_{\epsilon}^2$&$\sigma_{\tau}^2$&$K=2$&$K=3$&$K=4$&$K=5$&Rate&Rand Index\\ \hline\multicolumn{9}{c}{\textbf{K-means on Derivative Splines Coefficients}}\\ Uniform & 0.50 & 2.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
-  Uniform & 2.00 & 2.00 & 15.00 & 189.00 & 164.00 & 132.00 & 0.39 & 0.27 \\ 
-  Uniform & 0.50 & 3.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
-  Uniform & 2.00 & 3.00 & 15.00 & 189.00 & 164.00 & 132.00 & 0.39 & 0.27 \\ 
-  Gaussian & 0.50 & 2.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
-  Gaussian & 2.00 & 2.00 & 18.00 & 191.00 & 171.00 & 120.00 & 0.39 & 0.27 \\ 
-  Gaussian & 0.50 & 3.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
-  Gaussian & 2.00 & 3.00 & 18.00 & 191.00 & 171.00 & 120.00 & 0.39 & 0.27 \\ 
-   \multicolumn{9}{c}{\textbf{K-means on Raw Derivatives}}\\Uniform & 0.50 & 2.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
+  \hline &&&\multicolumn{4}{c}{Number of Groups}&Misclassification&Adjusted\\ Distribution of $\tau$&$\sigma_{\epsilon}$&$\sigma_{\tau}$&$K=2$&$K=3$&$K=4$&$K=5$&Rate&Rand Index\\ \hline\multicolumn{9}{c}{\textbf{K-means on Quotient Differences}}\\ Uniform & 0.50 & 2.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
   Uniform & 2.00 & 2.00 & 480.00 & 20.00 & 0.00 & 0.00 & 0.38 & 0.31 \\ 
   Uniform & 0.50 & 3.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
   Uniform & 2.00 & 3.00 & 480.00 & 20.00 & 0.00 & 0.00 & 0.38 & 0.31 \\ 
@@ -203,7 +222,7 @@ Lastly, we compare the three proposed methods. Using K-means with the derivative
   Gaussian & 2.00 & 2.00 & 483.00 & 17.00 & 0.00 & 0.00 & 0.38 & 0.31 \\ 
   Gaussian & 0.50 & 3.00 & 0.00 & 500.00 & 0.00 & 0.00 & 0.00 & 1.00 \\ 
   Gaussian & 2.00 & 3.00 & 483.00 & 17.00 & 0.00 & 0.00 & 0.38 & 0.31 \\ 
-   \multicolumn{9}{c}{\textbf{PAM with Correlation Measure}}\\Uniform & 0.50 & 2.00 & 131.00 & 105.00 & 64.00 & 200.00 & 0.24 & 0.49 \\ 
+   \\ \multicolumn{9}{c}{\textbf{PAM with Correlation Measure}}\\Uniform & 0.50 & 2.00 & 131.00 & 105.00 & 64.00 & 200.00 & 0.24 & 0.49 \\ 
   Uniform & 2.00 & 2.00 & 219.00 & 72.00 & 99.00 & 110.00 & 0.27 & 0.46 \\ 
   Uniform & 0.50 & 3.00 & 131.00 & 105.00 & 64.00 & 200.00 & 0.24 & 0.49 \\ 
   Uniform & 2.00 & 3.00 & 219.00 & 72.00 & 99.00 & 110.00 & 0.27 & 0.46 \\ 
@@ -213,57 +232,57 @@ Lastly, we compare the three proposed methods. Using K-means with the derivative
   Gaussian & 2.00 & 3.00 & 214.00 & 95.00 & 106.00 & 85.00 & 0.28 & 0.45 \\ 
    \hline\end{tabular}
 \caption{Frequency table of the number of groups chosen, average misclassification rate ($K=3$), and average adjusted rand index ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
-\label{fig:se}
+\label{tab:freq2}
 \end{center}
 \end{table}
 
+% latex table generated in R 2.15.2 by xtable 1.7-0 package
+% Mon Jan 28 09:15:25 2013
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{ccc|cccccc}
-  \hline &&&\multicolumn{4}{c}{Number of Groups}&Misclassification&Adjusted\\ Distribution of $\tau$&$\sigma_{\epsilon}^2$&$\sigma_{\tau}^2$&$K=2$&$K=3$&$K=4$&$K=5$&Rate&Rand Index\\ \hline\multicolumn{9}{c}{\textbf{Independent Mixture}}\\ Uniform & 0.50 & 2.00 & 0 & 0 & 2 & 498 & 0.44 & 0.22 \\ 
-  Uniform & 2.00 & 2.00 & 0 & 0 & 2 & 498 & 0.4 & 0.28 \\ 
-  Uniform & 0.50 & 3.00 & 0 & 0 & 1 & 499 & 0.49 & 0.12 \\ 
-  Uniform & 2.00 & 3.00 & 0 & 0 & 2 & 498 & 0.49 & 0.12 \\ 
-  Gaussian & 0.50 & 2.00 & 0 & 0 & 10 & 490 & 0.41 & 0.25 \\ 
-  Gaussian & 2.00 & 2.00 & 0 & 0 & 24 & 476 & 0.39 & 0.29 \\ 
-  Gaussian & 0.50 & 3.00 & 0 & 0 & 1 & 499 & 0.45 & 0.17 \\ 
-  Gaussian & 2.00 & 3.00 & 0 & 0 & 5 & 495 & 0.45 & 0.17 \\ 
-   \multicolumn{9}{c}{\textbf{Exponential Mixture}}\\Uniform & 0.50 & 2.00 & 0 & 65 & 171 & 264 & 0 & 1 \\ 
-  Uniform & 2.00 & 2.00 & 0 & 0 & 23 & 477 & 0.4 & 0.4 \\ 
-  Uniform & 0.50 & 3.00 & 0 & 113 & 157 & 230 & 0 & 1 \\ 
-  Uniform & 2.00 & 3.00 & 0 & 0 & 37 & 463 & 0.41 & 0.35 \\ 
-  Gaussian & 0.50 & 2.00 & 0 & 114 & 136 & 250 & 0 & 1 \\ 
-  Gaussian & 2.00 & 2.00 & 0 & 0 & 34 & 466 & 0.41 & 0.38 \\ 
-  Gaussian & 0.50 & 3.00 & 0 & 141 & 121 & 238 & 0 & 1 \\ 
-  Gaussian & 2.00 & 3.00 & 0 & 1 & 40 & 459 & 0.41 & 0.35 \\ 
-   \multicolumn{9}{c}{\textbf{Multilayer Mixture}}\\Uniform & 0.50 & 2.00 &  &  &  &  & 0.07 & 0.82 \\ 
+  \hline &&&\multicolumn{4}{c}{Number of Groups}&Misclassification&Adjusted\\ Distribution of $\tau$&$\sigma_{\epsilon}$&$\sigma_{\tau}$&$K=2$&$K=3$&$K=4$&$K=5$&Rate&Rand Index\\ \hline\multicolumn{9}{c}{\textbf{K-means on Derivative Splines Coefficients}}\\ Uniform & 0.50 & 2.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Uniform & 2.00 & 2.00 & 15 & 189 & 164 & 132 & 0.392 & 0.271 \\ 
+  Uniform & 0.50 & 3.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Uniform & 2.00 & 3.00 & 15 & 189 & 164 & 132 & 0.392 & 0.271 \\ 
+  Gaussian & 0.50 & 2.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Gaussian & 2.00 & 2.00 & 18 & 191 & 171 & 120 & 0.393 & 0.268 \\ 
+  Gaussian & 0.50 & 3.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Gaussian & 2.00 & 3.00 & 18 & 191 & 171 & 120 & 0.393 & 0.268 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Multilayer Mixture}}\\Uniform & 0.50 & 2.00 &  &  &  &  & 0.07 & 0.82 \\ 
   Uniform & 2.00 & 2.00 &  &  &  &  & 0.29 & 0.35 \\ 
   Uniform & 0.50 & 3.00 &  &  &  &  & 0.33 & 0.32 \\ 
   Uniform & 2.00 & 3.00 &  &  &  &  & 0.46 & 0.12 \\ 
   Gaussian & 0.50 & 2.00 &  &  &  &  & 0.09 & 0.75 \\ 
   Gaussian & 2.00 & 2.00 &  &  &  &  & 0.3 & 0.34 \\ 
-  Gaussian & 0.50 & 3.00 &  &  &  &  &  &  \\ 
-  Gaussian & 2.00 & 3.00 &  &  &  &  &  &  \\ 
-   \multicolumn{9}{c}{\textbf{Vertically Shifted Mixture}}\\Uniform & 0.50 & 2.00 & 0 & 50 & 0 & 0 &  &  \\ 
-  Uniform & 2.00 & 2.00 & 0 & 28 & 0 & 0 &  &  \\ 
-  Uniform & 0.50 & 3.00 & 0 & 0 & 0 & 0 &  &  \\ 
-  Uniform & 2.00 & 3.00 & 0 & 0 & 0 & 0 &  &  \\ 
-  Gaussian & 0.50 & 2.00 & 0 & 0 & 0 & 0 &  &  \\ 
-  Gaussian & 2.00 & 2.00 & 0 & 44 & 0 & 0 &  &  \\ 
-  Gaussian & 0.50 & 3.00 & 0 & 0 & 0 & 0 &  &  \\ 
-  Gaussian & 2.00 & 3.00 & 0 & 33 & 0 & 0 &  &  \\ 
+  Gaussian & 0.50 & 3.00 &  &  &  &  & 0.31 & 0.34 \\ 
+  Gaussian & 2.00 & 3.00 &  &  &  &  & 0.41 & 0.17 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Mixture}}\\Uniform & 0.50 & 2.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Uniform & 2.00 & 2.00 & 0 & 500 & 0 & 0 & 0.05 & 0.87 \\ 
+  Uniform & 0.50 & 3.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Uniform & 2.00 & 3.00 & 0 & 500 & 0 & 0 & 0.05 & 0.87 \\ 
+  Gaussian & 0.50 & 2.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Gaussian & 2.00 & 2.00 & 0 & 499 & 1 & 0 & 0.05 & 0.87 \\ 
+  Gaussian & 0.50 & 3.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+  Gaussian & 2.00 & 3.00 & 0 & 499 & 1 & 0 & 0.05 & 0.87 \\ 
    \hline\end{tabular}
 \caption{Frequency table of the number of groups chosen, average misclassification rate ($K=3$), and average adjusted rand index ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
-\label{fig:se}
+\label{tab:freq3}
 \end{center}
 \end{table}
 
-Tables 3, 4, and 5 present the mean square errors for the derivative spline coefficients under the simulation conditions for all clustering methods. When the clustering algorithm finds the shape groups correctly, the MSE is very close to zero for all coefficients. This occurs for the vertically shifted mixture for all conditions and both derivative-based methods and the exponential mixture model when the error is small. The multilayer mixture model has very small MSE only when the groups are very well separated. In general, most methods find a group with a horizontal shape indicated by small values for $\alpha_{21}$ and $\alpha_{22}$. If large MSE (close to or greater than 1), this indicates instability such that the method finds different groups every repitition. For derivative spline coefficients, the main reason for the large MSE when the measurement error is large is the order of the spline chosen. For example, with five observations, if the error is large enough, by chance the points look quadratic; therefore, fitting the quadratic spline results in a quadratic curve rather than the underlying line that generated the data. 
+To compare the group means from all methods with the true mean shapes used to generate the data, we transformed the estimates when $K=3$ to coefficients of the derivative spline previously mentioned. There are two coefficients per group and we denoted them as $\alpha_{11},\alpha_{21}$ for group 1, $\alpha_{12},\alpha_{22}$ for group 2, and $\alpha_{13},\alpha_{23}$ for group 3. Tables \ref{tab:mse1}, \ref{tab:mse2}, and \ref{tab:mse3} present the mean squared errors for the derivative spline coefficients under the simulation conditions for all clustering methods. When the clustering algorithm finds the shape groups correctly, the MSE is very close to zero for all coefficients. This occurs for the vertically shifted mixture under all conditions and both derivative-based methods and the exponential mixture model when the measurement error is small. The multilayer mixture model has very small MSE only when the groups are very well separated.\\
 
+ In general, the standard methods find one group with a horizontal shape on average indicated by smaller values for $\alpha_{21}$ and $\alpha_{22}$. If the MSE is large (close to or greater than 1) for a method, this indicates clustering instability such that the method finds different groups for every randomly generated data set resulting in great variation in the estimates (Table \ref{tab:mse2} and \ref{tab:mse3}). This may occur for a variety of reasons. When smoothing individual trajectories, for example, it is easy to occasionally over fit the five observations such that the shape is largely determined by the errors since the splines are chosen for the entire data set.\\
+ 
+ Of the three proposed models, only the vertically shifting mixture model consistently estimates the mean curves well (Table \ref{tab:mse3}). The K-means on the derivative spline coefficients estimate the shapes well only when the measurement error is small and the multilayer mixture model performs well when the measurement error is small and the vertical perturbation is small. \\
+
+% latex table generated in R 2.15.2 by xtable 1.7-0 package
+% Mon Jan 28 09:51:17 2013
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{ccc|cccccc}
-  \hline Distribution of $\tau$&$\sigma_{\epsilon}^2$&$\sigma_{\tau}^2$&$\alpha_{11}$&$\alpha_{12}$&$\alpha_{21}$&$\alpha_{22}$&$\alpha_{31}$&$\alpha_{32}$\\ \hline\multicolumn{9}{c}{\textbf{K-means on Raw Data}}\\ Uniform & 0.50 & 2.00 & 0.71 & 0.71 & 0.09 & 0.09 & 0.72 & 0.72 \\ 
+  \hline Distribution of $\tau$&$\sigma_{\epsilon}$&$\sigma_{\tau}$&$\alpha_{11}$&$\alpha_{21}$&$\alpha_{12}$&$\alpha_{22}$&$\alpha_{13}$&$\alpha_{23}$\\ \hline\multicolumn{9}{c}{\textbf{K-means on Raw Data}}\\ Uniform & 0.50 & 2.00 & 0.71 & 0.71 & 0.09 & 0.09 & 0.72 & 0.72 \\ 
   Uniform & 2.00 & 2.00 & 0.78 & 0.77 & 0.06 & 0.06 & 0.80 & 0.80 \\ 
   Uniform & 0.50 & 3.00 & 0.87 & 0.88 & 0.01 & 0.01 & 0.88 & 0.88 \\ 
   Uniform & 2.00 & 3.00 & 0.88 & 0.89 & 0.01 & 0.01 & 0.89 & 0.88 \\ 
@@ -271,7 +290,7 @@ Tables 3, 4, and 5 present the mean square errors for the derivative spline coef
   Gaussian & 2.00 & 2.00 & 0.90 & 0.91 & 0.02 & 0.02 & 0.89 & 0.90 \\ 
   Gaussian & 0.50 & 3.00 & 0.89 & 0.89 & 0.01 & 0.01 & 0.89 & 0.90 \\ 
   Gaussian & 2.00 & 3.00 & 0.89 & 0.89 & 0.01 & 0.01 & 0.88 & 0.91 \\ 
-   \multicolumn{9}{c}{\textbf{K-means on Splines Coefficients}}\\Uniform & 0.50 & 2.00 & 0.50 & 0.50 & 0.21 & 0.22 & 0.53 & 0.53 \\ 
+   \\ \multicolumn{9}{c}{\textbf{K-means on Splines Coefficients}}\\Uniform & 0.50 & 2.00 & 0.50 & 0.50 & 0.21 & 0.22 & 0.53 & 0.53 \\ 
   Uniform & 2.00 & 2.00 & 0.49 & 0.55 & 0.23 & 0.29 & 0.53 & 0.58 \\ 
   Uniform & 0.50 & 3.00 & 0.52 & 0.53 & 0.23 & 0.24 & 0.59 & 0.59 \\ 
   Uniform & 2.00 & 3.00 & 0.56 & 0.63 & 0.26 & 0.29 & 0.60 & 0.69 \\ 
@@ -279,24 +298,33 @@ Tables 3, 4, and 5 present the mean square errors for the derivative spline coef
   Gaussian & 2.00 & 2.00 & 0.47 & 0.55 & 0.21 & 0.29 & 0.54 & 0.62 \\ 
   Gaussian & 0.50 & 3.00 & 0.68 & 0.69 & 0.14 & 0.14 & 0.69 & 0.70 \\ 
   Gaussian & 2.00 & 3.00 & 0.64 & 0.76 & 0.16 & 0.20 & 0.64 & 0.76 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Independent Mixture}}\\Uniform & 0.50 & 2.00 & 0.87 & 0.87 & 0.01 & 0.01 & 0.87 & 0.87 \\ 
+  Uniform & 2.00 & 2.00 & 0.85 & 0.86 & 0.02 & 0.02 & 0.87 & 0.86 \\ 
+  Uniform & 0.50 & 3.00 & 0.85 & 0.85 & 0.02 & 0.02 & 0.86 & 0.86 \\ 
+  Uniform & 2.00 & 3.00 & 0.84 & 0.83 & 0.02 & 0.02 & 0.86 & 0.85 \\ 
+  Gaussian & 0.50 & 2.00 & 0.88 & 0.88 & 0.01 & 0.01 & 0.88 & 0.88 \\ 
+  Gaussian & 2.00 & 2.00 & 0.86 & 0.86 & 0.02 & 0.02 & 0.86 & 0.86 \\ 
+  Gaussian & 0.50 & 3.00 & 0.91 & 0.91 & 0.01 & 0.01 & 0.90 & 0.90 \\ 
+  Gaussian & 2.00 & 3.00 & 0.90 & 0.88 & 0.01 & 0.01 & 0.89 & 0.90 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Exponential Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 2.00 & 0.28 & 0.30 & 0.38 & 0.37 & 0.26 & 0.27 \\ 
+  Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 3.00 & 0.12 & 0.13 & 0.39 & 0.37 & 0.10 & 0.09 \\ 
+  Gaussian & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 2.00 & 2.00 & 0.26 & 0.25 & 0.41 & 0.40 & 0.24 & 0.24 \\ 
+  Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 2.00 & 3.00 & 0.12 & 0.12 & 0.39 & 0.37 & 0.11 & 0.11 \\ 
    \hline\end{tabular}
-\caption{Mean squared error of derivative spline coefficients ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
-\label{fig:se}
+\caption{Mean squared error for derivative spline coefficients ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
+\label{tab:mse1}
 \end{center}
 \end{table}
-
+% latex table generated in R 2.15.2 by xtable 1.7-0 package
+% Mon Jan 28 09:51:02 2013
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{ccc|cccccc}
-  \hline Distribution of $\tau$&$\sigma_{\epsilon}^2$&$\sigma_{\tau}^2$&$\alpha_{11}$&$\alpha_{12}$&$\alpha_{21}$&$\alpha_{22}$&$\alpha_{31}$&$\alpha_{32}$\\ \hline\multicolumn{9}{c}{\textbf{K-means on Derivative Splines Coefficients}}\\ Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Uniform & 2.00 & 2.00 & 0.50 & 0.49 & 1.21 & 1.29 & 0.41 & 0.51 \\ 
-  Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Uniform & 2.00 & 3.00 & 0.50 & 0.49 & 1.21 & 1.29 & 0.41 & 0.51 \\ 
-  Gaussian & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 2.00 & 0.46 & 0.45 & 1.26 & 1.27 & 0.48 & 0.52 \\ 
-  Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 3.00 & 0.46 & 0.45 & 1.26 & 1.27 & 0.48 & 0.52 \\ 
-   \multicolumn{9}{c}{\textbf{K-means on Raw Derivatives}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  \hline Distribution of $\tau$&$\sigma_{\epsilon}$&$\sigma_{\tau}$&$\alpha_{11}$&$\alpha_{21}$&$\alpha_{12}$&$\alpha_{22}$&$\alpha_{13}$&$\alpha_{23}$\\  \hline\multicolumn{9}{c}{\textbf{K-means on Quotient Differences}}\\ Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Uniform & 2.00 & 2.00 & 0.10 & 0.09 & 0.20 & 0.17 & 0.10 & 0.10 \\ 
   Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Uniform & 2.00 & 3.00 & 0.10 & 0.09 & 0.20 & 0.17 & 0.10 & 0.10 \\ 
@@ -304,7 +332,7 @@ Tables 3, 4, and 5 present the mean square errors for the derivative spline coef
   Gaussian & 2.00 & 2.00 & 0.10 & 0.09 & 0.20 & 0.18 & 0.10 & 0.10 \\ 
   Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Gaussian & 2.00 & 3.00 & 0.10 & 0.09 & 0.20 & 0.18 & 0.10 & 0.10 \\ 
-   \multicolumn{9}{c}{\textbf{PAM with Correlation Measure}}\\Uniform & 0.50 & 2.00 & 0.91 & 0.91 & 0.46 & 0.46 & 1.87 & 1.85 \\ 
+   \\ \multicolumn{9}{c}{\textbf{PAM with Correlation Measure}}\\Uniform & 0.50 & 2.00 & 0.91 & 0.91 & 0.46 & 0.46 & 1.87 & 1.85 \\ 
   Uniform & 2.00 & 2.00 & 1.21 & 1.23 & 0.62 & 0.67 & 2.11 & 2.01 \\ 
   Uniform & 0.50 & 3.00 & 0.91 & 0.91 & 0.46 & 0.46 & 1.87 & 1.85 \\ 
   Uniform & 2.00 & 3.00 & 1.21 & 1.23 & 0.62 & 0.67 & 2.11 & 2.01 \\ 
@@ -313,66 +341,92 @@ Tables 3, 4, and 5 present the mean square errors for the derivative spline coef
   Gaussian & 0.50 & 3.00 & 0.83 & 0.87 & 0.47 & 0.46 & 1.77 & 1.77 \\ 
   Gaussian & 2.00 & 3.00 & 1.19 & 1.29 & 0.67 & 0.64 & 1.92 & 2.08 \\ 
    \hline\end{tabular}
-\caption{Frequency table of the number of groups chosen, average misclassification rate ($K=3$), and average adjusted rand index ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
-\label{fig:se}
+\caption{Mean squared error for derivative spline coefficients ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
+\label{tab:mse2}
 \end{center}
 \end{table}
 
+% latex table generated in R 2.15.2 by xtable 1.7-0 package
+% Mon Jan 28 09:50:45 2013
 \begin{table}[ht]
 \begin{center}
-\begin{tabular}{cc|ccccccc}
-  \hline Distribution of $\tau$&$\sigma_{\epsilon}^2$&$\sigma_{\tau}^2$&$\alpha_{11}$&$\alpha_{12}$&$\alpha_{21}$&$\alpha_{22}$&$\alpha_{31}$&$\alpha_{32}$\\ \hline\multicolumn{9}{c}{\textbf{Independent Mixture}}\\ Uniform & 0.50 & 2.00 & 0.87 & 0.87 & 0.01 & 0.01 & 0.87 & 0.87 \\ 
-  Uniform & 2.00 & 2.00 & 0.85 & 0.86 & 0.02 & 0.02 & 0.87 & 0.86 \\ 
-  Uniform & 0.50 & 3.00 & 0.85 & 0.85 & 0.02 & 0.02 & 0.86 & 0.86 \\ 
-  Uniform & 2.00 & 3.00 & 0.84 & 0.83 & 0.02 & 0.02 & 0.86 & 0.85 \\ 
-  Gaussian & 0.50 & 2.00 & 0.88 & 0.88 & 0.01 & 0.01 & 0.88 & 0.88 \\ 
-  Gaussian & 2.00 & 2.00 & 0.86 & 0.86 & 0.02 & 0.02 & 0.86 & 0.86 \\ 
-  Gaussian & 0.50 & 3.00 & 0.91 & 0.91 & 0.01 & 0.01 & 0.90 & 0.90 \\ 
-  Gaussian & 2.00 & 3.00 & 0.90 & 0.88 & 0.01 & 0.01 & 0.89 & 0.90 \\ 
-   \multicolumn{9}{c}{\textbf{Exponential Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Uniform & 2.00 & 2.00 & 0.28 & 0.30 & 0.38 & 0.37 & 0.26 & 0.27 \\ 
+\begin{tabular}{ccc|cccccc}
+  \hline Distribution of $\tau$&$\sigma_{\epsilon}$&$\sigma_{\tau}$&$\alpha_{11}$&$\alpha_{21}$&$\alpha_{12}$&$\alpha_{22}$&$\alpha_{13}$&$\alpha_{23}$\\  \hline\multicolumn{9}{c}{\textbf{K-means on Derivative Splines Coefficients}}\\ Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 2.00 & 0.50 & 0.49 & 1.21 & 1.29 & 0.41 & 0.51 \\ 
   Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Uniform & 2.00 & 3.00 & 0.12 & 0.13 & 0.39 & 0.37 & 0.10 & 0.09 \\ 
+  Uniform & 2.00 & 3.00 & 0.50 & 0.49 & 1.21 & 1.29 & 0.41 & 0.51 \\ 
   Gaussian & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 2.00 & 0.26 & 0.25 & 0.41 & 0.40 & 0.24 & 0.24 \\ 
+  Gaussian & 2.00 & 2.00 & 0.46 & 0.45 & 1.26 & 1.27 & 0.48 & 0.52 \\ 
   Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 3.00 & 0.12 & 0.12 & 0.39 & 0.37 & 0.11 & 0.11 \\ 
-   \multicolumn{9}{c}{\textbf{Multilayer Mixture}}\\Uniform & 0.50 & 2.00 & 0.02 & 0.02 & 0.01 & 0.01 & 0.03 & 0.03 \\ 
+  Gaussian & 2.00 & 3.00 & 0.46 & 0.45 & 1.26 & 1.27 & 0.48 & 0.52 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Multilayer Mixture}}\\Uniform & 0.50 & 2.00 & 0.02 & 0.02 & 0.01 & 0.01 & 0.03 & 0.03 \\ 
   Uniform & 2.00 & 2.00 & 0.12 & 0.12 & 0.01 & 0.01 & 0.12 & 0.11 \\ 
   Uniform & 0.50 & 3.00 & 0.33 & 0.33 & 0.03 & 0.03 & 0.33 & 0.32 \\ 
   Uniform & 2.00 & 3.00 & 0.40 & 0.40 & 0.02 & 0.02 & 0.42 & 0.40 \\ 
   Gaussian & 0.50 & 2.00 & 0.01 & 0.01 & 0.00 & 0.00 & 0.01 & 0.01 \\ 
   Gaussian & 2.00 & 2.00 & 0.13 & 0.13 & 0.01 & 0.01 & 0.13 & 0.13 \\ 
-  Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-   \multicolumn{9}{c}{\textbf{Vertically Shifted Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Uniform & 2.00 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 0.50 & 3.00 & 0.31 & 0.32 & 0.02 & 0.02 & 0.29 & 0.29 \\ 
+  Gaussian & 2.00 & 3.00 & 0.35 & 0.34 & 0.01 & 0.01 & 0.34 & 0.35 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 2.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
   Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Uniform & 2.00 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 3.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
   Gaussian & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 2.00 & 2.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
   Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
-  Gaussian & 2.00 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 2.00 & 3.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
    \hline\end{tabular}
-\caption{Mean squared error of derivative spline coefficients ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
-\label{fig:se}
+\caption{Mean squared error for derivative spline coefficients ($K=3$) for 500 replications of clustering methods applied to data generated under different conditions for the distribution of $\tau$ and the standard deviation of $\epsilon$ and $\tau$.}
+\label{tab:mse3}
 \end{center}
 \end{table}
 
+We have determined that some of the methods discover the shape groups fairly well under conditions of small measurement error. We have measured this by comparing the group labels to the true generating labels comparing the estimates of the mean shapes with known generating values. Lastly, we want to know how this impacts the estimation of the relationship between baseline factors and group membership. For simplification, we present density plots of the estimated coefficients for group 1 and 2 for the factors $z_{1}$ and $z_{2}$ for three methods---K-means on the raw data, K-means on the raw derivatives, and vertically shifted mixture models---after setting $K=3$. As a reminder, the first baseline factor, $z_{1}$, was used to generate shape groups and the second, $z_{2}$, was used to generate level groups. \\
 
-GAMMA pictures - Show K-means and that the estimated coefficient for $z_{1}$ is zero in that the variable that impacted shape is not important. Show one of the derivatives in that the coefficients for $z_{2}$ are zero, but the values for $z_{1}$ are not consistent. Show the mixture with exponential and show the vertical.
+It is clear that the K-means on the raw data picks up the relationship between the group membership and the second baseline factor, $z_{2}$ (Figure \ref{fig:gamma1}). The density plots in dashed lines are concentrated at non-zero values while the solid line densities for $z_{1}$ are mostly centered around zero. For two Uniform conditions with $\sigma_{\tau}=2$, the density plot for $z_{1}$ is bimodal, which indicates some variability in the groups chosen. Overall, K-means picks up the level groups since $z_{2}$ is significantly non-zero.\\
 
+On the other hand, the K-means on the quotient differences picks out the shape groups. The coefficients for $z_{1}$ are now mostly significantly non-zero while the coefficients for $z_{2}$ are centered around zero. However, when $\sigma_{epsilon}=2$, one of the density plots is bimodal indicating variability. We saw this earlier with the higher the misclassification rate.\\
 
+Lastly, with the vertically shifting mixture model, there is a significant relationship between group membership and $z_{1}$, the factor that was used to generate shape groups. The second factor is estimated to have zero relationship with the grouping.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6in]{Chp5Gamma1}
+\end{center}
+\label{fig:gamma1}
+\caption{Density plots of estimated multinomial coefficients from analysis after running K-means on raw data under all simulation conditions. Within each plot, the solid line represents the coefficients for the factor, $z_{1}$, and dashed line represents the coefficients for the factor, $z_{2}$, with line thickness indicating group 1 vs. group 2 (group 3 is the reference group with coefficients fixed to zero).}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6in]{Chp5Gamma2}
+\end{center}
+\label{fig:gamma1}
+\caption{Density plots of estimated multinomial coefficients from analysis after running K-means on quotient differences under all simulation conditions. Within each plot, the solid line represents the coefficients for the factor, $z_{1}$, and dashed line represents the coefficients for the factor, $z_{2}$, with line thickness indicating group 1 vs. group 2 (group 3 is the reference group with coefficients fixed to zero).}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=6in]{Chp5Gamma3}
+\end{center}
+\label{fig:gamma1}
+\caption{Density plots of simultaneously estimated multinomial coefficients from the vertically shifted mixture model under all simulation conditions. Within each plot, the solid line represents the coefficients for the factor, $z_{1}$, and dashed line represents the coefficients for the factor, $z_{2}$, with line thickness indicating group 1 vs. group 2 (group 3 is the reference group with coefficients fixed to zero).}
+\end{figure}
 
 
 \subsection{Conclusion}
-
-
 These results are limited as we focused on one generating framework, but the ideas should generalize to similar situations.
+\begin{itemize}
+\item K-means on raw data does not find shape groups; rather it finds groups based mainly on level.
+\item K-means on spline coefficients, which is one way to generalize the original K-means to work with irregularly sampled data, does not improve upon and may be slightly worse than K-means.
+\item Finite mixture with independence failed just like K-means.
+\item By generalizing the mixture model to allow exponential correlation, the model was able to detect three shape groups when measurement error was small. Its success may be a function of the data generation process, but either way, it won't give you the correct number of groups.
+\item Of the methods thought to detect shape, PAM with the correlation measure failed miserably on all accounts. Not only could it not detect the right number of shape groups, it could find the shape groups when forced to the correct number of groups. 
+\item Quotient differences on the other hand worked well when measurement error was small. It was able to choose the correct number of groups and and find the shape groups.
+\item K-means on the derivative spline coefficients could be seen as a generalization of the quotient differences to accommodate irregularly sampled data. Under the same conditions of small measurement error, this method performed well. However, under larger measurement error, it performed worse than quotient differences. This may change when working with longer data sets with more observations.
+\item The multilayer mixture model only works well if the data fit into the shape group/level subgroup framework such that the subgroups are well separated. Unfortunately, this is not a realistic model for most data sets. 
+\item Vertically shifting the data prior to fitting a mixture model outperformed the rest of the methods. With larger measurement errors, there was about 5\% misclassification, but it did not impact the mean shape or baseline factor coefficient estimation.
+\end{itemize}
 
 
 
-
-We need to be able to compare the cluster results for different simulated data sets. This makes sense when the cluster groups are relatively stable, but it is less than ideal when the clustering results drastically differ. To compare we will switch the cluster labels so that we are comparing the right groups. After trying a small simulation, I decided to use two protocols. For methods that discovered and grouped by shape, I permuted the cluster labels so as to maximize the match between the known groups and the cluster groups. For the methods that doesn't consistently group by shape but rather more by level, I permuted the cluster labels so that the labels describe the groups in increasing order of the mean at the last time period. 
 
 \end{document}
