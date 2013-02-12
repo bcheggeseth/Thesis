@@ -1,16 +1,5 @@
-\documentclass[12pt]{article}
-\usepackage{fullpage,amsmath,amsfonts,graphicx,amsthm}
-\usepackage{setspace}
-\title{Motivation Chapter}
-\author{Brianna C. Heggeseth}
+\chapter{Motivation Chapter}
 
-\newtheorem{theorem}{Theorem}
-  \newcommand{\B}[0]{\mathbf}
-    \newcommand{\bs}[0]{\boldsymbol}
-
-\begin{document}
-\doublespace
-\maketitle
  In this chapter, I motivate clustering longitudinal data based on the {\em shape} of the trajectory over time by highlighting the goal of longitudinal data is to study change over time. Next, I review the standard clustering methods presented in Chapter 1 and discuss their limitations in achieving these goals. Finally, I close by discussing some extension that have been designed to particularly focus on shape.
 
 \section{Motivation}
@@ -140,7 +129,4 @@ where $\epsilon_{ij}\overset{iid}{\sim} (0,\sigma_{i}^{2})$ and $f_{i}$ is a ran
 $$y_{ij}=\alpha_i+f_k(t_{ij})+\epsilon_{ij}$$
 given the $i$th individual is in group $k$, where $\alpha_i$ is adjusts the vertical level of an individuals' curve, $f_k$ is a continuous mean function for cluster $k$, and $\epsilon_{ij}$ is random error that may be correlated within subject $i$ but independent between subjects. The type of model is used frequently in longitudinal data analysis \cite{diggle2002} and if $\alpha_{i}$ is considered a random variable following some distribution, then it is considered a random intercept model. \\\\
  In the next few chapters, we will review the standard methods, and then present three new methods adapted from related literature that address issues of shape or pattern over time and apply them to growth trajectories data of children. Additionally, we will compare the methods in a simulation study and discuss the advantages and disadvantages of using the methods in practice. 
-\bibliographystyle{plain}	
-\bibliography{Dissertation}	
-
-\end{document}
+	

@@ -1,0 +1,105 @@
+\chapter{Derivation of Standard Errors for Multilayer Mixture Model}
+In a multilayer mixture model, let $K$ be the number of high level clusters and $J_{k}$ be the number of low level normal components in the mixture model of cluster $k=1,...,K$ such that $J=\sum_{k=1}^{K}J_{k}$ is the total number of lower level components in the model. To index all of the low level components, we let the set of indices assigned to cluster $k$ be $\{\sum^{k-1}_{k'=0}J_{k'}+1,\sum^{k-1}_{k'=0}J_{k'}+2,...,\sum^{k}_{k'=0}J_{k'}\}$ for $k=1,2,...,K$  and $\mathcal J_{k}=\sum^{k}_{k'=0}J_{k'}$ is the maximum index for cluster $k$. The the indices of the components in cluster $k$ are $\{\mathcal J_{k-1}+1,...,\mathcal J_{k}\}$. For ease of explanation, define a cluster assigning function $c(j)\in \{1,2,...,K\}$ to specify the high level cluster to which a low level component belongs. Let $f(y|x,\alpha,\beta,\sigma^{2})$ be the probability density function of a multivariate normal distribution with mean $\alpha\B 1_{m_i}+x\beta$ and covariance $\sigma^{2}I$ where $\B 1_{m_{i}}$ is a vectors of 1's of length $m_{i}$. Then the mixture distribution of cluster $k$ is
+$$f_{k}(y|x) = \sum_{j: c(j) = k} \pi_{j|c(j)}(\eta)f(y|x,\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$$
+where $\pi_{j|c(j)}(\eta)$ is the probability of being in component $j$ given a sample is in cluster $c(j)$ and $\pi_{j|c(j)}(\eta)=\exp(\eta_{j})/\sum_{l:c(l)=c(j)} \exp(\eta_{l})$ for all $j=1,2,...,J$ with $\eta_{\mathcal J_{k}}=0$ for all $k=1,...,K$ and $\eta=\{\eta_{j}\}_{j=1}^{J}$. Let the prior probability of cluster $k$ be $\pi_{k}(z,\gamma)=\exp(z^{T}\gamma_{k})/\sum^{K}_{l=1}\exp(z^{T}\gamma_{l})$ such that $\gamma_{K}=0$ and $\gamma=(\gamma_{1},...,\gamma_{K})$. Then the density for the multilayer mixture can be written as
+$$g(y|x,z) = \sum_{k=1}^{K}\pi_{k}(z,\gamma)f_{k}(y|x) = \sum_{k=1}^{K}\pi_{k}(z,\gamma)\sum_{j: c(j) = k} \pi_{j|c(j)}(\eta)f(y|x,\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$$
+Since every component belongs to only one cluster, the above equation reduces to a regular mixture model if we let $\bar{\pi}_{j}(z,\gamma,\eta)=\pi_{c(j)}(z,\gamma)\pi_{j|c(j)}(\eta)$,
+$$g(y|x,z) = \sum_{j=1}^{J}\bar{\pi}_{j}(z,\gamma,\eta)f(y|x,\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$$
+\subsection{Standard Error Calculations}
+Let $h(z,\gamma)=\sum^{K}_{j=1}\exp(z^{T}\gamma_{j})$. Then $\pi_{k}(z,\gamma)=\frac{\exp(z^{T}\gamma_{k})}{h(z,\gamma)}$. We will differentiate $\log\pi_{k}(z,\gamma)$ with respect to $\gamma_{1},\gamma_{2},...,\gamma_{K-1}$. Taking the logarithm of both sides we get,
+$$\log\pi_{k}(z,\gamma)=z^{T}\gamma_{k}-\log h(z,\gamma)$$
+Note that $\partial \log h(z,\gamma)/\partial \gamma_{j}=\pi_{j}(z,\gamma)z$. Then
+\begin{align*}
+\frac{\partial \log\pi_{k}(z,\gamma) }{\partial \gamma_{j}} &= I(j=k)z-\pi_{k}(z,\gamma)z\\
+\frac{\partial^{2} \log\pi_{k}(z,\gamma) }{\partial \gamma_{j}\partial \gamma_{j'}} &= [-I(j=j')\pi_{j}(z,\gamma)+\pi_{j}(z,\gamma)\pi_{j'}(z,\gamma)]zz^{T}\\
+\end{align*}
+Similarly, 
+\begin{align*}
+\frac{\partial \log\pi_{j|c(j)}(\eta) }{\partial \eta_{i}} &= I(c(i)=c(j))\left[I(i=j)-\pi_{i|c(i)}(\eta)\right]\\
+\frac{\partial^{2} \log\pi_{j|c(j)}(\eta) }{\partial \eta_{i}\partial \eta_{i'}} &= I(c(i)=c(i')=c(j))\left[-I(i=i')\pi_{i|c(i)}(\eta)+\pi_{i|c(i)}(\eta)\pi_{i'|c(i')}(\eta)\right]\\
+\end{align*}
+Define the following:
+\begin{align*}
+b_{ij} = \frac{1}{\sigma_{j}^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)}),&\quad B_{ij}=\frac{m_{i}}{\sigma^{2}_{j}}-b_{ij}^{T}b_{ij}\\
+c_{ij} = \left(\begin{array}{c}
+\B 1_{m_i}^{T} b_{ij}\\
+-\frac{1}{2}B_{ij}
+\end{array}\right),&\quad C_{ij} =\left(\begin{array}{cc}
+\frac{m_{i}}{\sigma^{2}_{j}}&\frac{\B 1_{m_i}^{T}b_{ij}}{\sigma^{2}_{j}}\\
+\frac{b^{T}_{ij}\B 1_{m_i}}{\sigma^{2}_{j}}&\frac{1}{2\sigma_{j}^{2}}(-2B_{ij}+\frac{m_{i}}{\sigma^{2}_{j}})
+\end{array}\right)\\
+d_{ij}=\left(\begin{array}{c}
+\frac{\B 1_{m_i}^{T}x_{i}}{\sigma^{2}_{j}}\\
+\frac{b_{ij}^{T}x_{i}}{\sigma^{2}_{j}}\end{array}\right),&
+\quad \theta_{j}=\left(\begin{array}{c}
+\alpha_{j}\\
+\sigma_{j}^{2}\end{array}\right)
+\end{align*}
+Let $\phi_{ij} = \bar{\pi}_{j}(z_{i},\gamma)f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$ and $p_{ij} = \frac{\phi_{ij}}{\sum_{j} \phi_{ij}}$. Then since $g(y_{i}|x_{i},z_{i})=\sum_{j=1}^{J}\phi_{ij}$, we obtain
+\begin{align}\label{dg}
+\partial \log g(y_{i}|x_{i},z_{i})=\frac{\partial g(y_{i}|x_{i},z_{i})}{g(y_{i}|x_{i},z_{i})}=\sum^{J}_{j=1}\frac{\partial \phi_{ij} }{\sum_{k=1}^{J} \phi_{ik}}=\sum^{J}_{j=1}p_{ij}\partial \log \phi_{ij}
+\end{align}
+and
+\begin{align}\label{d2g}
+\partial^{2} \log g(y_{i}|x_{i},z_{i})&=\left(\frac{\partial^{2} g(y_{i}|x_{i},z_{i})}{g(y_{i}|x_{i},z_{i})}-\left(\frac{\partial g(y_{i}|x_{i},z_{i})}{g(y_{i}|x_{i},z_{i})}\right)^{2}\right)\nonumber\\
+&=\left(\frac{\sum^{J}_{j=1}\partial^{2}\phi_{ij}}{\sum^{J}_{j=1}\phi_{ij}}-\left(\frac{\sum^{J}_{j=1}\partial\phi_{ij}}{\sum^{J}_{j=1}\phi_{ij}}\right)^{2}\right)\nonumber\\
+&=\left( \sum^{J}_{j=1}p_{ij}(\partial^{2}\log \phi_{ij} + (\partial \log \phi_{ij})^{2})-(\sum^{J}_{j=1}p_{ij}\partial \log \phi_{ij})^{2}\right)
+\end{align}
+To evaluate these, we first need the first and second-order derivatives of $\log\phi_{ij}$. Since,
+$$\log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})=-\frac{m_{i}}{2}\log(2\pi)-\frac{m_{i}}{2}\log\sigma_{j}^{2}-\frac{1}{2\sigma_{j}^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})$$
+we find 
+\begin{align*}
+\partial \log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j}) &= -\frac{m_{i}}{2}\partial \log\sigma_{j}^{2}+\frac{1}{\sigma_{j}^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}\partial (\alpha_{j}\B 1_{m_i}+x_{i}\beta_{c(j)})\\
+&\quad- \frac{1}{2}\partial((\sigma_{j}^{2})^{-1})(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})\\
+&= -\frac{m_{i}}{2}\frac{\partial\sigma_{j}^{2}}{\sigma_{j}^{2}}+\frac{1}{\sigma_{j}^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}[\partial \alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]\\
+&\quad+\frac{1}{2}\frac{\partial\sigma_{j}^{2}}{(\sigma_{j}^{2})^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})\\
+&=c_{ij}^{T}\partial\theta_{j}+b_{ij}^{T}x_{i}\partial \beta_{c(j)}
+\end{align*}
+and
+\begin{align*}
+\partial^{2} \log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j}) &= \frac{m_{i}}{2}\frac{\partial^{2}\sigma_{j}^{2}}{(\sigma_{j}^{2})^{2}}-\frac{1}{\sigma_{j}^{2}}[\partial \alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]^{T}[\partial \alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]\\
+&\quad-\frac{\partial \sigma_{j}^{2}}{(\sigma^{2}_{j})^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}[\partial \alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]\\
+&\quad-\frac{\partial^{2}\sigma_{j}^{2}}{(\sigma_{j}^{2})^{3}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})\\
+&\quad-\frac{\partial\sigma_{j}^{2}}{(\sigma_{j}^{2})^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)})^{T}[\partial \alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]\\
+&= \frac{m_{i}}{2}\frac{\partial^{2}\sigma_{j}^{2}}{(\sigma_{j}^{2})^{2}}-\frac{1}{\sigma_{j}^{2}}[\partial \alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]^{T}[\partial\alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]\\
+&\quad-2\frac{\partial \sigma_{j}^{2}}{(\sigma^{2}_{j})}b_{ij}^{T}[\partial\alpha_{j}\B 1_{m_i}+\partial(x_{i}\beta_{c(j)})]-\frac{\partial^{2}\sigma_{j}^{2}}{(\sigma_{j}^{2})}b_{ij}^{T}b_{ij}\\
+&= -2(\partial \theta_{j}^{T}d_{ij})\partial\beta_{c(j)}+\partial\beta_{c(j)}^{T}x_{i}^{T}x_{i}\partial\beta_{c(j)}-\partial \theta_{j}^{T}C_{ij}\partial \theta_{j}\\
+\end{align*}
+and hence,
+\begin{align}\label{dphi}
+\partial \log \phi_{ij} &= \partial \log \bar{\pi}_{j}(z_{i},\gamma)+\partial \log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})\nonumber\\
+&= \partial \log \pi_{c(j)}(z_{i},\gamma)+\partial \log \pi_{j|c(j)}+\partial \log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})\nonumber\\
+&= z_{i}^{T}\partial \gamma_{c(j)}-\pi_{.}(z_{i},\gamma)z_{i}^{T}\partial \gamma_{.}+ \partial \eta_{j} - I(c(.)=c(j))\pi_{.|c(j)}(\eta)\partial \eta_{.}+c_{ij}^{T}\partial\theta_{j}+b_{ij}^{T}x_{i}\partial \beta_{c(j)}
+\end{align}
+and
+\begin{align}\label{d2phi}
+\partial^{2} \log \phi_{ij} &= \partial^{2} \log \bar{\pi}_{j}(z_{i},\gamma)+\partial^{2} \log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})\nonumber\\
+&= \partial^{2} \log \pi_{c(j)}(z_{i},\gamma)+\partial^{2} \log \pi_{j|c(j)}+\partial^{2} \log f(y_{i}|x_{i},\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})\nonumber\\
+&= -\partial \gamma_{.}^{T}\pi_{.}(z_{i},\gamma)z_{i}z_{i}^{T}\partial \gamma_{.}+\partial \gamma_{.}^{T}\pi_{.}(z_{i},\gamma)\pi_{..}(z_{i},\gamma)z_{i}z_{i}^{T}\partial \gamma_{..}\nonumber\\
+&\quad+I(c(.)=c(..)=c(j))(-\partial \eta_{.}^{T}\pi_{.|c(j)}(\eta)\partial \eta_{.}+\partial \eta_{.}^{T}\pi_{.|c(j)}(\eta)\pi_{..|c(j)}(\eta)\partial \eta_{..})\nonumber\\
+&\quad-2(\partial \theta_{j}^{T}d_{ij})\partial\beta_{c(j)}+\partial\beta_{c(j)}^{T}x_{i}^{T}x_{i}\partial\beta_{c(j)}-\partial \theta_{j}^{T}C_{ij}\partial \theta_{j}
+\end{align}
+Then by substituting (\ref{dphi}) into (\ref{dg}) as well as (\ref{dphi}) and (\ref{d2phi}) into (\ref{d2g}), we find
+\begin{align*}
+q_{i}^{\gamma_{k}} &= \left[\sum_{l: c(l) = k} p_{il} -\pi_{k}(z_{i},\gamma)\right]z_{i}\\
+q_{i}^{\beta_{k}} &= \sum_{l: c(l) = k} p_{il} x^{T}_{i}b_{il}\\
+q_{i}^{\eta_{j}} &= p_{ij}-\pi_{j|c(j)}\sum_{l:c(l)=c(j)}p_{il}\\
+q_{i}^{\theta{j}} &= p_{ij} c_{ij}
+\end{align*}
+and
+\begin{align*}
+Q_{i}^{\gamma_{k}\gamma_{k'}} &= \left(I(k=k')\left[\sum_{l: c(l) = k} p_{il}-\pi_{k}(z_{i},\gamma)\right]-[\sum_{l: c(l) =k} p_{il}][\sum_{l: c(l)=k'} p_{il}] +\pi_{k}(z_{i},\gamma)\pi_{k'}(z_{i},\gamma)\right)z_{i}z_{i}^{T}\\
+Q_{i}^{\beta_{k}\beta_{k'}} &= I(k=k')\left[\sum_{l: c(l) = k} p_{il}(\frac{-1}{\sigma_{j}^{2}}x_{i}^{T}x_{i}+x_{i}^{T}b_{il}b_{il}^{T}x_{i})\right]-[\sum_{l: c(l) =k}p_{il}x^{T}_{i}b_{il}][\sum_{l: c(l)=k'}p_{il}x^{T}_{i}b_{il}]^{T}\\
+Q_{i}^{\eta_{j}\eta_{j'}} &= I(c(j)=c(j'))\left(I(j=j')\left[p_{ij}- \pi_{j|c(j)}\sum_{l:c(l)=c(j)}p_{il}\right]+2\pi_{j|c(j)}\pi_{j'|c(j')}\sum_{l:c(l)=c(j)}p_{il}-p_{ij'}\pi_{j|c(j)}-p_{ij}\pi_{j'|c(j')}\right)\\
+&\quad - \left[p_{ij}-\pi_{j|c(j)}\sum_{l:c(l)=c(j)}p_{il}\right]\left[p_{ij'}-\pi_{j'|c(j')}\sum_{l:c(l)=c(j')}p_{il}\right]\\
+Q_{i}^{\theta_{j}\theta_{j'}} &= I(j=j')\left[p_{ij}(c_{ij}c_{ij}^{T}-C_{ij})\right]-p_{ij}p_{ij'}c_{ij}c_{il}^{T}\\
+\end{align*}
+and
+\begin{align*}
+Q_{i}^{\gamma_{k}\beta_{k'}} &= \sum_{l: c(l) = k'} p_{il}\left[I(k=k')-\pi_{k}(z_{i},\gamma)\right]z_{i}b_{il}^{T}x_{i}+\left[\pi_{k}(z_{i},\gamma)-\sum_{l: c(l) =k}p_{il} \right]z_{i}\left[\sum_{l: c(l) = k'}p_{il}x_{i}^{T}b_{il}\right]^{T}\\
+Q_{i}^{\gamma_{k}\eta_{j}} &=\left[p_{ij} - \pi_{j|c(j)}\sum_{l:c(l)=c(j)}p_{il}\right]\left[I(c(j)=k) - \pi_{k}(z_{i},\gamma) \right]z_{i} +   \left[\pi_{k}(z_{i},\gamma)-\sum_{l: c(l) =k}p_{il}\right]z_{i}\left[p_{ij}-\pi_{j|c(j)} \sum_{l:c(l)=c(j)}p_{il}\right]\\
+Q_{i}^{\gamma_{k}\theta_{j}} &=  p_{ij}I(c(j)=k)(1-\pi_{k}(z_{i},\gamma))z_{i}c_{ij}^{T}+\left[\pi_{k}(z_{i},\gamma)-\sum_{l: c(l) =k}p_{il}\right]z_{i}p_{ij}c_{ij}^{T} \\
+Q_{i}^{\beta_{k}\eta_{j}} &=I(c(j)=k)\left[p_{ij}x^{T}_{i}b_{ij}-\pi_{j|c(j)}(\eta)\sum_{l:c(l)=c(j)}p_{il}x^{T}_{i}b_{il}\right] - \left[\sum_{l: c(l) = k}p_{il}x_{i}^{T}b_{il}\right]\left[p_{ij}-\pi_{j|c(j)} \sum_{l:c(l)=c(j)}p_{il}\right]\\
+Q_{i}^{\beta_{k}\theta_{}{j}} &=p_{ij}I(c(j)=k)x_{i}^{T}b_{ij}c_{ij}^{T}-\left[\sum_{l: c(l) =k}p_{il}x_{i}^{T}b_{il}\right]\left[p_{ij}c_{ij}\right]^{T} \\
+Q_{i}^{\eta_{j}\theta_{j'}} &=I(j=j')p_{ij}(1-\pi_{j|c(j)}(\eta))c_{ij}^{T} - \left[p_{ij}-\pi_{j|c(j)} \sum_{l:c(l)=c(j)}p_{il}\right]\left[p_{ij'}c_{ij'}\right]^{T}\\
+\end{align*}

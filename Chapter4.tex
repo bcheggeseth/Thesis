@@ -1,19 +1,5 @@
-\documentclass[12pt]{article}
-\usepackage{fullpage,amsmath,amsfonts,graphicx,amsthm}
-\usepackage{setspace}
-\title{Three Proposed Methods}
-\author{Brianna C. Heggeseth}
-
-\newtheorem{theorem}{Theorem}
-\newcommand{\B}[0]{\mathbf}
-\newcommand{\bs}[0]{\boldsymbol}
-\newcommand{\Cov}[0]{\text{Cov}}
-\newcommand{\Cor}[0]{\text{Cor}}
-
-\begin{document}
-\doublespace
-\maketitle
-\noindent In this chapter, I present three new clustering techniques---derivative spline coefficient partitioning, the multilayer mixture model, and the vertically shifted mixture model---that attempt to answer the three research questions presented in the last chapter: Are there distinct shape patterns in the longitudinal data? How many patterns are there? Are there baseline factors that impact the shape of an individual's trajectory? For each method, I discuss related work and then introduce necessary background, notation, and the model specification. I describe the implementation process and any foreseen issues and limitations. After introducing the three methods, I discuss the advantages and disadvantages of each. In the next chapter, a simulation study compares the proposed methods with those presented earlier in the thesis in addressing the three research questions above.
+\chapter{Three Proposed Methods}
+In this chapter, I present three new clustering techniques---derivative spline coefficient partitioning, the multilayer mixture model, and the vertically shifted mixture model---that attempt to answer the three research questions presented in the last chapter: Are there distinct shape patterns in the longitudinal data? How many patterns are there? Are there baseline factors that impact the shape of an individual's trajectory? For each method, I discuss related work and then introduce necessary background, notation, and the model specification. I describe the implementation process and any foreseen issues and limitations. After introducing the three methods, I discuss the advantages and disadvantages of each. In the next chapter, a simulation study compares the proposed methods with those presented earlier in the thesis in addressing the three research questions above.
 \section{Derivative Spline Coefficients Partitioning}
 The first method is based on the idea that calculating the derivative removes the level from a function and provides information about the shape. Unlike the quotient difference method described in Chapter 3,  the proposed method invokes smoothing out noise prior to calculating the derivative and does not require the data to be regularly sampled for all subjects. Using techniques from functional data analysis \cite{ramsay2002}, we project each individual's outcome data onto a functional basis to estimate a smooth curve over time and then differentiate the basis functions to get an indirect estimate of the derivative function. The estimated derivative functions then are used to calculate the dissimilarity between individuals. By first removing the level, this  method theoretically clusters individuals with similarly shaped trajectories.
 \subsection{Related Work}
@@ -219,11 +205,11 @@ for $i=1,...,n$ and $k=1,...,K$ using current estimates of the parameters. In th
 \subsection{Issues}
 There are many issues with mixture models as stated in Chapter 2. In this section, we discuss some unique consequences of vertically shifting the data on the model and inference.
 \subsubsection{Covariance of Transformed Data}
-Let $\B Y=(Y_{1},...,Y_{m})$ be a random vector of length $m$ with mean zero and covariance, $\Cov(Y) = \B V^{1/2}\B R(\alpha)\B V^{1/2}$ where $\B R(\alpha)$ is an $m\times m$ correlation matrix based on the parameter $\alpha$ and potentially the associated observation times of $\B Y$ and $\B V$ is a $m\times m$ matrix with variance parameters along the diagonal. If we linearly transform the data to subtract the mean of the elements according to the symmetric matrix $A$ previously defined, the covariance of the resulting random vector is
-$$\Cov(\B A\B Y) = \B A\Cov(\B Y)\B A^{T}$$
+Let $\B Y=(Y_{1},...,Y_{m})$ be a random vector of length $m$ with mean zero and covariance, $Cov(Y) = \B V^{1/2}\B R(\alpha)\B V^{1/2}$ where $\B R(\alpha)$ is an $m\times m$ correlation matrix based on the parameter $\alpha$ and potentially the associated observation times of $\B Y$ and $\B V$ is a $m\times m$ matrix with variance parameters along the diagonal. If we linearly transform the data to subtract the mean of the elements according to the symmetric matrix $A$ previously defined, the covariance of the resulting random vector is
+$$Cov(\B A\B Y) = \B ACov(\B Y)\B A^{T}$$
 by the properties of covariance. First, let's assume that $\B V=\sigma^{2}I$ such that the variance is constant over time. Let's assume independence, $\B R(\alpha)=I$, then
 \begin{align*} 
-\Cov(\B A\B Y) &= \sigma^{2}\B A\B A^{T} \\
+Cov(\B A\B Y) &= \sigma^{2}\B A\B A^{T} \\
 &=\sigma^{2}\B A\\
 &= \sigma^{2}(I - m^{-1}\B1_{m}\B1_{m}^{T})\\
 &=\sigma^{2}\left(\frac{m-1}{m}\right)(a\B 1\B 1^{T}+ (1-a)I)
@@ -232,16 +218,16 @@ by the properties of covariance. First, let's assume that $\B V=\sigma^{2}I$ suc
  
  If the errors in the original data are exchangeable with  $\B R(\alpha) = \alpha\B 1_{m} \B 1_{m} + (1-\alpha) I$, then 
  \begin{align*}
- \Cov(\B A\B Y) &= \sigma^{2}\B A\B R(\alpha)\B A^{T}\\
+ Cov(\B A\B Y) &= \sigma^{2}\B A\B R(\alpha)\B A^{T}\\
  &= \sigma^{2}(I-m^{-1}\B1_{m}\B1_{m}^{T})(\alpha\B1_{m}\B1_{m}^{T}+(1-\alpha)I)(I-m^{-1}\B1_{m}\B1_{m}^{T})^{T}\\
  &= \sigma^{2}(1-\alpha)(I-m^{-1}\B1_{m}\B1_{m}^{T})\\
  &=\sigma^{2}(1-\alpha)\left(\frac{m-1}{m}\right)(a\B 1_{m}\B 1_{m}^{T}+ (1-a)I)
  \end{align*} 
  where $a=\frac{-1}{m-1}$ as before. This transformation maintains its exchangeable structure but with negative correlation on the off diagonal and decreased variance. Therefore, if the dependence in the errors for the original vector is either independence or exchangeable, then the errors of the transformed vector has a covariance matrix with exchangeable but smaller variance and negative correlation. Again, if the number of observed data points is large, then the structure is approximately independent.\\
  
- On the other hand, if the original correlation is exponential such that $\Cor(Y_{1},Y_{2}) = \exp(-|t_{2}-t_{1}|/\alpha)$, the resulting covariance function after transformation is no longer exponential. The covariance structure is a linear combination of the original correlation matrix, column and row means, and the overall mean correlation:
+ On the other hand, if the original correlation is exponential such that $Cor(Y_{1},Y_{2}) = \exp(-|t_{2}-t_{1}|/\alpha)$, the resulting covariance function after transformation is no longer exponential. The covariance structure is a linear combination of the original correlation matrix, column and row means, and the overall mean correlation:
    \begin{align*}
- \Cov(\B A\B Y) &= \sigma^{2}\left[\B R(\alpha)-m^{-1}\B1_{m}\B1_{m}^{T}\B R(\alpha)-m^{-1}\B R(\alpha)\B1_{m}\B1_{m}^{T} + m^{-2}\B1_{m}\B1_{m}^{T}\B R(\alpha)\B1_{m}\B1_{m}^{T}\right].
+ Cov(\B A\B Y) &= \sigma^{2}\left[\B R(\alpha)-m^{-1}\B1_{m}\B1_{m}^{T}\B R(\alpha)-m^{-1}\B R(\alpha)\B1_{m}\B1_{m}^{T} + m^{-2}\B1_{m}\B1_{m}^{T}\B R(\alpha)\B1_{m}\B1_{m}^{T}\right].
  \end{align*} 
  This results in a non-stationary covariance matrix since the correlation is no longer just a function of the difference in observation times (Figure \ref{fig:exp}). Besides inducing non-stationarity in terms of the correlation, the transformation also results in negative correlations. The structure seems to stretch the exponential curve downward. Fixing the number of observation points, if the observation period is long relative to the range of dependence, the correlation could be approximated by a exchangeable structure, which allows for negative correlations but doesn't account for the decay of correlation for small lags. If the observation period is short relative to the range, the column and row means are large causing more negative correlations. There are no common parametric functions that  fit the structure well. Blindly using compound symmetry or even exponential correlation structure may be so far from the truth that it may impact the clustering. As seen in Chapter 2, if the components are well separated, then it may not have a huge impact. [SEPARATION FOR SHAPE TRAJECTORIES?]
 \begin{figure}
@@ -271,7 +257,3 @@ Rather than trying to ignore the level, the second approach attempts to directly
 Lastly, the third approach directly removes the level by subtracting individual-specific means prior to modeling. This allows individuals to be compared without making specific assumptions about the distribution of the level while providing the probability framework.  There are two difficulties with this method. First, subtracting an observed mean impacts the covariance in a way that makes it harder to model with a known correlation structure. Second, care needs to be taken when there is sparse and irregularly sampling. \\
 
 We compare these methods in practice with a simulation study in the next chapter.
-
-\bibliographystyle{plain}	
-\bibliography{Dissertation}
-\end{document}

@@ -1,21 +1,9 @@
-\documentclass[12pt]{article}
-\usepackage{fullpage,amsmath,amsfonts,graphicx,amsthm}
+\chapter{Simulations}
 
-\title{Simulations}
-\author{Brianna C. Heggeseth}
-
-\newtheorem{theorem}{Theorem}
-  \newcommand{\B}[0]{\mathbf}
-    \newcommand{\bs}[0]{\boldsymbol}
-
-\begin{document}
-
-\maketitle
-\section{Simulations}
 In this chapter, I compare the three proposed methods presented in the last chapter with standard clustering methods through a simulation study. There is not one method that works well in all situations and for all research questions. The goal of this study is to understand the behavior of these methods when applied to data with individuals with the same shape trajectory at a variety of levels. The data are generated under a variety of conditions to test the methods on their robustness to model misspecification, noise, and group overlap. The outcomes of interest are the data-driven number of groups chosen and the methods' ability to detect shape groups despite differences in level. \\
 
 First, I describe the data-generating process used throughout the simulation study. Then, I discuss the specific details of the simulation implementation in terms of methods used, the number of repetitions, and the outcomes of interest. Lastly, I present the results and compare the performance of the new methods to the standard.
-\subsection{Data-Generating Process}
+\section{Data-Generating Process}
 When deciding upon the data-generating process, it is important to choose a simple example that addresses the our goals and could generalize to a more complex situations. I have chosen to have three trajectory shapes for individuals to follow over time. Since many complex functions can be locally approximated with linear functions, the three shapes used in the simulation are straight lines with different slopes---positive, negative, and zero. After establishing the general shapes, it is necessary to include diversity in the level of the trajectories. The average levels can be placed into three groups: low, middle, and high. I translated these groups into five distinct mean functions with three shapes and three levels:
 \begin{align*}
 g_{1}(t) &= -1 - t\\
@@ -63,11 +51,11 @@ $$y_{ij} = g_{l}(t_{j})+\tau_{i}+\epsilon_{ij}\quad\text{where}\quad \epsilon_{i
 where $\sigma_{\epsilon}$  is the standard deviation of the measurement error and $\sigma_{\tau}$ is the standard deviation and $F$ is the probability distribution of the level perturbation.\\
  
 The level perturbation can be viewed as a random intercept that induces constant within individual correlation between the random deviations from the mean. The distribution of the level perturbation as well as the standard deviations of the random noise are values that vary in the simulation to create different conditions on which to test the clustering methods. The values are chosen to alter the overlap of the groups and the signal to noise ratio and are discussed in the next section.
-\subsection{Simulation Implementation}
+\section{Simulation Implementation}
 In this section, I describe the random noise values chosen for this simulation study and briefly overview the included clustering methods. 
-\subsubsection{Random Noise}
+\subsection{Random Noise}
 The first components of the random noise is the level perturbation. Since many methods assume normality directly or indirectly, I use the uniform distribution in addition to the Gaussian distribution to generate the level perturbations to test the sensitivity of the methods to distributional assumptions. To impact the overlap of groups, I choose the standard deviation of the perturbation by dividing the magnitude of the vertical shift so that there are 4 or 6 standard deviations between the mean functions. This results in standard deviations of 2 and 3. Lastly the size of measurement error influences the signal to noise ratio and I use extreme standard deviations of 0.5 and 2. There are eight possible combinations of these three properties, representing the eight conditions of the data-generating process I use in the simulation study. 
-\subsubsection{Clustering Methods}
+\subsection{Clustering Methods}
 For each of the eight conditions, I let $n=500$ and draw 500 individuals from the data-generating process previously described and apply each cluster method to partition the data into $K=2,3,4,$ and $5$ groups. However, each method produces different output making comparisons difficult. \\
 
 Partition methods produce group labels while fitting a mixture model results in posterior probability estimates for each individual and group. Therefore, I translate the estimated probabilities into labels by placing individuals into the group that has the highest posterior probability.\\
@@ -127,7 +115,7 @@ This is the second proposed method of this thesis. In generalizing the model to 
 
 \textbf{Vertically Shifted Mixture Model}\\
 This is the third proposed method of this thesis. Rather than trying to explicitly model the level differences as subgroups, I remove the level prior to fitting the model by subtracting the individual-specific mean. Before the model is fit to the data, the trajectories are vertically shifted so they lie in the same range. The hope is that shape drives the group development now that the level is removed. As mentioned in the last chapter, subtracting the mean does impact the correlation structure and could potentially result in negative correlation between some observations, which is hard to model with a correlation function of only a few parameters. Therefore, I use the exponential correlation structure to model the leftover correlation after removing the mean. The same estimation and modeling procedures as the standard finite mixture model apply.
-\subsubsection{Outcomes of Interest}
+\subsection{Outcomes of Interest}
 For each method and condition, we generate a data set of $n=500$ individuals and calculate the following outcomes of interest. This is then repeated $B=500$ times such that we get 500 unique data sets under each condition on which we can apply each methods and summarize the results.\\
 
 \textbf{Number of Groups}\\
@@ -153,7 +141,7 @@ Just as with the misclassification rate, it is necessary to match the group labe
 \textbf{Baseline Factors}\\
 Besides detecting group structure in the data, the information of most practical importance is the relationship between baseline factors and the group membership. Once the groups are discovered, the natural question is to ask who are in the groups and how else do they differ? For each condition, method, and replication, the coefficients of the generalized logit, $\{\eta_{k0},\eta_{k1},\eta_{k2}\}$ for $k=1,...,K-1$ are estimated either simultaneously in the model setting or a posterior in the partition methods. To summarize the parameters from all of the replications, we plot the density of the values assuming $K=3$ and compare them to the true generating values. The clustering is unstable if the density plot is multimodal.
 
-\subsection{Results}
+\section{Results}
 Tables \ref{tab:freq1}, \ref{tab:freq2}, and \ref{tab:freq3} summarize the simulations in terms of the number of groups, average misclassification rate, and average Adjusted Rand Index. It is clear from these tables that three methods---the standard K-means algorithm applied to raw data, K-means on spline coefficients, and the Gaussian mixture model assuming independence---do not select three groups as the optimal number of groups (Table \ref{tab:freq1}). For all the conditions except the one when $\sigma_{\epsilon}=0.5$ and $\sigma_{\tau}=2$, the raw data K-means algorithm obscures any shape differences in the data by vertically splitting the individuals in half: high and low groups. If the noisy from the data is smoothed using a spline basis, K-means applied to the coefficients tends to favor five groups except in the extreme cases of large standard deviations which results in increased overlap between groups and the algorithm selects two groups. The BIC with the independent mixture model consistently chooses five groups, the maximum we allow in the simulation, under all conditions. All three of these methods do not perform well when forced to choose $K=3$. Only about 50\% of the data is correctly specified in terms of the generating shape groups. Small values for the Adjusted Rand Index also indicate that groups from these methods do not match shape partitions.\\
 
 If the correlation structure of the finite mixture model is generalized from conditional independence to exponential correlation, there is more variability in the number of groups chosen. When the time-specific measurement error was small ($\sigma_{\epsilon}=0.5$), the correct number of groups were chosen about 30\% of the time (Table \ref{tab:freq1}). Additionally, under these same circumstances, when forced to have 3 groups, there was perfect alignment with the generating shape groups. However, when the magnitude of the noise is large ($\sigma_{\epsilon}=2$), three groups was never chosen and shape groups are not discovered when $K=3$. So even though this method does not directly cluster based on shape, having a general enough correlation structure allows  the possibility of the method to pick up the correct groups when the number of group is known and the measurement error is small. It is important to note that it does not choose the correct number of groups in the majority of simulations. \\
@@ -412,7 +400,7 @@ Lastly, with the vertically shifting mixture model, there is a significant relat
 \end{figure}
 
 
-\subsection{Conclusion}
+\section{Conclusion}
 These results are limited as we focused on one generating framework, but the ideas should generalize to similar situations.
 \begin{itemize}
 \item K-means on raw data does not find shape groups; rather it finds groups based mainly on level.
@@ -426,7 +414,3 @@ These results are limited as we focused on one generating framework, but the ide
 \item Vertically shifting the data prior to fitting a mixture model outperformed the rest of the methods. With larger measurement errors, there was about 5\% misclassification, but it did not impact the mean shape or baseline factor coefficient estimation.
 \end{itemize}
 
-
-
-
-\end{document}

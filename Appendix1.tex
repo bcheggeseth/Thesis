@@ -1,0 +1,138 @@
+\chapter{Derivative of Standard Errors for Multivariate Gaussian Mixture Model}
+
+Let $\B y_{1},...,\B y_{n}$ be a sample of independent and identically distributed  $m$-variate random vectors drawn from mixture model
+$$f(\B y|\B x, \B z, \bs\theta) = \sum^{K}_{k=1}\pi_{k}(\B z, \bs\gamma)f_{k}(\B y|\B x, \bs \theta_{k})$$
+where $f_{k}(\B y|\B x, \bs \theta_{k})$ is the density for a multivariate Gaussian with mean $\B x\bs\beta_{k}$ and covariance matrix $\bs\Sigma_{k}$. We write the log likelihood as
+$$L(\bs\theta)=\sum^{n}_{i=1}\log f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)$$
+where the complete parameter vector is $\bs\theta=(\bs\gamma_{1}^{T},...,\bs\gamma_{K-1}^{T},\bs\theta^{T}_{1},...,\bs\theta^{T}_{K})^{T}$ and $\bs\theta_{k}^{T}$ includes mean and covariance parameters. The score vector is defined by $\B q(\bs\theta)=\sum_{i=1}^{n}\B q_{i}(\bs \theta)$, where
+$$\B q_{i}(\bs\theta)=\frac{\partial \log f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}{\partial \bs\theta}=((\B q^{\gamma_{1}}_{i})^{T},...,(\B q^{\gamma_{K-1}}_{i})^{T},(\B q^{\theta_{1}}_{i})^{T},...,(\B q^{\theta_{K}}_{i})^{T})^{T}$$
+and the Hessian matrix defined by $\B Q(\bs\theta)=\sum_{i=1}^{n}\B Q_{i}(\bs\theta)$, where
+$$ \B Q_{i}(\bs\theta)=\frac{\partial^{2} \log f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}{\partial \bs\theta\partial \bs\theta'}=\left(\begin{array}{cccccc} \B Q^{\gamma_{1}\gamma_{1}}_{i}&\cdots&\B Q^{\gamma_{1}\gamma_{K-1}}_{i}&\B Q^{\gamma_{1}\theta_{1}}_{i}&\cdots&\B Q^{\gamma_{1}\theta_{K}}_{i}\\
+\vdots&\ddots&\vdots&\vdots&\ddots&\vdots\\
+\B Q^{\gamma_{K-1}\gamma_{1}}_{i}&\cdots&\B Q^{\gamma_{K-1}\gamma_{K-1}}_{i}&\B Q^{\gamma_{K-1}\theta_{1}}_{i}&\cdots&\B Q^{\gamma_{K-1}\theta_{K}}_{i}\\
+\B Q^{\theta_{1}\gamma_{1}}_{i}&\cdots&\B Q^{\theta_{1}\gamma_{K-1}}_{i}&\B Q^{\theta_{1}\theta_{1}}_{i}&\cdots&\B Q^{\theta_{1}\theta_{K}}_{i}\\
+\vdots&\ddots&\vdots&\vdots&\ddots&\vdots\\
+\B Q^{\theta_{K}\gamma_{1}}_{i}&\cdots&\B Q^{\theta_{K}\gamma_{K-1}}_{i}&\B Q^{\theta_{K}\theta_{1}}_{i}&\cdots&\B Q^{\theta_{K}\theta_{K}}_{i}\\
+\end{array} \right).$$
+Also, we define
+\begin{align}
+\phi_{ik}=\pi_{k}(\B z_{i},\bs\gamma)f_{k}(\B y_{i}|\B x_{i},\bs\theta_{k}),&\;\; \alpha_{ik}=\frac{\phi_{ik}}{\sum_{k}\phi_{ik}}\label{phi}\\
+\B b_{ik}=\bs\Sigma_{k}^{-1}(\B y_{i}-\B x_{i}\bs\beta_{k}),&\;\; \B B_{ik}=\bs\Sigma_{k}^{-1}-\B b^{T}_{ik}\B b_{ik},\label{bs2}
+\end{align}
+
+\begin{theorem}
+For the multivariate Gaussian mixture model, the contribution of the $i$th observation to the score vector with respect to the parameters, $\bs\gamma_{k}$ (k=1,...,K-1) and $\bs\theta_{k}$ $(k=1,..,K)$, is given by
+\begin{align*}
+\B q_{i}^{\gamma_{k}}=(\alpha_{ik}-\pi_{k}(\B z_{i},\bs\gamma_{k}))\B z_{i},\;\; \B q_{i}^{\theta_{k}}=\alpha_{ik}\B c_{ik}.
+\end{align*}
+The contribution of the $i$th observation to the Hessian matrix is given by
+\begin{align*}
+\B Q_{i}^{\gamma_{k}\gamma_{k}}=[\alpha_{ik}(1-\alpha_{ik})-\pi_{k}(\B z_{i},\bs\gamma_{k})(1-\pi_{k}(\B z_{i},\bs\gamma_{k}))]\B z_{i}\B z_{i}^{T},& \quad \B Q_{i}^{\gamma_{k}\gamma_{l}}=-[\alpha_{ik}\alpha_{il}-\pi_{k}(\B z_{i},\bs\gamma_{k})\pi_{l}(\B z_{i},\bs\gamma_{l})]\B z_{i}\B z_{i}^{T}\\
+\B Q_{i}^{\gamma_{k}\theta_{k}}=\alpha_{ik}(1-\alpha_{ik})\B z_{i}\B c_{ik}^{T},&\quad \B Q_{i}^{\gamma_{k}\theta_{l}}=-\alpha_{ik}\alpha_{il}\B z_{i}\B c_{il}^{T}\\
+\B Q_{i}^{\theta_{k}\theta_{k}}=-(\alpha_{ik}\B C_{ik}-\alpha_{ik}(1-\alpha_{ik})\B c_{ik}\B c_{ik}^{T}\B ),&\quad \B Q_{i}^{\theta_{k}\theta_{l}}=-\alpha_{ik}\alpha_{il}\B c_{ik}\B c_{il}^{T}\;\;\;(k\not=l).
+\end{align*}
+where $\B c_{ik}$ and $\B C_{ik}$ are defined as follows:\\
+
+if $\Sigma_{k}=\sigma_{k}^{2}I$, then $\bs\theta_{k}=(\bs\beta_{k},\sigma^{2}_{k})$ and
+\begin{align*}
+\B c_{ik}=\left( \begin{array}{c}\B x_{i}^{T}\B b_{ik}\\ -\frac{1}{2} \B B_{ik}\end{array}\right),&\;\;
+\B C_{ik}=\left(\begin{array}{cc} \frac{1}{\sigma^{2}_{k}}\B x_{i}^{T}\B x_{i}&\frac{1}{\sigma^{2}_{k}}\B x_{i}^{T}\B b_{ik}\\ \frac{1}{\sigma^{2}_{k}}\B b^{T}_{ik}\B x_{i}&\frac{1}{2\sigma^{2}_{k}}(\frac{m}{\sigma^{2}_{k}}-2\B B_{ik})\end{array} \right)
+\end{align*}
+
+if $\Sigma_{k}=\sigma_{k}^{2}\B R(\rho_{k})$, then $\bs\theta_{k}=(\bs\beta_{k},\sigma^{2}_{k},\rho_{k})$ and
+\begin{align*}
+\B c_{ik}&=\left( \begin{array}{c}\B x_{i}^{T}\B b_{ik}\\ -\frac{1}{2}tr( \B B_{ik} \B R(\rho_{k}))\\ -\frac{\sigma^{2}_{k}}{2}tr( \B B_{ik} \B R'(\rho_{k}))\end{array}\right),\\
+\B C_{ik}&=\left(\begin{array}{ccc} \B x_{i}^{T}\bs\Sigma_{k}^{-1}\B x_{i}& \B x_{i}^{T}\bs\Sigma_{k}^{-1}\B R(\rho_{k})\B b_{ik}&\sigma^{2}_{k}\B x_{i}^{T} \bs\Sigma^{-1}_{k}\B R^{'}(\rho_{k})\B b_{ik}\\  
+\B b^{T}_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B x_{i}&\frac{1}{2}tr(\B D_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B R(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B R^{'}(\rho_{k}))\\ 
+\sigma^{2}_{k}\B b_{ik}^{T}\B R^{'}(\rho_{k}) \bs\Sigma^{-1}_{k}\B x_{i}&\frac{1}{2}tr(\B D_{ik}\B R^{'}(\rho_{k})\bs\Sigma_{k}^{-1}\B R(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B R^{'}(\rho_{k})\bs\Sigma_{k}^{-1}\B R^{'}(\rho_{k}))
+\end{array} \right)
+\end{align*}
+where $\B D_{ik} = \bs\Sigma_{k}^{-1}-2\B B_{ik}$ and $\B R^{'}(\rho_{k})$ is the derivative  of $\B R(\rho_{k})$ with respect to $\rho_{k}$. \\
+
+if $\Sigma_{k}=\nu_{k}^{2}\B J+\sigma_{k}^{2}\B R(\rho_{k})$, then $\bs\theta_{k}=(\bs\beta_{k},\sigma^{2}_{k},\rho_{k},\nu_{k}^{2})$ and
+\begin{align*}
+\B c_{ik}&=\left( \begin{array}{c}\B x_{i}^{T}\B b_{ik}\\ -\frac{1}{2}tr( \B B_{ik} \B R(\rho_{k}))\\ -\frac{\sigma^{2}_{k}}{2}tr( \B B_{ik} \B R'(\rho_{k}))\\
+-\frac{1}{2}tr( \B B_{ik} \B J)
+\end{array}\right),\\
+\B C_{ik}&=\left(\begin{array}{cccc} \B x_{i}^{T}\bs\Sigma_{k}^{-1}\B x_{i}& \B x_{i}^{T}\bs\Sigma_{k}^{-1}\B R(\rho_{k})\B b_{ik}&\sigma^{2}_{k}\B x_{i}^{T} \bs\Sigma^{-1}_{k}\B R^{'}(\rho_{k})\B b_{ik}&\B x_{i}^{T} \bs\Sigma^{-1}_{k}\B J \B b_{ik}\\  
+\B b^{T}_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B x_{i}&\frac{1}{2}tr(\B D_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B R(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B R^{'}(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B R(\rho_{k})\bs\Sigma_{k}^{-1}\B J)\\ 
+\sigma^{2}_{k}\B b_{ik}^{T}\B R^{'}(\rho_{k}) \bs\Sigma^{-1}_{k}\B x_{i}&\frac{1}{2}tr(\B D_{ik}\B R^{'}(\rho_{k})\bs\Sigma_{k}^{-1}\B R(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B R^{'}(\rho_{k})\bs\Sigma_{k}^{-1}\B R^{'}(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B R^{'}(\rho_{k})\bs\Sigma_{k}^{-1}\B J)\\
+ \B b_{ik}^{T}\B J \bs\Sigma^{-1}_{k}\B x_{i}&\frac{1}{2}tr(\B D_{ik}\B J\bs\Sigma_{k}^{-1}\B R(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B J\bs\Sigma_{k}^{-1}\B R^{'}(\rho_{k}))&\frac{1}{2}tr(\B D_{ik}\B J\bs\Sigma_{k}^{-1}\B J)\\
+\end{array} \right)
+\end{align*}
+where $\B J$ is an $m\times m$ matrix of 1's, $\B D_{ik} = \bs\Sigma_{k}^{-1}-2\B B_{ik}$, and $\B R^{'}(\rho_{k})$ is the derivative  of $\B R(\rho_{k})$ with respect to $\rho_{k}$. 
+\end{theorem}
+
+\begin{proof}
+We follow a procedure similar to Boldea and Magnus \cite{boldea2009}. Let $g(\B  z)=\sum_{j=1}^{K}\exp(\B  z^{T}\bs \gamma_{j})$. Then $\pi_{k}(\B z,\bs\gamma)=\frac{\exp( \B  z^{T}\bs\gamma_{k})}{g(\B  z)}$. We will maximize $\pi_{k}(\B z,\bs\gamma)$ with respect to $\bs\gamma_{1},\bs\gamma_{2},...,\bs\gamma_{K-1}$. Taking the logarithm of both sides, we get
+\begin{align}
+\log \pi_{k}(\B z,\bs\gamma)=\B z^{T}\bs\gamma_{k} - \log g(\B z)
+\label{wts}
+\end{align}
+Note that $\partial\log g(\B z)/\partial \bs \gamma_{j}=\pi_{j}(\B z,\bs\gamma) \B z$. Then,
+\begin{align}
+\frac{d\log\pi_{k}(\B z,\bs\gamma)}{d\bs\gamma_{j}}&=I(j=k)\B z-\pi_{j}(\B z,\bs\gamma_{j})\B z\quad\text{ for }j=1,...,K-1\nonumber\\
+\frac{d^{2}\log\pi_{k}(\B z_{i},\bs\gamma)}{d\bs\gamma_{j}d\bs\gamma_{j}}&=[-I(i=j)\pi_{j}(\B z,\bs\gamma_{j})+\pi_{i}(\B z,\bs\gamma_{i})\pi_{j}(\B z,\bs\gamma_{j})]\B z\B z^{T}\quad\text{ for }i,j=1,...,K-1
+\label{logpi}
+\end{align}
+Let $\phi_{ik}$ and $\alpha_{ik}$ be defined as in \eqref{phi}. Then since $f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)=\sum^{K}_{k=1}\phi_{ik}$, we obtain
+\begin{align}
+d\log f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)=\frac{d f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}{f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}=\sum^{K}_{k=1}\frac{d\phi_{ik}}{\sum^{K}_{j=1}\phi_{ij}}=\sum^{K}_{k=1}\alpha_{ik}d\log \phi_{ik}\label{dlogf}
+\end{align}
+and 
+\begin{align}\label{d2logf}
+d^{2}\log f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)&=\left(\frac{d^{2} f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}{f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}-\left(\frac{d f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}{f(\B y_{i}|\B x_{i},\B z_{i},\bs\theta)}\right)^{2}\right)=\left(\frac{\sum^{K}_{k=1}d^{2}\phi_{ik}}{\sum^{K}_{k=1}\phi_{ik}}-\left(\frac{\sum^{K}_{k=1}d \phi_{ik}}{\sum^{K}_{k=1}\phi_{ik}}\right)^{2}\right)\nonumber\\
+&=\left(\sum^{K}_{k=1}\alpha_{ik}(d^{2}\log \phi_{ik}+(d\log \phi_{ik})^{2})-(\sum^{K}_{k=1}\alpha_{ik}d\log \phi_{ik})^{2}\right)
+\end{align}
+To evaluate these, we first need the first- and second-order derivatives of $\log \phi_{ik}$.  Since, 
+\begin{align*}
+\log f_{k}(\B y|\B x,\bs\theta_{k})=-\frac{m}{2}\log(2\pi)-\frac{1}{2}\log |\bs\Sigma_{k}^{-1}|-(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})
+\end{align*}
+we find 
+\begin{align*}
+d\log f_{k}(\B y|\B x,\bs\theta_{k})&=-\frac{1}{2}d\log|\bs\Sigma_{k}|+(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})-\frac{1}{2}(\B y-\B x\bs \beta_{k})^{T}d\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})\\
+&=-\frac{1}{2}tr(\bs\Sigma_{k}^{-1}d\bs\Sigma_{k})+(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})+\frac{1}{2}(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})\\
+\end{align*}
+and
+\begin{align*}
+d^{2}\log f_{k}(\B y|\B x,\bs\theta_{k})&=-\frac{1}{2}tr(d\bs\Sigma_{k}^{-1}d\bs\Sigma_{k})-d(\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})+(\B y-\B x\bs \beta_{k})^{T}d\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})\\
+&\;\;-(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d(\B x\bs\beta_{k})-(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})\\
+&=\frac{1}{2}tr(\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k})-d(\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})\\
+&\;\;-2(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d(\B x\bs\beta_{k})-(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})\\
+\end{align*}
+and hence, using \eqref{logpi} and the definitions \eqref{phi}-\eqref{bs2},
+\begin{align}
+d\log \phi_{ik}&=d\log \pi_{k}(\B z_{i},\bs\gamma_k)+(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})-\frac{1}{2}tr(\bs\Sigma_{k}^{-1}d\bs\Sigma_{k})+\frac{1}{2}(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})\nonumber\\
+&=\B z_{i} d\bs \gamma_{k} -\pi_{k}(\B z_{i},\bs\gamma_k)\B z_{i}d\bs\gamma_{\cdot}+\B b^{T}_{ik}d(\B x_{i}\bs \beta_{k})-\frac{1}{2}tr(\B B_{ik}d\bs\Sigma_{k})\nonumber
+\end{align}
+and
+\begin{align}
+d^{2}\log \phi_{ik}&=d^{2}\log \pi_{k}(\B z_{i},\bs\gamma_k)-d(\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})-2(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d(\B x\bs\beta_{k})\nonumber\\
+&\;\;-(\B y-\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}(\B y-\B x\bs\beta_{k})+\frac{1}{2}tr(\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k})\nonumber\\
+&=-d\bs\gamma_{\cdot}^{T}\pi_{\cdot}(\B z_{i},\bs\gamma_{\cdot})\B z_{i}\B z_{i}^{T}d\bs\gamma_{\cdot}+d\bs\gamma_{\cdot}^{T}\pi_{\cdot}(\B z_{i},\bs\gamma_{\cdot})\pi_{\cdot\cdot}(\B z_{i},\bs\gamma_{\cdot\cdot})\B z_{i}\B z_{i}^{T}d\bs\gamma_{\cdot\cdot}-d(\B x\bs \beta_{k})^{T}\bs\Sigma_{k}^{-1}d(\B x\bs \beta_{k})\nonumber\\
+&\;\;-2\B b_{ik}^{T}(d\bs\Sigma_{k})\bs\Sigma_{k}d(\B x\bs\beta_{k})-\frac{1}{2}tr(\bs\Sigma_{k}^{-1}-2\B B_{ik})d\bs\Sigma_{k}\bs\Sigma_{k}^{-1}d\bs\Sigma_{k}\nonumber
+\end{align}
+For specific structures of $\bs\Sigma_{k}$, we can substitute in the derivative:\\
+
+if $\bs\Sigma_{k}=\sigma_{k}^{2}I$, then $\bs\theta_{k}=(\bs\beta_{k},\sigma^{2}_{k})$ and
+$$d\bs\Sigma_{k}=d\sigma_{k}^{2}I$$
+
+if $\bs\Sigma_{k}=\sigma_{k}^{2}\B R(\rho_{k})$, then $\bs\theta_{k}=(\bs\beta_{k},\sigma^{2}_{k},\rho_{k})$ and
+$$d\bs\Sigma_{k}=d\sigma_{k}^{2}\B R(\rho_{k}) +\sigma_{k}^{2}\B R^{'}(\rho_{k})d\rho_{k}$$
+
+if $\bs\Sigma_{k}=\nu_{k}^{2}\B J+\sigma_{k}^{2}\B R(\rho_{k})$, then $\bs\theta_{k}=(\bs\beta_{k},\sigma^{2}_{k},\rho_{k})$ and
+$$d\bs\Sigma_{k}=d\nu_{k}^{2}\B J + d\sigma_{k}^{2}\B R(\rho_{k}) +\sigma_{k}^{2}\B R^{'}(\rho_{k})d\rho_{k}$$
+Using these calculations, we can rewrite the previously equations with the definitions of $\B c_{ik}$ and $\B C_{ik}$ in the the theorem,
+\begin{align}\label{dlogphi2}
+d\log \phi_{ik}&=\B z_{i} d\bs \gamma_{k} -\pi_{k}(\B z_{i},\bs\gamma_k)\B z_{i}d\bs\gamma_{\cdot}+\B c^{T}_{ik}d\bs\theta_{k} 
+\end{align}
+and
+\begin{align}\label{d2logphi2}
+d^{2}\log \phi_{ik}
+&=-d\bs\gamma_{\cdot}^{T}\pi_{\cdot}(\B z_{i},\bs\gamma_{\cdot})\B z_{i}\B z_{i}^{T}d\bs\gamma_{\cdot}+d\bs\gamma_{\cdot}^{T}\pi_{\cdot}(\B z_{i},\bs\gamma_{\cdot})\pi_{\cdot\cdot}(\B z_{i},\bs\gamma_{\cdot\cdot})\B z_{i}\B z_{i}^{T}d\bs\gamma_{\cdot\cdot}-d\bs\theta_{k}^{T}\B C_{ik}d\bs\theta_{k}
+\end{align}
+Inserting \eqref{dlogphi2} in \eqref{dlogf}, and \eqref{d2logphi2} and \eqref{dlogphi2} in \eqref{d2logf} completes the proof.
+\end{proof}
+Then by definition, the conventional variance-covariance estimates are $A_{n}(\hat{\bs\theta}_{n})=n^{-1}\sum_{i=1}^{n}\B Q_{i}(\hat{\bs \theta}_{n})$ and $B_{n}(\hat{\bs\theta}_{n})=n^{-1}\sum_{i=1}^{n}\B q_{i}(\hat{\bs\theta}_{n})\B q_{i}^{T}(\hat{\bs\theta}_{n})$. 
+
+
