@@ -1,6 +1,6 @@
 \documentclass{ucbthesis}
-\usepackage{biblatex}
-\usepackage{amsmath,amsfonts,graphicx,amsthm}
+\usepackage[doi=true,url=false,eprint=false,isbn=false,firstinits=true]{biblatex}
+\usepackage{amsmath,amsfonts,graphicx,amsthm,pdflscape}
 
 % Double spacing, if you want it.
 % \def\dsp{\def\baselinestretch{2.0}\large\normalsize}
@@ -13,7 +13,8 @@
 \newtheorem{theorem}{Theorem}
 \newcommand{\B}[0]{\mathbf}
 \newcommand{\BS}[0]{\boldsymbol}
-
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
 
 \bibliography{Dissertation}
 
@@ -69,7 +70,7 @@ To Paul, the love of my life.\\\vspace{12pt}
 \listoftables
 
 \begin{acknowledgements}
-I want to thank my advisor for advising me. Parents. Siblings. Paul.
+I thank my advisor, Nicholas Jewell, for asking questions to push me farther and for providing me opportunities to grow professionally. I would not be where I am without the love and support of my family. Lastly, my partner in life, Paul, made sure I kept my head held high.
 \end{acknowledgements}
 
 \end{frontmatter}
@@ -90,7 +91,7 @@ I want to thank my advisor for advising me. Parents. Siblings. Paul.
 \printbibliography
 
 \appendix
-%\include{Appendix1} %something about mix model is screwing things up
+%\include{Appendix1} 
 %\include{Appendix2}
 %\include{Appendix3}
 

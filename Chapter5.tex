@@ -113,8 +113,12 @@ As discussed in Chapter 2, assuming independence for longitudinal data when ther
 \textbf{Multilayer Mixture Model}\\
 This is the second proposed method of this thesis. In generalizing the model to allow shape groups to have different level groups, I assume that each shape component of the mixture model is a mixture of level subcomponents assumed to be multivariate Gaussian. In order to control of the number of parameters to be estimated, I assume independence within each subcomponent. For this two-tiered model, the prior probabilities for the shape components, rather than those of the level subcomponents, are parameterized to relate baseline factors to group membership. In addition to specifying the number of shape components, the number of level components within each shape component need to be set prior to estimating the parameters. It is difficult to choose both of these values in an automatic way; therefore, we fix the number of shape components to be $K=3$ since they are known a priori. Then we use the BIC to select the number of subcomponents with the shape components (cite the multilayer paper). \\
 
-\textbf{Vertically Shifted Mixture Model}\\
-This is the third proposed method of this thesis. Rather than trying to explicitly model the level differences as subgroups, I remove the level prior to fitting the model by subtracting the individual-specific mean. Before the model is fit to the data, the trajectories are vertically shifted so they lie in the same range. The hope is that shape drives the group development now that the level is removed. As mentioned in the last chapter, subtracting the mean does impact the correlation structure and could potentially result in negative correlation between some observations, which is hard to model with a correlation function of only a few parameters. Therefore, I use the exponential correlation structure to model the leftover correlation after removing the mean. The same estimation and modeling procedures as the standard finite mixture model apply.
+\textbf{Vertically Shifted Independence Mixture Model}\\
+This is the third proposed method of this thesis. Rather than trying to explicitly model the level differences as subgroups, I remove the level prior to fitting the model by subtracting the individual-specific mean. Before the model is fit to the data, the trajectories are vertically shifted so they lie in the same range. The hope is that shape drives the group development now that the level is removed. As mentioned in the last chapter, subtracting the mean does impact the correlation structure and could potentially result in negative correlation between some observations, which is hard to model with a correlation function of only a few parameters. Therefore, I use the independence correlation structure to model the leftover correlation after removing the mean. The same estimation and modeling procedures as the standard finite mixture model apply.
+
+\textbf{Vertically Shifted Exponential Mixture Model}\\
+Rather than assuming independence for the transformed vector, I use the exponential correlation structure model the error structure after removing the mean.
+
 \subsection{Outcomes of Interest}
 For each method and condition, we generate a data set of $n=500$ individuals and calculate the following outcomes of interest. This is then repeated $B=500$ times such that we get 500 unique data sets under each condition on which we can apply each methods and summarize the results.\\
 
@@ -152,7 +156,7 @@ Now, we compare the three proposed methods (Table \ref{tab:freq3}). Using K-mean
 
 The multilayer mixture model is only successful in correctly classifying individuals into shape groups when there are distinct subgroups that are well separated in terms of vertical level ($\sigma_{epsilon}=0.5, \sigma_{\tau}=2$). Even though the components are assumed Gaussian, the method seems to be robust to some misspecification as none of the components were generated as independent Gaussians. \\
 
-Lastly, the method that prevailed amongst the competition is the vertically shifted mixture model. For every condition, the method chose three groups as the optimal partition and when forced to $K=3$, the method discovered the shape groups with little misclassification. Only when the measurement error is large ($\sigma_{epsilon}=2$) did the method misclassify 5\% (about 25 individuals) in terms of shape. \\ 
+Lastly, the method that prevailed amongst the competition is the vertically shifted mixture model. In this case, either correlation assumption worked well. For every condition, the method chose three groups as the optimal partition and when forced to $K=3$, the method discovered the shape groups with little misclassification. Only when the measurement error is large ($\sigma_{epsilon}=2$) did the method misclassify 5\% (about 25 individuals) in terms of shape. \\ 
 
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Mon Jan 28 09:13:22 2013
@@ -245,7 +249,15 @@ Lastly, the method that prevailed amongst the competition is the vertically shif
   Gaussian & 2.00 & 2.00 &  &  &  &  & 0.3 & 0.34 \\ 
   Gaussian & 0.50 & 3.00 &  &  &  &  & 0.31 & 0.34 \\ 
   Gaussian & 2.00 & 3.00 &  &  &  &  & 0.41 & 0.17 \\ 
-   \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Mixture}}\\Uniform & 0.50 & 2.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
+     \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Independent Mixture}}\\Uniform & 0.50 & 2.00 & 0 & 499 & 1 & 0 & 0 & 1 \\ 
+  Uniform & 2.00 & 2.00 & 0 & 499 & 1 & 0 & 0.05 & 0.87 \\ 
+  Uniform & 0.50 & 3.00 & 0 & 499 & 1 & 0 & 0 & 1 \\ 
+  Uniform & 2.00 & 3.00 & 0 & 499 & 1 & 0 & 0.05 & 0.87 \\ 
+  Gaussian & 0.50 & 2.00 & 0 & 499 & 0 & 1 & 0 & 1 \\ 
+  Gaussian & 2.00 & 2.00 & 0 & 498 & 2 & 0 & 0.05 & 0.87 \\ 
+  Gaussian & 0.50 & 3.00 & 0 & 499 & 0 & 1 & 0 & 1 \\ 
+  Gaussian & 2.00 & 3.00 & 0 & 498 & 2 & 0 & 0.05 & 0.87 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Exponential Mixture}}\\Uniform & 0.50 & 2.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
   Uniform & 2.00 & 2.00 & 0 & 500 & 0 & 0 & 0.05 & 0.87 \\ 
   Uniform & 0.50 & 3.00 & 0 & 500 & 0 & 0 & 0 & 1 \\ 
   Uniform & 2.00 & 3.00 & 0 & 500 & 0 & 0 & 0.05 & 0.87 \\ 
@@ -263,7 +275,7 @@ To compare the group means from all methods with the true mean shapes used to ge
 
  In general, the standard methods find one group with a horizontal shape on average indicated by smaller values for $\alpha_{21}$ and $\alpha_{22}$. If the MSE is large (close to or greater than 1) for a method, this indicates clustering instability such that the method finds different groups for every randomly generated data set resulting in great variation in the estimates (Table \ref{tab:mse2} and \ref{tab:mse3}). This may occur for a variety of reasons. When smoothing individual trajectories, for example, it is easy to occasionally over fit the five observations such that the shape is largely determined by the errors since the splines are chosen for the entire data set.\\
  
- Of the three proposed models, only the vertically shifting mixture model consistently estimates the mean curves well (Table \ref{tab:mse3}). The K-means on the derivative spline coefficients estimate the shapes well only when the measurement error is small and the multilayer mixture model performs well when the measurement error is small and the vertical perturbation is small. \\
+ Of the three proposed models, only the vertically shifting mixture model with independence or exponential correlation consistently estimates the mean curves well (Table \ref{tab:mse3}). The K-means on the derivative spline coefficients estimate the shapes well only when the measurement error is small and the multilayer mixture model performs well when the measurement error is small and the vertical perturbation is small. \\
 
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Mon Jan 28 09:51:17 2013
@@ -355,7 +367,15 @@ To compare the group means from all methods with the true mean shapes used to ge
   Gaussian & 2.00 & 2.00 & 0.13 & 0.13 & 0.01 & 0.01 & 0.13 & 0.13 \\ 
   Gaussian & 0.50 & 3.00 & 0.31 & 0.32 & 0.02 & 0.02 & 0.29 & 0.29 \\ 
   Gaussian & 2.00 & 3.00 & 0.35 & 0.34 & 0.01 & 0.01 & 0.34 & 0.35 \\ 
-   \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+     \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Independent Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 2.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
+  Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Uniform & 2.00 & 3.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
+  Gaussian & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 2.00 & 2.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
+  Gaussian & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
+  Gaussian & 2.00 & 3.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
+   \\ \multicolumn{9}{c}{\textbf{Vertically Shifted Exponential Mixture}}\\Uniform & 0.50 & 2.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Uniform & 2.00 & 2.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
   Uniform & 0.50 & 3.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Uniform & 2.00 & 3.00 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 & 0.01 \\ 
@@ -369,13 +389,13 @@ To compare the group means from all methods with the true mean shapes used to ge
 \end{center}
 \end{table}
 
-We have determined that some of the methods discover the shape groups fairly well under conditions of small measurement error. We have measured this by comparing the group labels to the true generating labels comparing the estimates of the mean shapes with known generating values. Lastly, we want to know how this impacts the estimation of the relationship between baseline factors and group membership. For simplification, we present density plots of the estimated coefficients for group 1 and 2 for the factors $z_{1}$ and $z_{2}$ for three methods---K-means on the raw data, K-means on the raw derivatives, and vertically shifted mixture models---after setting $K=3$. As a reminder, the first baseline factor, $z_{1}$, was used to generate shape groups and the second, $z_{2}$, was used to generate level groups. \\
+We have determined that some of the methods discover the shape groups fairly well under conditions of small measurement error. We have measured this by comparing the group labels to the true generating labels comparing the estimates of the mean shapes with known generating values. Lastly, we want to know how this impacts the estimation of the relationship between baseline factors and group membership. For simplification, we present density plots of the estimated coefficients for group 1 and 2 for the factors $z_{1}$ and $z_{2}$ for three methods---K-means on the raw data, K-means on the raw derivatives, and vertically shifted exponential mixture models---after setting $K=3$. As a reminder, the first baseline factor, $z_{1}$, was used to generate shape groups and the second, $z_{2}$, was used to generate level groups. \\
 
 It is clear that the K-means on the raw data picks up the relationship between the group membership and the second baseline factor, $z_{2}$ (Figure \ref{fig:gamma1}). The density plots in dashed lines are concentrated at non-zero values while the solid line densities for $z_{1}$ are mostly centered around zero. For two Uniform conditions with $\sigma_{\tau}=2$, the density plot for $z_{1}$ is bimodal, which indicates some variability in the groups chosen. Overall, K-means picks up the level groups since $z_{2}$ is significantly non-zero.\\
 
 On the other hand, the K-means on the quotient differences picks out the shape groups. The coefficients for $z_{1}$ are now mostly significantly non-zero while the coefficients for $z_{2}$ are centered around zero. However, when $\sigma_{epsilon}=2$, one of the density plots is bimodal indicating variability. We saw this earlier with the higher the misclassification rate.\\
 
-Lastly, with the vertically shifting mixture model, there is a significant relationship between group membership and $z_{1}$, the factor that was used to generate shape groups. The second factor is estimated to have zero relationship with the grouping.
+Lastly, with the vertically shifting exponential mixture model, there is a significant relationship between group membership and $z_{1}$, the factor that was used to generate shape groups. The second factor is estimated to have zero relationship with the grouping.
 
 \begin{figure}[h]
 \begin{center}
@@ -396,7 +416,7 @@ Lastly, with the vertically shifting mixture model, there is a significant relat
 \includegraphics[width=6in]{Chp5Gamma3}
 \end{center}
 \label{fig:gamma1}
-\caption{Density plots of simultaneously estimated multinomial coefficients from the vertically shifted mixture model under all simulation conditions. Within each plot, the solid line represents the coefficients for the factor, $z_{1}$, and dashed line represents the coefficients for the factor, $z_{2}$, with line thickness indicating group 1 vs. group 2 (group 3 is the reference group with coefficients fixed to zero).}
+\caption{Density plots of simultaneously estimated multinomial coefficients from the vertically shifted exponential mixture model under all simulation conditions. Within each plot, the solid line represents the coefficients for the factor, $z_{1}$, and dashed line represents the coefficients for the factor, $z_{2}$, with line thickness indicating group 1 vs. group 2 (group 3 is the reference group with coefficients fixed to zero).}
 \end{figure}
 
 

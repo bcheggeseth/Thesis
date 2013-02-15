@@ -1,6 +1,8 @@
 \chapter{Ascending Property of CEM Algorithm}
-
-   Proof of Theorem 1: We now prove the ascending property of the CEM algorithm used to estimate parameters in the multilayer mixture model, which is stated in Theorem 1 in Chapter 4. We need to show that
+\begin{theorem} The classification likelihood $L(\bs\theta,\bs\eta)$ defined in (\ref{ll}) is non-decreasing after each update of $\bs\eta$ and $\bs\theta$ by the CEM algorithm. That is, $L(\bs\theta^{(t+1)},\bs\eta^{(t+1)}) \geq L(\bs\theta^{(t)},\bs\eta^{(t)})$ for all $t$.
+\end{theorem}
+\begin{proof}
+We now prove the ascending property of the CEM algorithm used to estimate parameters in the multilayer mixture model, which is stated in Theorem 1 in Chapter 4. We need to show that
     \begin{align}\label{ap1}L(\theta^{(t+1)},\eta^{(t+1)})\geq L(\theta^{(t)},\eta^{(t)}).\end{align}
     The CEM algorithm alternatives between optimizing $\eta$ and $\theta$, keeping the other fixed. After the classification step, the parameter vector is updated from $(\theta^{(t)},\eta^{(t)})$ to $(\theta^{(t)},\eta^{(t+1)})$. Then the maximization step updates $(\theta^{(t)},\eta^{(t+1)})$ to $(\theta^{(t+1)},\eta^{(t+1)})$. To prove \ref{ap1}, it suffices to show that
     \begin{align*}
@@ -9,19 +11,20 @@
     \end{align*}
     Note that 
     \begin{align*}
- L(\theta^{(t)},\eta)&=\sum^{n}_{i=1}\log\left[\pi_{\eta(i)}(\B z_{i},\bs \gamma^{(t)})\sum_{j:c(j)=\eta(i)}\pi_{j|c(j)}(\bs\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\bs\beta^{(t)}_{\eta(i)},\sigma^{(t)}_{j})\right]\\
- &\leq \sum^{n}_{i=1}\max_{\eta(i)}\log\left[\pi_{\eta(i)}(\B z_{i},\bs \gamma^{(t)})\sum_{j:c(j)=\eta(i)}\pi_{j|c(j)}(\bs\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\bs\beta^{(t)}_{\eta(i)},\sigma^{(t)}_{j})\right]\\
-  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t)}(i)}(\B z_{i},\bs \gamma^{(t)})\sum_{j:c(j)=\eta^{(t)}(i)}\pi_{j|c(j)}(\bs\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\bs\beta^{(t)}_{\eta^{(t)}(i)},\sigma^{(t)}_{j})\right]\\
+ L(\theta^{(t)},\eta)&=\sum^{n}_{i=1}\log\left[\pi_{\eta(i)}(\B z_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta(i)}\pi_{j|c(j)}(\BS\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\BS\beta^{(t)}_{\eta(i)},\sigma^{(t)}_{j})\right]\\
+ &\leq \sum^{n}_{i=1}\max_{\eta(i)}\log\left[\pi_{\eta(i)}(\B z_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta(i)}\pi_{j|c(j)}(\BS\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\BS\beta^{(t)}_{\eta(i)},\sigma^{(t)}_{j})\right]\\
+  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t)}(i)}(\B z_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta^{(t)}(i)}\pi_{j|c(j)}(\BS\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\BS\beta^{(t)}_{\eta^{(t)}(i)},\sigma^{(t)}_{j})\right]\\
   &= L(\theta^{(t)},\eta^{(t+1)})
     \end{align*}
-for all $\eta$. This is true because in the algorithm, $$\eta^{(t+1)}(i) = \arg \max_{\eta(i)} \pi_{\eta(i)}(\B z_{i},\bs \gamma^{(t)})\sum_{j:c(j)=\eta(i)}\pi_{j|c(j)}(\bs\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\bs\beta^{(t)}_{\eta(i)},\sigma^{(t)}_{j}).$$
+for all $\eta$. This is true because in the algorithm, $$\eta^{(t+1)}(i) = \arg \max_{\eta(i)} \pi_{\eta(i)}(\B z_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta(i)}\pi_{j|c(j)}(\BS\nu^{(t)})f(\B y_{i}|\B x_{i},\alpha_{j}^{(t)},\BS\beta^{(t)}_{\eta(i)},\sigma^{(t)}_{j}).$$
    Thus, we have $    L(\theta^{(t)},\eta^{(t+1)})\geq L(\theta^{(t)},\eta^{(t)})$. To prove the other part of the inequality, note that
        \begin{align*}
- L(\theta,\eta^{(t+1)})  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t)}(i)}(\B z_{i},\bs \gamma)\sum_{j:c(j)=\eta^{(t)}(i)}\pi_{j|c(j)}(\bs\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\bs\beta_{\eta^{(t)}(i)},\sigma_{j})\right]\\
- &= \sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log\left[\pi_{k}(\B z_{i},\bs \gamma)\sum_{j:c(j)=k}\pi_{j|c(j)}(\bs\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\bs\beta_{k},\sigma_{j})\right]\\
-  &= \sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log\pi_{k}(\B z_{i},\bs \gamma)\\
-  &\quad+\sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log \sum_{j:c(j)=k}\pi_{j|c(j)}(\bs\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\bs\beta_{k},\sigma_{j})\\
-    &\leq\max_{\bs\gamma} \sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log\pi_{k}(\B z_{i},\bs \gamma)\\
-  &\quad+\sum^{K}_{k=1}\max_{\bs \nu,\beta_{k},\alpha_{j},\sigma_{j}\text{ for }j:c(j)=k}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log \sum_{j:c(j)=k}\pi_{j|c(j)}(\bs\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\bs\beta_{k},\sigma_{j})\\
+ L(\theta,\eta^{(t+1)})  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t)}(i)}(\B z_{i},\BS \gamma)\sum_{j:c(j)=\eta^{(t)}(i)}\pi_{j|c(j)}(\BS\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\BS\beta_{\eta^{(t)}(i)},\sigma_{j})\right]\\
+ &= \sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log\left[\pi_{k}(\B z_{i},\BS \gamma)\sum_{j:c(j)=k}\pi_{j|c(j)}(\BS\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\BS\beta_{k},\sigma_{j})\right]\\
+  &= \sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log\pi_{k}(\B z_{i},\BS \gamma)\\
+  &\quad+\sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log \sum_{j:c(j)=k}\pi_{j|c(j)}(\BS\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\BS\beta_{k},\sigma_{j})\\
+    &\leq\max_{\BS\gamma} \sum^{K}_{k=1}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log\pi_{k}(\B z_{i},\BS \gamma)\\
+  &\quad+\sum^{K}_{k=1}\max_{\BS \nu,\beta_{k},\alpha_{j},\sigma_{j}\text{ for }j:c(j)=k}\sum^{n}_{i=1}I(\eta^{(t+1)}(i) = k)\log \sum_{j:c(j)=k}\pi_{j|c(j)}(\BS\nu)f(\B y_{i}|\B x_{i},\alpha_{j},\BS\beta_{k},\sigma_{j})\\
     \end{align*}
-    for all $\theta$. This suggests that $L(\theta,\eta^{(t+1)})$ can be maximized by first using numerical optimization to find $\bs\gamma$ that maximizes the first term. Then the rest of the parameters can be chosen separately for the mixture model within each cluster using the samples assigned to the cluster by $\eta^{(t+1)}$. The maximization step in the CEM computes $\theta^{(t+1)}$ exactly in that fashion. Therefore, we have $L(\theta,\eta^{(t+1)}\leq L(\theta^{(t+1)}),\eta^{(t+1)})$. 
+    for all $\theta$. This suggests that $L(\theta,\eta^{(t+1)})$ can be maximized by first using numerical optimization to find $\BS\gamma$ that maximizes the first term. Then the rest of the parameters can be chosen separately for the mixture model within each cluster using the samples assigned to the cluster by $\eta^{(t+1)}$. The maximization step in the CEM computes $\theta^{(t+1)}$ exactly in that fashion. Therefore, we have $L(\theta,\eta^{(t+1)}\leq L(\theta^{(t+1)}),\eta^{(t+1)})$. 
+    \end{proof}
