@@ -13,32 +13,24 @@ In a finite multivariate mixture, the density of a random vector $\B y$ takes th
 $$f(\B y)=\pi_{1}f_{1}(\B y)+\cdots+\pi_{K}f_{K}(\B y)$$
 where $\pi_{k}>0$ for $k=1,...,K$ and $\sum^{K}_{k}\pi_{k}=1$. The parameters $\pi_{k}$ are mixing proportions, and the functions $f_{1},...,f_{K}$ are component densities, assumed multivariate Gaussian here. 
 
-We extend the general model to allow other factors to affect the mean as well as the mixing proportions. Let $\B y\in\mathbb{R}^{m}$ be a random vector whose distribution, conditional on regression covariates, $\B x$, and concomitant variables, $\B z$, is a mixture of $K$ Gaussian densities with mixing proportions: $\pi_{1}(\B z,\BS \gamma),....,\pi_{K}(\B z,\BS \gamma)$. That is, the conditional mixture density for $\B y$ is defined by
+We extend the general model to allow other factors to affect the mean as well as the mixing proportions. Let $\B y\in\mathbb{R}^{m}$ be a random vector whose distribution, conditional on regression covariates, $\B x$, and concomitant variables, $\B w$, is a mixture of $K$ Gaussian densities with mixing proportions: $\pi_{1}(\B w,\BS \gamma),....,\pi_{K}(\B w,\BS \gamma)$. That is, the conditional mixture density for $\B y$ is defined by
 \begin{align}
-f(\B y|\B x,\B z,\BS \theta)=\sum^{K}_{k=1}\pi_{k}(\B z,\BS\gamma)f_{k}(\B y|\B x,\BS\theta_{k}) \label{mixdens}
+f(\B y|\B x,\B w,\BS \theta)=\sum^{K}_{k=1}\pi_{k}(\B w,\BS\gamma)f_{k}(\B y|\B x,\BS\theta_{k}) \label{mixdens}
 \end{align}
-where $f_{k}(\B y|\B x,\BS\theta_{k})$ denotes the $m$-variate Gaussian probability density function with mean $\B x\BS \beta_{k}$ and covariance matrix $\BS\Sigma_{k}$ $(k=1,...,K)$, $\BS\theta_{k}$ includes both $\BS\beta_{k}$ and $\BS\Sigma_{k}$, $\B x$ is a $m\times p$ matrix, and $\B z$ is a vector of length $q$. The regression covariates include measures that affect the mean, whereas the concomitant variables influence the mixing proportions. This general structure allows the possibility that some baseline variables could be in both $\B x$ and $\B z$. 
+where $f_{k}(\B y|\B x,\BS\theta_{k})$ denotes the $m$-variate Gaussian probability density function with mean $\B x\BS \beta_{k}$ and covariance matrix $\BS\Sigma_{k}$ $(k=1,...,K)$, $\BS\theta_{k}$ includes both $\BS\beta_{k}$ and $\BS\Sigma_{k}$, $\B x$ is a $m\times p$ matrix, and $\B w$ is a vector of length $q$. The regression covariates include measures that affect the mean, whereas the concomitant variables influence the mixing proportions. This general structure allows the possibility that some baseline variables could be in both $\B x$ and $\B w$. 
 
-We parameterize the mixing proportions using the multinomial logit with the form
-$$\pi_{k}(\B z,\BS\gamma)=\frac{\exp(\B z^{T}\BS\gamma_{k})}{\sum_{j=1}^{K}\exp(\B z^{T}\BS\gamma_{j})}$$ 
+We parameterize the mixing proportions using the multinomial/generalized logit model with the form
+$$\pi_{k}(\B w,\BS\gamma)=\frac{\exp(\B w^{T}\BS\gamma_{k})}{\sum_{j=1}^{K}\exp(\B w^{T}\BS\gamma_{j})}$$ 
 for $k=1,...,K$ where $\BS \gamma_{k}\in\mathbb{R}^{q}$, $\BS\gamma = (\BS\gamma_1^T,...,\BS\gamma_K^T)$ where $\BS\gamma_{K}=\B 0$.
 
 Throughout this chapter, we generally assume conditional independence with constant variance within a component where $\B\Sigma_{k}=\sigma^{2}_{k}I_{m}$ as the {\em proposed estimation model}, but it is straightforward to extend the covariance model to include other correlation structures such as exchangeable or exponential. Therefore, the vector of all unknown parameters, $\BS\theta$, consists of the mixing proportion parameters, $\BS\gamma_{k}$, and the component regression and variance parameters, $\BS\theta^{T}_{k}=(\BS\beta^{T}_{k},\sigma^{2}_{k})$, for $k=1,...,K$ and could include correlation parameters.  
 
 \section{Parameter estimation}
-\subsection{Expectation maximization algorithm}
-Under the assumption that $\B y_{1},...,\B y_{n}$ are independent realizations from the mixture distribution, $f(\B y | \B x, \B z, \BS\theta)$, defined in \ref{mixdens}, the log likelihood function for the parameter vector, $\BS \theta$ is given by
-$$\log L(\BS\theta)=\sum^{n}_{i=1}\log f(\B y_{i}|\B x_{i},\B z_{i},\BS \theta).$$
+\subsection{EM Algorithm}
+Under the assumption that $\B y_{1},...,\B y_{n}$ are independent realizations from the mixture distribution, $f(\B y | \B x, \B w, \BS\theta)$, defined in \ref{mixdens}, the log likelihood function for the parameter vector, $\BS \theta$ is given by
+$$\log L(\BS\theta)=\sum^{n}_{i=1}\log f(\B y_{i}|\B x_{i},\B w_{i},\BS \theta).$$
 The ML estimate of $\BS\theta$ is obtained by finding an appropriate root of the score equation, $\partial \log L(\BS\theta)/\partial \BS\theta=\B 0.$
-Solutions of this equation corresponding to local maxima can be found iteratively through the Expectation-Maximization (EM) algorithm \cite{dempster1977}. This algorithm is applied in the framework where given $(\B x_{i},\B z_{i})$ each $\B y_{i}$ is assumed to have stemmed from one of the components and the indicator denoting its originating component is missing. The complete-data log likelihood is based on these indicator variables as well as the observed data $\{(\B y_{i}, \B x_{i}, \B z_{i})\}$. The expectation step (E-step) involves replacing the indicators by current values of the conditional expectation, which is the posterior probability of component membership, written as
-$$\alpha_{ik}=\pi_{k}(\B z_{i},\BS\gamma)f_{k}(\B y_{i}|\B x_{i})/\sum_{j=1}^{K}\pi_{j}(\B z_{i},\BS\gamma)f_{j}(\B y_{i}|\B x_{i},\BS \theta_{j})$$
-for $i=1,...,n$ and $k=1,...,K$ using current estimates of the parameters. In the maximization step (M-step), the parameter estimates for the mixing proportions, regression effects, and covariance matrices are updated by maximizing the complete-data log likelihood using the posterior probabilities from the E-step in place of the indicator variables using numerical optimization. The E-step and M-step are alternated repeatedly until convergence. The EM algorithm guarantees convergence to a local maximum; global convergence may be attained through initializing the algorithm by randomly assigning individuals to initial components, running the algorithm multiple times, and using the estimates associated with the highest log likelihood.
-
-\subsection{Estimation issues}
-Although an estimation tool exists, there are potential issues of parameter identifiability with mixture models. Fr{\"u}hwirth-Schnatter \cite{fruhwirth2006} distinguished between three types of nonidentifiability: invariance to  relabeling of components, potential overfitting, and nonidentifiability due to the family of component distribution and the covariate design matrix. The first two issues are resolved through constraints such as $\BS\theta_{k}\not=\BS\theta_{k'}$ for all $k,k'=1,...,K$, $k\not=k'$. The last concern is solved by assuming Gaussian components since finite mixtures of multivariate Gaussians are identifiable \cite{teicher1963,yakowitz1968}. However, Hennig \cite{hennig2000} suggested that the introduction of a regression structure to a Gaussian mixture requires a full rank design matrix as well as a rich covariate domain for regression parameters to be identifiable. On the other hand, mixing proportions parameters from a multinomial logit based on concomitant variables are identifiable by setting the parameters of one component to zero such as $\BS\gamma_{K}=\BS0$ \cite{jiang1999}.
-
-Besides identifiability, there are other known issues with finite mixture models. McLachlan and Peel \cite{mclachlan2000} noted that the sample size must be quite large for asymptotic theory to accurately describe the finite sampling properties of the estimator. Also, when component variances are allowed to vary between components, the mixture likelihood function is unbounded, and each observation gives rise to a singularity on the boundary of the parameter space \cite{day1969,kiefer1956}. However, Kiefer \cite{kiefer1978} outlined theory that guarantees that there exists a particular local maximizer of the mixture likelihood function that is consistent, efficient, and asymptotically normal if the mixture is not overfit. To avoid issues of singularities and spurious local modes in the EM algorithm, Hathaway \cite{hathaway1985} considered constrained maximum likelihood estimation for multivariate Gaussian mixtures based on the following constraint on the smallest eigenvalue of the matrix $\BS\Sigma_{h}\BS\Sigma_{j}^{-1}$, denoted as $\lambda_{\text{min}}(\BS\Sigma_{h}\BS\Sigma_{j}^{-1})$,
-$$\min_{1\leq h\not=j\leq K}\lambda_{\text{min}}(\BS\Sigma_{h}\BS\Sigma_{j}^{-1})\geq c > 0$$ for some positive constant $c\in[0,1]$ to ensure a global maximizer. 
+Solutions of this equation corresponding to local maxima can be found iteratively through the EM algorithm \cite{dempster1977}, which is thoroughly described in Section \ref{subsec:em}. 
 
 \subsection{Asymptotic properties of estimates}
 If the true underlying data-generating distribution is a member of the specified model class, then ML estimation via the EM algorithm gives parameter estimates that are consistent  \cite{wald1949, lecam1953}. However, if the specified model does not contain the true underlying mixture, then the ML estimators potentially have asymptotic bias \cite{gray1994,lo2011}. Here, we are interested in the impact of misspecifying the covariance matrix structure on parameter estimation and inference.
@@ -72,9 +64,9 @@ In all of the simulations, the data with sample size $n$ are generated from an $
 \item Fix $K$. 
 \item For each subject, $i=1,...,n$, 
 \begin{itemize}
-\item Fix $\B x_{i} = \B 1_{m}$ and $\B z_{i}=1$.
+\item Fix $\B x_{i} = \B 1_{m}$ and $\B w_{i}=1$.
 \item Construct matrices $\B A_k$ such that $\B A_k\B A_k^{T}=\B R_k$ for $k=1,..,K$ using the Cholesky decomposition. 
-\item Randomly assign group membership, $h_{i}$, by drawing a value from the categorical distribution defined by $P(h=k)=\pi_{k}(\B z_{i},\BS\gamma)$ for $k=1,...,K$. 
+\item Randomly assign group membership, $h_{i}$, by drawing a value from the categorical distribution defined by $P(h=k)=\pi_{k}(\B w_{i},\BS\gamma)$ for $k=1,...,K$. 
 \item Draw $m$ standard normal random values $\B e_{i}$ and let
 $$\B y_{i}=\B x_{i}\beta_{h_{i}}+\sigma_{h_{i}}\B A_{h_{i}}\B e_{i}$$
 \end{itemize}
@@ -180,7 +172,7 @@ To look at the behavior of the parameter and standard error estimates in practic
 For the purposes of this chapter, the complex sampling structure is ignored and we randomly sample 500 subjects who were at least 18 years of age in 1981 and reported all 17 weight measurements. Of this sample, 51\% are female, 54\% are non-Hispanic/non-Black, 29.2\% Black and 16.8\% Hispanic. To model the BMI outcomes, we allow a quadratic relationship between mean BMI and age and include sex as a baseline concomitant variable. Therefore, for $i=1,...,500$, we assume that the observed data were generated according to
 $$BMI=\beta_{k0}+\beta_{k1}\cdot (AGE-18)+\beta_{k2}\cdot (AGE-18)^{2}+\epsilon_{k}$$
 with probability
-$$\pi_{k}(\B z,\BS\gamma)=\frac{e^{\gamma_{k0}+I(male)\gamma_{k1}}}{\sum_{j}e^{\gamma_{j0}+I(male)\gamma_{j1}}}$$
+$$\pi_{k}(\B w,\BS\gamma)=\frac{e^{\gamma_{k0}+I(male)\gamma_{k1}}}{\sum_{j}e^{\gamma_{j0}+I(male)\gamma_{j1}}}$$
 where $\epsilon_{k}\sim N(0,\sigma_{k}^{2}\B R_k)$
 for $k=1,...,4$. The choice of four groups is based on previous research \cite{ostbye2011}. Using the EM algorithm with five random initializations, we estimate parameters and standard errors and present the estimates that produced the highest log likelihood. For the sake of comparison, we complete the estimation assuming conditional independence ($\B R_k  = I_m$), and under an exchangeable ($\B R_k = \rho_k(J_m - I_m)+I_m$) and exponential ($\B V_k = \exp(-D/r_k)$ where $D$ is the Euclidean distance matrix of the ages at interviews for a subject) correlation model.
 %%%%%%%
