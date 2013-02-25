@@ -114,7 +114,7 @@ The EM algorithm treats the $z_{ik}$ as missing data and iteratively imputes the
 E_{\BS\theta^{(t-1)}}( Z_{ik}|\B y) &= P_{\BS\theta^{(t-1)}}( Z_{ik}|\B y)\\
 &=\alpha_{ik}
 \end{align*}
-using current estimates of the parameters. The quantity $\alpha_{ik}$ is the the posterior probability that the $i$th individual belongs to component $k$, written as
+using current estimates of the parameters. The quantity $\alpha_{ik}$ is the posterior probability that the $i$th individual belongs to component $k$, written as
 $$\alpha_{ik}=\pi_{k}f_{k}(\B y_{i}|\BS\theta_{k})/\sum_{j=1}^{K}\pi_{j}f_{j}(\B y_{i}|\BS \theta_{j})$$
 for $i=1,...,n$ and $k=1,...,K$.
 
@@ -137,15 +137,32 @@ Besides identifiability, there are other known issues with finite mixture models
 $$\min_{1\leq h\not=j\leq K}\lambda_{\text{min}}(\BS\Sigma_{h}\BS\Sigma_{j}^{-1})\geq c > 0$$ for some positive constant $c\in[0,1]$ to ensure a global maximizer. 
 
 
-%%%%%%%continue working here%
+
 \subsection{Choosing the number of components}
-Just as with partitioning methods, it is difficult to choose the number of components, $K$, and the problem has not been completely resolved \cite{mclachlan2000}. With the model framework, model selection criteria are typically used.
+Just as with partitioning methods, it is difficult to choose the number of components, $K$, and the problem has not been completely resolved \cite{mclachlan2000}. A natural approach s to test the hypothesis that $K=K_{0}$ against the alternative that $K=K_{1}$ with a likelihood ratio test. However, the regularity conditions do not hold for the test statistic to have its usual asymptotic null distribution. This problem has ben considered by many authors (see \textcite{mclachlan2000} for a summary) who have suggested modified test statistics \cite{wolfe1971}, approximate null distributions \cite{lo2001}, and resampling methods to empirically estimate the null distribution \cite{mclachlan1987}.
 
-Mixture models are often used for nonparametric density estimation and in this context, Roeder and Wasserman have shown that the density estimate chosen with the Bayesian Information Criteria (BIC) is consistent \cite{roeder1997}. However, in the context of clustering, the solution is not as clear. The BIC approximates the integrated likelihood \cite{schwarz1978}, but the regularity conditions do not hold for mixtures. Nevertheless, Raftery and Fraley note considerable theoretical and practical evidence to support the use in this context \cite{fraley1998}. If the densities assumptions do not hold, Biernacki et. al. \cite{biernacki2000} have been found that it tends fit too many components. If the shape of clusters is not exactly Gaussian, a model selection criteria may suggest a larger number of components so as to use multiple Gaussians to better model each cluster. 
+Another approach is to use information theoretic methods used for model selection. A set of candidate models are compared by measuring the information lost when the model is used to approximate the true realty. The model with the lowest information loss, thus lowest information criterion, is the chosen as the best model. Two popular information criterion are the Akaike Information Criterion (AIC) and the Bayesian Information Criterion (BIC). 
 
-The ICL-BIC based on the integrated classification likelihood to overcome shortcomings of the BIC. this approximation is only appropriate for large sample sizes, but has found the performance differs little from the more accurate version \cite{biernacki2000}.
+The information loss can be described in term of the Kullback-Leibler (KL) information \cite{kullback1951} of the true distribution with respect to the fitted model. If $g(\B y)$ is the true density, the KL information of $g(\B y)$ with respect to the assumed model, $f(\B y|\BS \theta)$, is
+$$\int \log[g(\B y)/f(\B y|\BS\theta)]g(\B y)d\B y=\int \log[g(\B y)]g(\B y)d\B y-\int \log[f(\B y|\BS\theta)]g(\B y)d\B y.$$
+Since the first term does not involve the model, only the second term is relevant. This integral can be simply estimated using the empirical distribution, which places mass $1/n$ at each observation $\B y_{i}$,
+\begin{align*}
+\int \log[f(\B y|\BS\theta)]g(\B y)d\B y &\approx \frac{1}{n} \sum^{n}_{i=1}\log f(\B y_{i}|\hat{\BS\theta})\\
+&=\frac{1}{n} \log L(\hat{\BS\theta}).
+\end{align*}
+This is usually a biased estimate of the expected log density. Akaike \cite{akaike1973,akaike1974} showed that the bias is asymptotically equal to $d$, where $d$ is equal to the number of parameters in the model. Thus, he proposed choosing a model that minimizes
+$$AIC = -2\log L(\hat{\BS\theta}) + 2d.$$
+The AIC criterion is often used to choose the number of components in a mixture model. However, many authors have observed that it is inconsistent \cite{koehler1988} and tends to over estimate the number of components in a mixture \cite{soromenho1994,celeux1996}.
 
-For the sake of parsimony, the smallest number of components that fit the data is chosen.
+The BIC was originally derived in a Bayesian framework as an approximate to the integrated likelihood  \cite{schwarz1978}, which are used in Bayes factors to compare two models. For further information about Bayes factors, see \textcite{kass1995}. The BIC is calculated as
+$$BIC= -2 \log L(\hat{\BS\theta}) + d\log n $$
+where $d$ is the number of parameters in the model and $n$ is the sample size. The criterion can be justified in a frequentist framework, but the regularity conditions breakdown for mixture models. Nevertheless, Raftery and Fraley note considerable theoretical and practical evidence to support the use for clustering \cite{fraley1998}. Unlike the AIC, the BIC has been shown not to asymptotically underestimate the true number of components \cite{leroux1992}. In the context of nonparametric density estimation, Roeder and Wasserman have shown that the density estimate chosen with the BIC is consistent \cite{roeder1997}. However if the component densities assumptions do not hold, \textcite{biernacki2000} have been found that it tends fit too many components. 
+
+To overcome the shortcomings of the BIC for the mixture model, \textcite{biernacki2000} proposed the ICL-BIC based on the integrated complete likelihood for a mixture with $K$ components,
+$$ICL-BIC = -2\log L(\hat{\BS\theta}) + d\log n - 2\sum^{K}_{k=1}\sum^{n}_{i=1}\alpha_{ik}\log \alpha_{ik}$$
+where $\alpha_{ik}$ is the posterior probability of individual $i$ belonging to component $k$, $d$ is the total number of parameters, and $n$ is the sample size. The last term is an entropy term based on the strength of the group classification. If the components of the mixture are well separated, then the entropy will be close to zero, but when the components are largely overlapping, the entropy is large and acts as a penalty for having poorly separated clusters. 
+
+When comparing information criterion between competing models, large differences correspond to strong evidence for one model over the other. \textcite{kass1995} provide standard conventions for calibrating differences in BIC which can guide the final choice. When the differences are small, the smallest number of components that fit the data is chosen for the sake of parsimony.
 
 \section{Thesis outline}
 This thesis is organized in the following manner. In Chapter \ref{chap:misspecify}, I develop a series of simulations to study the impact of misspecifying the covariance structure in finite mixture models and present finite-sample and asymptotic bias results. In Chapter \ref{chap:motivate}, I motivate the rest of the thesis by discuss the general clustering methodology for longitudinal data and illustrate how these methods do not cluster based on the shape of change over time. Chapter \ref{chap:methods} presents three proposed methods to cluster based solely on the shape and compares them to standard methods through a simulation study in Chapter \ref{chap:sim}. Chapter \ref{chap:data} applies these methods to a data example. In Chapter \ref{chap:concl}, I will overview the results of the thesis, discuss the contributions, and present areas of future work. 
