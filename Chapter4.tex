@@ -83,7 +83,7 @@ K-means is a partitioning algorithm, therefore, by definition every subject is `
 $$P(c_{i} = k|\B z_{i}) = \frac{\exp(\B z_{i}^{T}\BS\gamma_{k})}{\sum_{j=1}^{K}\exp(\B z_{i}^{T}\BS\gamma_{j})}$$
 for all $k=1,...,K$ and $i=1,...,n$ with $\BS\gamma_{K}=0$ where $\B z_{i}$ is the design vector based on baseline factors. We then estimate the parameters $\BS\gamma_{1},...,\BS\gamma_{K-1}$ using maximum likelihood estimation. The estimated standard errors from a standard Hessian calculation do not include any group membership uncertainty  as we assume the hard clustering labels are known for the estimation process.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Multilayer mixture model}
+\section{Multilayer mixture model}\label{chp4:multi}
 The second method attempts to make up for the lack of uncertainty in groups memberships by using a model-based approach. The circumstances in which traditional clustering methods fail are when the level and shape are weakly dependent resulting in individuals with the same shape but at different levels. Therefore, it makes sense to model data as originating from shape clusters each having a mixture distribution of levels.
 \subsection{Related work}
 Model-based methods provides the probability framework that dissimilarity-based methods lack. One of the main benefits is the ability to take into account uncertainty---the uncertainty of the mean estimates as to make inferences about a larger population and the uncertainty of cluster membership when estimating relationships between baseline variables and clusters. As mentioned in Chapter 1, the main model-based method is the finite mixture model. However, a standard mixture of Gaussians fit to the raw data does not distinguish between the level and shape and will cluster subjects based on the dominant source of variability. Another limitation of Gaussian mixtures for grouping data is that the cluster densities may be non-normal. For these reasons, the mixture model has been extended into the multilayer mixture model, which is a generalization of finite mixture models in that each cluster is allowed to be a mixture itself \cite{li2005}. For example, imagine a data set with two groups with bimodal densities. One could fit a multilayer mixture of two clusters each with two components. (see Figure \ref{fig:dia} for diagram). A variation of this idea has been used in clustering non-normal groups by first fitting a mixture and then combining cluster components to make more meaningful clusters \cite{hennig2010}. 
@@ -132,7 +132,7 @@ for $i=1,...,n$ and $k=1,...,K$.
 \item Classification step: Hard classify subjects to shape clusters according to $\eta^{(t+1)}_{i} = \arg\max_{k} p_{i,k}$.
 \item Maximization step: For each shape cluster, use maximum likelihood estimation to update parameter vector $\theta$ by embedding an EM procedure initialized with the current parameter values.
 \end{enumerate} 
-This algorithm increases the log-likelihood at each iteration and the statement is below. The proof is in the appendix. 
+This algorithm increases the log-likelihood at each iteration and the statement is below. The proof is in the Appendix \ref{append:2}. 
 \begin{theorem} The classification likelihood $L(\BS\theta,\BS\eta)$ defined in (\ref{ll}) is non-decreasing after each update of $\BS\eta$ and $\BS\theta$ by the CEM algorithm. That is, $L(\BS\theta^{(t+1)},\BS\eta^{(t+1)}) \geq L(\BS\theta^{(t)},\BS\eta^{(t)})$ for all $t$.
 \end{theorem}
 
