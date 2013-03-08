@@ -1,3 +1,23 @@
 \chapter{Conclusions}
+Overview
+Longitudinal data: irregularly sampled data and inherent dependence
+-need a methods that adapts to this highly structured data type and is careful to take the dependence into account. Chapter 2 provided evidence that the correlation cannot be disregarded as a nuisance parameter when fitting mixture models. This is contrast to most longitudinal data analysis in which the mean can be estimated in an unbiased manner without modeling the inherent dependence. With robust standard errors, one can complete ignore the correlation. Using a working correlation improves the statistical efficient of the estimator. 
 
-Final Stuff here
+change over time leads to wanting to group individuals by shape separate from level
+-want a method that works well even if observed with moderate noise
+
+Vertically shifting out performs the rest even though it has problems theoretically 
+-by subtracting the  mean, the transformed vector lies on a subspace of one dimension smaller and thus the true covariance matrix of the vector will be singular. 
+-can't estimate the true model with all m dimensions.
+-despite the singularity, assuming independence or exponential may approximate the original and induced correlation in the transformed vectors
+-further investigation about vertical shifting and the subtlety of differences in function shape it can detect when the only using an approximate correlation (add points using parametric bootstrap or combining people in the same group into one).
+
+
+Future work
+-shape and level give rise to different questions. It may be worth thinking of this as a two-part model. First model or cluster the level, the baseline value or estimated mean over the time period, using explanatory variables. Then cluster the shape and use baseline factors and potentially the level as predictors.
+
+I have limited this discussion to only include a basis for time in the explanatory variables $x$, but there is nothing stopping us from adding other covariates. When doing shape, it does not make sense to include time-fixed covariates as that only impacts the vertical level and any interactions with time should be included as predictors to the group membership. Time varying covariates could be included; however, more time needs to be spent thinking about the implications on interpretation. 
+
+-how to calculate bias in mixture models (bootstrap)?
+
+-when do functional approaches work on longitudinal data? How much data do you need, how dense?
