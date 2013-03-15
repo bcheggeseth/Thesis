@@ -1,27 +1,22 @@
 \chapter{Derivation of Standard Errors for Multilayer Mixture Model}
-In a multilayer mixture model, let $K$ be the number of high level clusters and $J_{k}$ be the number of low level normal components in the mixture model of cluster $k=1,...,K$ such that $J=\sum_{k=1}^{K}J_{k}$ is the total number of lower level components in the model. To index all of the low level components, we let the set of indices assigned to cluster $k$ be $\{\sum^{k-1}_{k'=0}J_{k'}+1,\sum^{k-1}_{k'=0}J_{k'}+2,...,\sum^{k}_{k'=0}J_{k'}\}$ for $k=1,2,...,K$  and $\mathcal J_{k}=\sum^{k}_{k'=0}J_{k'}$ is the maximum index for cluster $k$. The the indices of the components in cluster $k$ are $\{\mathcal J_{k-1}+1,...,\mathcal J_{k}\}$. For ease of explanation, define a cluster assigning function $c(j)\in \{1,2,...,K\}$ to specify the high level cluster to which a low level component belongs. Let $f(y|x,\alpha,\beta,\sigma^{2})$ be the probability density function of a multivariate normal distribution with mean $\alpha\B 1_{m_i}+x\beta$ and covariance $\sigma^{2}I$ where $\B 1_{m_{i}}$ is a vectors of 1's of length $m_{i}$. Then the mixture distribution of cluster $k$ is
-$$f_{k}(y|x) = \sum_{j: c(j) = k} \pi_{j|c(j)}(\eta)f(y|x,\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$$
-where $\pi_{j|c(j)}(\eta)$ is the probability of being in component $j$ given a sample is in cluster $c(j)$ and $\pi_{j|c(j)}(\eta)=\exp(\eta_{j})/\sum_{l:c(l)=c(j)} \exp(\eta_{l})$ for all $j=1,2,...,J$ with $\eta_{\mathcal J_{k}}=0$ for all $k=1,...,K$ and $\eta=\{\eta_{j}\}_{j=1}^{J}$. Let the prior probability of cluster $k$ be $\pi_{k}(z,\gamma)=\exp(z^{T}\gamma_{k})/\sum^{K}_{l=1}\exp(z^{T}\gamma_{l})$ such that $\gamma_{K}=0$ and $\gamma=(\gamma_{1},...,\gamma_{K})$. Then the density for the multilayer mixture can be written as
-$$g(y|x,z) = \sum_{k=1}^{K}\pi_{k}(z,\gamma)f_{k}(y|x) = \sum_{k=1}^{K}\pi_{k}(z,\gamma)\sum_{j: c(j) = k} \pi_{j|c(j)}(\eta)f(y|x,\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$$
-Since every component belongs to only one cluster, the above equation reduces to a regular mixture model if we let $\bar{\pi}_{j}(z,\gamma,\eta)=\pi_{c(j)}(z,\gamma)\pi_{j|c(j)}(\eta)$,
-$$g(y|x,z) = \sum_{j=1}^{J}\bar{\pi}_{j}(z,\gamma,\eta)f(y|x,\alpha_{j},\beta_{c(j)},\sigma^{2}_{j})$$
+In a multilayer mixture model, $K$ is the number of clusters and $J_{k}$ is the number of components in the $k$th cluster ($k=1,...,K$) such that $J=\sum_{k=1}^{K}J_{k}$ is the total number of components in the entire model. Let $j$ uniquely index all of the components such that $j=1,...,J$. For ease of explanation, let $c(j):\{1,...,J\}\rightarrow \{1,2,...,K\}$ be a cluster assigning function that specifies the cluster to which a component belongs. Let $f(\B y|\BS\mu,\BS\Sigma)$ be the probability density function of a multivariate normal distribution with mean $\BS\mu$ and covariance matrix $\BS\Sigma$. Then, the probability density function for cluster $k$ is
+$$f_{k}(\B y) = \sum_{j: c(j) = k} \pi_{j|c(j)}f(\B y|\mu_{j},\Sigma_{j})$$
+where $\pi_{j|c(j)}$ is the probability of being in component $j$ given a subject is in cluster $c(j)$ and $\sum_{j: c(j) = k}\pi_{j|c(j)}=1$ for all $k=1,2,...,K$. Let the probability of cluster $k$ given baseline factors, $\B w$, be $\pi_{k}(\B w,\BS\gamma)=\exp(\B w^{T}\BS\gamma_{k})/\sum^{K}_{l=1}\exp(\B z^{T}\BS\gamma_{l})$ such that $\BS\gamma_{K}=0$ and $\BS\gamma=(\BS\gamma_{1},...,\BS\gamma_{K})$. The probability density function for the multilayer mixture is written as
+$$g(\B y|\B w) = \sum_{k=1}^{K}\pi_{k}(\B w,\BS \gamma)f_{k}(\B y) = \sum_{k=1}^{K}\pi_{k}(\B w,\BS\gamma)\sum_{j: c(j) = k} \pi_{j|c(j)}f( \B y| \BS\mu_{j},\BS\Sigma_{j}).$$
+Since every component belongs to one and only one cluster, the above equation reduces to a regular mixture model if $\bar{\pi}_{j}(\B w,\BS \gamma)=\pi_{c(j)}(\B w,\BS\gamma)\pi_{j|c(j)}$ with the density written as
+$$g(\B y|\B w) = \sum_{j=1}^{J}\bar{\pi}_{j}(\B w,\gamma)f(\B y|\BS \mu_{j},\BS\Sigma_{j}).$$
 \subsection{Standard Error Calculations}
-Let $h(z,\gamma)=\sum^{K}_{j=1}\exp(z^{T}\gamma_{j})$. Then $\pi_{k}(z,\gamma)=\frac{\exp(z^{T}\gamma_{k})}{h(z,\gamma)}$. We will differentiate $\log\pi_{k}(z,\gamma)$ with respect to $\gamma_{1},\gamma_{2},...,\gamma_{K-1}$. Taking the logarithm of both sides we get,
-$$\log\pi_{k}(z,\gamma)=z^{T}\gamma_{k}-\log h(z,\gamma)$$
-Note that $\partial \log h(z,\gamma)/\partial \gamma_{j}=\pi_{j}(z,\gamma)z$. Then
+Let $h(\B w,\BS\gamma)=\sum^{K}_{j=1}\exp(\B w^{T}\BS\gamma_{j})$. Then $\pi_{k}(\B w,\BS\gamma)=\frac{\exp(\B w^{T}\BS\gamma_{k})}{h(\B w,\BS\gamma)}$. I differentiate $\log\pi_{k}(\B w,\BS\gamma)$ with respect to $\BS\gamma_{1},\BS\gamma_{2},...,\BS\gamma_{K-1}$. Taking the logarithm of both sides I get,
+$$\log\pi_{k}(\B w,\BS\gamma)=\B w^{T}\BS\gamma_{k}-\log h(\B w,\gamma)$$
+Note that $\partial \log h(\B w,\BS\gamma)/\partial \BS\gamma_{j}=\pi_{j}(\B w,\BS\gamma)\B w$. Then
 \begin{align*}
-\frac{\partial \log\pi_{k}(z,\gamma) }{\partial \gamma_{j}} &= I(j=k)z-\pi_{k}(z,\gamma)z\\
-\frac{\partial^{2} \log\pi_{k}(z,\gamma) }{\partial \gamma_{j}\partial \gamma_{j'}} &= [-I(j=j')\pi_{j}(z,\gamma)+\pi_{j}(z,\gamma)\pi_{j'}(z,\gamma)]zz^{T}\\
-\end{align*}
-Similarly, 
-\begin{align*}
-\frac{\partial \log\pi_{j|c(j)}(\eta) }{\partial \eta_{i}} &= I(c(i)=c(j))\left[I(i=j)-\pi_{i|c(i)}(\eta)\right]\\
-\frac{\partial^{2} \log\pi_{j|c(j)}(\eta) }{\partial \eta_{i}\partial \eta_{i'}} &= I(c(i)=c(i')=c(j))\left[-I(i=i')\pi_{i|c(i)}(\eta)+\pi_{i|c(i)}(\eta)\pi_{i'|c(i')}(\eta)\right]\\
+\frac{\partial \log\pi_{k}(\B w,\BS\gamma) }{\partial \BS\gamma_{j}} &= I(j=k)\B w-\pi_{k}(\B w,\BS\gamma)\B w\\
+\frac{\partial^{2} \log\pi_{k}(\B w,\BS\gamma) }{\partial \BS\gamma_{j}\partial \BS\gamma_{j'}} &= [-I(j=j')\pi_{j}(\B w,\BS\gamma)+\pi_{j}(\B w,\BS\gamma)\pi_{j'}(\B w,\BS\gamma)]\B w\B w^{T}\\
 \end{align*}
 Define the following:
 \begin{align*}
-b_{ij} = \frac{1}{\sigma_{j}^{2}}(y_{i}-\alpha_{j}\B 1_{m_i}-x_{i}\beta_{c(j)}),&\quad B_{ij}=\frac{m_{i}}{\sigma^{2}_{j}}-b_{ij}^{T}b_{ij}\\
-c_{ij} = \left(\begin{array}{c}
+\B b_{ij} = \frac{1}{\sigma_{j}^{2}}(\B y_{i}-\alpha_{j}\B 1_{m_i}-\B x_{i}\BS\beta_{c(j)}),&\quad \B B_{ij}=\frac{m_{i}}{\sigma^{2}_{j}}-\B b_{ij}^{T}\B b_{ij}\\
+\B c_{ij} = \left(\begin{array}{c}
 \B 1_{m_i}^{T} b_{ij}\\
 -\frac{1}{2}B_{ij}
 \end{array}\right),&\quad C_{ij} =\left(\begin{array}{cc}
