@@ -1,8 +1,8 @@
-\chapter{Standard errors for multivariate Gaussian mixture model}\label{append:1}
+\chapter{Standard errors derivations}\label{append:1}
 
 Let $\B y_{1},...,\B y_{n}$ be a sample of independent and identically distributed  $m$-variate random vectors drawn from mixture model
 $$f(\B y|\B x, \B w, \BS\theta) = \sum^{K}_{k=1}\pi_{k}(\B w, \BS\gamma)f_{k}(\B y|\B x, \BS \theta_{k})$$
-where $f_{k}(\B y|\B x, \BS \theta_{k})$ is the density for a multivariate Gaussian with mean $\B x\BS\beta_{k}$ and covariance matrix $\BS\Sigma_{ik}$. We write the log likelihood as
+where $f_{k}(\B y|\B x, \BS \theta_{k})$ is the density for a multivariate Gaussian with mean $\B x\BS\beta_{k}$ and covariance matrix $\BS\Sigma_{ik}$. The log likelihood is written as
 $$L(\BS\theta)=\sum^{n}_{i=1}\log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)$$
 where the complete parameter vector is $\BS\theta=(\BS\gamma_{1}^{T},...,\BS\gamma_{K-1}^{T},\BS\theta^{T}_{1},...,\BS\theta^{T}_{K})^{T}$ and $\BS\theta_{k}^{T}$ includes mean and covariance parameters. The score vector is defined by $\B q(\BS\theta)=\sum_{i=1}^{n}\B q_{i}(\BS \theta)$, where
 $$\B q_{i}(\BS\theta)=\frac{\partial \log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)}{\partial \BS\theta}=((\B q^{\gamma_{1}}_{i})^{T},...,(\B q^{\gamma_{K-1}}_{i})^{T},(\B q^{\theta_{1}}_{i})^{T},...,(\B q^{\theta_{K}}_{i})^{T})^{T}$$
@@ -52,7 +52,7 @@ if $\BS\Sigma_{ik}=\sigma_{k}^{2}\B R_{ik}$, then $\BS\theta_{k}=(\BS\beta_{k},\
 \end{align*}
 where $\BS \Lambda_{ik} = \BS\Sigma_{ik}^{-1}-2\B B_{ik}$, $\B R_{ik}$ is a correlation matrix based on the parameter $\rho_{k}$, and $\B R^{'}_{ik}$ is the derivative of $\B R_{ik}$ with respect to $\rho_{k}$. \\
 
-if $\Sigma_{ik}=\nu_{k}^{2}\B J +\sigma_{k}^{2}\B R_{ik}$, then $\BS\theta_{k}=(\BS\beta_{k},\sigma^{2}_{k},\rho_{k},\nu_{k}^{2})$ and
+if $\BS\Sigma_{ik}=\nu_{k}^{2}\B J +\sigma_{k}^{2}\B R_{ik}$, then $\BS\theta_{k}=(\BS\beta_{k},\sigma^{2}_{k},\rho_{k},\nu_{k}^{2})$ and
 \begin{align*}
 \B c_{ik}&=\left( \begin{array}{c}\B x_{i}^{T}\B b_{ik}\\ -\frac{1}{2}tr( \B B_{ik} \B R_{ik})\\ -\frac{\sigma^{2}_{k}}{2}tr( \B B_{ik} \B R'(\rho_{k}))\\
 -\frac{1}{2}tr( \B B_{ik} \B J)
@@ -67,7 +67,7 @@ where $\B J$ is an $m\times m$ matrix of 1's, $\BS \Lambda_{ik} = \BS\Sigma_{ik}
 \end{theorem}
 
 \begin{proof}
-We follow a procedure similar to Boldea and Magnus \cite{boldea2009}. Let $g(\B  z)=\sum_{j=1}^{K}\exp(\B  z^{T}\BS \gamma_{j})$. Then $\pi_{k}(\B w,\BS\gamma)=\frac{\exp( \B  z^{T}\BS\gamma_{k})}{g(\B  z)}$. We will maximize $\pi_{k}(\B w,\BS\gamma)$ with respect to $\BS\gamma_{1},\BS\gamma_{2},...,\BS\gamma_{K-1}$. Taking the logarithm of both sides, we get
+I follow a procedure similar to Boldea and Magnus \cite{boldea2009}. Let $g(\B  z)=\sum_{j=1}^{K}\exp(\B  z^{T}\BS \gamma_{j})$. Then $\pi_{k}(\B w,\BS\gamma)=\frac{\exp( \B  z^{T}\BS\gamma_{k})}{g(\B  z)}$. Taking the logarithm of both sides, we get
 \begin{align}
 \log \pi_{k}(\B w,\BS\gamma)=\B w^{T}\BS\gamma_{k} - \log g(\B w)
 \label{wts}
@@ -143,6 +143,7 @@ d^{2}\log \phi_{ik}
 \end{align}
 Inserting \eqref{dlogphi2} in \eqref{dlogf}, and \eqref{d2logphi2} and \eqref{dlogphi2} in \eqref{d2logf} completes the proof.
 \end{proof}
-By definition, the conventional variance-covariance estimates are $A_{n}(\hat{\BS\theta}_{n})=n^{-1}\sum_{i=1}^{n}\B Q_{i}(\hat{\BS \theta}_{n})$ and $B_{n}(\hat{\BS\theta}_{n})=n^{-1}\sum_{i=1}^{n}\B q_{i}(\hat{\BS\theta}_{n})\B q_{i}^{T}(\hat{\BS\theta}_{n})$. 
+By definition, the conventional variance-covariance estimates are\\ 
+$A_{n}(\hat{\BS\theta}_{n})=n^{-1}\sum_{i=1}^{n}\B Q_{i}(\hat{\BS \theta}_{n})$ and $B_{n}(\hat{\BS\theta}_{n})=n^{-1}\sum_{i=1}^{n}\B q_{i}(\hat{\BS\theta}_{n})\B q_{i}^{T}(\hat{\BS\theta}_{n})$. 
 
 

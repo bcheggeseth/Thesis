@@ -1,17 +1,18 @@
 \chapter{Data application}
+\label{chap:data}
 \section{Introduction}
 Obesity has become one of the most burdensome public health issues of the time in the United States \cite{surgeon2001}.  This epidemic impacts children and adults alike.  A recent study estimates that about 32\% of children in the U.S. are overweight or obese \cite{ogden2008}. This alarming statistic has been a call to action for public officials and parents to change how we live and eat. However, encouraging healthy diets and physical activity through increased education and community involvement has own seen limited success.  It is generally accepted that genetic, metabolic, and environmental factors play a role in children's weight in addition to the behavioral factors. Yet, the exact determinants of childhood obesity are poorly understood.
 
-It is difficult to change the behavior of individuals in a community. Recent focus has been on other potential causes and venues for intervention. Researchers hypothesize that exposure to hormone-altering chemicals may disrupt and reprogram the metabolical system to favor weight gain \cite{tuma2007}. Animal studies suggest that endocrine disrupters such as bisphenol A cause increased weight after adjusting for exercise and amount and type of food \cite{rubin2001,rubin2009}, but in human studies, there are only moderately significant associations found \cite{mendez2011} (see additional references within \cite{harley2013}.
+It is difficult to change the behavior of individuals in a community. Recent focus has been on other potential causes and venues for intervention. Researchers hypothesize that exposure to hormone-altering chemicals may disrupt and reprogram the metabolical system to favor weight gain \cite{tuma2007}. Multiple rodent studies suggest that prenatal exposure to endocrine disrupters such as bisphenol A (BPA) are associated with increased body weight after adjusting for exercise and amount and type of food \cite{rubin2001,akingbemi2004,hiyama2011, howdeshell1999,miyawaki2007,somm2009,wei2011,xu2011}. A small number of cross-sectional studies suggest a positive association between BPA and obesity in children and adults \cite{carwile2011,shankar2012,trasande2012}. However, only one study has investigated human prenatal exposure and has found a negative association between prenatal exposure and BMI at age 9 but only in girls \cite{harley2013}.
  
- To fully understand the potential impact of chemical exposure on childhood growth development, it is necessary to observe the height and weight of children over the entire time frame between infancy and adolescence. Quality longitudinal growth studies are becoming more common, but most data analyses do not fully take advantage of the longitudinal nature of the data and only look at two cross-sectional points to determine change over time. Only in the past few years have researchers noted the important of the entire growth trajectory of individuals and attempt to study distinct trajectory patterns \cite{pryor2011,carter2012,li2007,garden2012}. 
+ To fully understand the potential impact of prenatal chemical exposure on childhood growth development, it is necessary to observe the height and weight of children during the time between infancy and adolescence. Quality longitudinal growth studies are becoming more common, but most data analyses do not fully take advantage of the longitudinal nature of the data and only look at two cross-sectional points to determine change over time. Only in the past few years have researchers noted the important of the entire growth trajectory of individuals and attempt to study distinct trajectory patterns \cite{pryor2011,carter2012,li2007,garden2012}. 
 
 \subsection{Body mass index trajectories}
 Quantifying and evaluating children's growth is important task that involves measuring both weight and height. Body mass index (BMI), calculated as weight (kg)/height$^{2}$ (m$^{2}$), is a weight-height index that in effect is a method of adjust weight for height. It is recommended as an indicator of total body fat for most individuals \cite{roche1981}. The Center for Disease Control (CDC) publishes clinical charts that include reference growth curves for BMI-for-age in terms of percentiles or BMI z-scores using pooled BMI data from cross-sectional National Health and Nutrition Examination Survey data (NHANES). The z-scores are not intended for longitudinal analysis as the CDC performs different normalizing transformations for each month to resolve the skewed sex and age-specific distributions for BMI. Since the reference data is cross-sectional, the charts may not reflect typical age-related patterns of BMI change. Therefore, we concentrate on the original BMI trajectories instead of BMI z-scores over time.
 
 Researchers hypothesize that there are distinct growth patterns amongst children in the United States. One way to detect these patterns is by applying cluster analysis methods to childhood BMI trajectory data. Additional analysis is completed to estimate the relationship between maternal and early life factors and group membership. Early life factors such as maternal BMI, maternal smoking, maternal weight gain, maternal age, birth weight, and duration of breastfeeding have been suggested to be potential predictors of increased risk of a high-rising BMI growth as well as the early and late onset of obesity \cite{pryor2011,carter2012,li2007}.
 
-\subsection{Clustering analysis}
+\subsection{Clustering}
 The clustering methods used in many longitudinal applications including body mass index trajectories are typically based on a finite mixture model, which is a probabilistic model for representing subgroups within the overall population that occur with different frequencies but are not known a priori. In the simplest form, the mixture density for the random outcome vector is a weighted sum of $K$ group densities:
 $$f(\B y|\BS\theta) = \sum^{K}_{k=1}\pi_{k}f_{k}(\B y|\BS\theta_{k})$$
 where $\pi_{k}$ is the probability of belonging to the $k$th group and $\pi_{k}>0$ for all $k=1,..,K$ and $\sum^{K}_{k=1}\pi_{k}=1$. The probability densities, $f_{k}$, are typically assumed to be multivariate Gaussian for continuous outcomes such as BMI. With longitudinal data, the main goal is to study the change over time so typically the mean for the groups will also be conditional on the observations times, $\B t.$  This model is the basis for many popular methods and software that have rapidly become commonplace in the growth trajectory literature.
@@ -34,9 +35,9 @@ Due to this misunderstanding, researchers present the results of a mixture model
 
 Given the clear goals of these papers were to group individuals on the basis of the shape of their growth trajectory, it is appropriate to compare the new methods proposed in Chapter 5 of this thesis. The vertically shifting mixture model is based on the same foundation as those described above. The main difference is that rather than fitting a model to the original data, the outcome is defined as the transformed or vertically shifted data vector. Each individual's mean BMI is subtracted from all of their measured BMI values. In effect, each individual is normalized to have mean zero and the level is removed without eliminating the variability at each time point. By removing the mean prior to fitting a multivariate Gaussian mixture model, we allow the clustering method to focus directly on the shape rather than the level. Thus, the resulting groups can be honestly summarized by describing the shape of the mean trajectory of the group and estimated associations with risk factors can be interpreted accurately in terms of shape groups. We illustrate these cautions with BMI data on a sample of Hispanic children.
 
-\section{Methods}
-\subsection{CHAMACOS}
-The Center for the Health Assessment of Mothers and Children of Salinas (CHAMACOS) Study is a longitudinal birth cohort study designed to assess the health effects of pesticides and other environmental exposures on the growth and development in children living in the agricultural Salinas Valley, CA \cite{eskenazi2004,eskenazi2005}. Of 601 pregnant women enrolled in the study in 1999-2000, a title of 527 mother-child singleton pairs were followed through a live-birth delivery and 327 pairs continued to be followed through the 9-year visit. Baseline maternal characteristics were measured at the start of the study and maternal urine and blood samples were taken twice during pregnancy and then again shortly after delivery to measure levels of pesticide and chemical exposure. Child height and weight  were measured at interviews that occurred at birth and approximately 1, 2, 3 1/2, 5, 7, and 9 years old. BMI is calculated for ages 2 and up. For this paper, we limit our analysis to 303 children who have BMI measures available for at least four time points. Details of the study are published elsewhere \cite{eskenazi2003}. All study activities were approved by the Committee for the Protection of Human Subjects at the University of California, Berkeley. 
+
+\section{Data}
+The Center for the Health Assessment of Mothers and Children of Salinas (CHAMACOS) Study is a longitudinal birth cohort study designed to assess the health effects of pesticides and other environmental exposures on the growth and development in low-income children living in the agricultural Salinas Valley, CA \cite{eskenazi2004,eskenazi2005}. Of 601 pregnant women enrolled in the study in 1999-2000, a total of 527 mostly Latino mother-child singleton pairs were followed through a live-birth delivery and 327 pairs continued to be followed through the 9-year visit. Baseline maternal characteristics were measured at the start of the study and maternal urine and blood samples were taken twice during pregnancy and then again shortly after delivery to measure levels of pesticide and chemical exposure. Child height and weight  were measured at interviews that occurred at birth and approximately 1, 2, 3 1/2, 5, 7, and 9 years old. BMI is calculated for ages 2 and up. For this paper, we limit our analysis to 303 children who have BMI measures available for at least four time points. Details of the study are published elsewhere \cite{eskenazi2003}. All study activities were approved by the Committee for the Protection of Human Subjects at the University of California, Berkeley. 
 
 At each assessment point, children were weighed and measured without jackets and shoes by trained staff. BMI was calculated as weight (kg) divided by height squared ($m^{2}$). The exactly age of the child was also calculated due to variability in the interview times.
 
@@ -44,7 +45,7 @@ For illustrative purposes, we limit the discussion to a few baseline risk factor
 
 Characterizing BMI growth trajectories of children and whether there are distinct patterns is of great importance to public health officials. We use this data set to illustrate the differences between the clustering methods and how they work in practice with real data.
 
-\subsection{Data analysis}
+\section{Cluster methods}
 I use the standard and novel methods described in this thesis and compare the clustering groups and the inference on baseline factors that may be related to cluster membership. Specifically, we fit a multivariate Gaussian mixture with conditional independence like Proc Traj (Model 1), a multivariate Gaussian mixture with exponential correlation (Model 2), and the vertically shifting mixture model proposed in this thesis (Model 3). There is some variability in the observation times, but the rate of change is not large in magnitude so the independence assumption may be the best approximation for the transformed data in Model 3.
 
 All of these model-based methods require a mean structure. We used a B-spline basis to model the mean function. Based on the visual inspection of the data, we determine that quadratic basis functions with one internal knot should be sufficient to model the complexity given the limited number of time points.  The internal knot is place at the median observation time. 
@@ -62,11 +63,10 @@ Figure \ref{fig:6-1} show the clustering results for the three mixture models us
 It is interesting to note that the mean shapes do not drastically change between the three models even though group membership changes. Thus, the number of groups switches is not enough to change the shape of the means for this data set. Even though it is tempting to compare the starting levels of the mean curves (right side of Figure \ref{fig:6-1}), it is important to realize that the level was removed to focus on the shape in Model 3 and the artificial levels for presentation are based on the average BMI at age 2 within the groups. Thus in Model 3, group 1 includes more individuals with lower BMI at age 2 in comparison to the other models. 
 
 \begin{figure}[h]
-\begin{center}
+\centering
 \includegraphics[width=6.5in]{Chp6BMI}
-\end{center}
 \label{fig:6-1}
-\caption{Clustered BMI trajectories colored according to the group assignment made by maximizing the posterior probability and group mean functions for three mixture models with maternal pre-pregnancy BMI as the baseline factor.}
+\caption{Clustered BMI trajectories colored according to the group assignment made by maximizing the posterior probability and group mean functions for three mixture models (Model 1: independence, Model 2: exponential, Model 3: vertically shifted) with maternal pre-pregnancy BMI as the baseline factor.}
 \end{figure}
 
 Table \ref{tab:6-1} gives the estimated odds ratios comparing group membership for the baseline factor maternal pre-pregnancy BMI. The odds are all in reference to the last group with the most stable shape over time. There seems to be a monotone trend in the odds ratios for pre-pregnancy BMI as the shape has a higher overall rate of change, but the inference depends on the model used. It is agreed upon that maternal pre-pregnancy BMI predicts the child's BMI level and we see that it highly predicts group memberships in Model 1. This makes sense since the groups are divided mainly by BMI level. However, generalizing the correlation structure in Model 2 increases the standard error enough to change the inference. While the point estimates are similar for Model 3, the standard errors are slightly smaller but not enough to provide strong evidence that maternal BMI not only impact level but also the rate of change over time. 
@@ -76,8 +76,8 @@ Table \ref{tab:6-1} gives the estimated odds ratios comparing group membership f
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{lccc}
-  \hline
- & Odds Ratio Estimate & 95\% Confidence Interval & $P>|z|$ \\ 
+  \thickhline
+ & Odds Ratio & 95\% CI& $P>|z|$ \\ 
   \hline
 Model 1: Group  1 & 1.32 & (1.2, 1.45) & 0 \\ 
   Model 1: Group  2 & 1.24 & (1.14, 1.35) & 0 \\ 
@@ -93,9 +93,9 @@ Model 1: Group  1 & 1.32 & (1.2, 1.45) & 0 \\
   Model 3: Group  3 & 1.18 & (0.89, 1.55) & 0.247 \\ 
   Model 3: Group  4 & 1.04 & (0.85, 1.28) & 0.7 \\ 
   Model 3: Group  5  (ref.) & - & - & - \\ 
-   \hline
+   \thickhline
 \end{tabular}
-\caption{Odds ratio estimates for maternal pre-pregnancy BMI for three mixture models. }
+\caption{Odds ratio estimates and confidence intervals for a one unit increase in maternal pre-pregnancy BMI comparing each group to the reference group for the three mixture models (Model 1: independence, Model 2: exponential, Model 3: vertically shifted). }
 \end{center}
 \label{tab:6-1}
 \end{table}
@@ -103,11 +103,10 @@ Model 1: Group  1 & 1.32 & (1.2, 1.45) & 0 \\
 Figure \ref{fig:6-2} show the clustering results for the three mixture models using maternal BPA exposure during pregnancy as a baseline factor impacts group membership. The chosen number of groups for each model is $K = 5$, $K=4$, and $K=5$ for Model 1, 2, and 3, respectively. The clustering look very similar to those from the models with pre-pregnancy BMI. The main differences occur with Model 3. The group means slight differ in shape from those with maternal BMI. This is natural since all of the parameters include group membership are simultaneously estimated. Therefore, baseline factors could determine group membership for a trajectory in the overlap between two groups.
 
 \begin{figure}[h]
-\begin{center}
+\centering
 \includegraphics[width=6.5in]{Chp6BPA}
-\end{center}
 \label{fig:6-2}
-\caption{Clustered BMI trajectories colored according to the group assignment made by maximizing the posterior probability and group mean functions for three mixture models with maternal BPA exposure during pregnancy as the baseline factor.}
+\caption{Clustered BMI trajectories colored according to the group assignment made by maximizing the posterior probability and group mean functions for three mixture models (Model 1: independence, Model 2: exponential, Model 3: vertically shifted) with maternal BPA exposure during pregnancy as the baseline factor.}
 \end{figure}
 
 Table \ref{tab:6-2} gives the estimated odds ratios comparing group membership for the baseline factor, maternal BPA exposure. The reference group is again the last group with the most stable trajectory shape. In generalizing the correlation structure (Model 2 vs. Model 1), the estimated relationship between BPA and group membership changes. Specifically, the odds ratios for group 2 switches from 0.9 to 1.24 in Model 2. This suggests that increased BPA increases the probability of being in group 2 in comparison to group 4. This magnitude change is maintained by the vertically shifted model (Model 3), and the standard errors are smaller relative to Model 2 to provide more evidence that there is small real effect of BPA on the shape of the growth curve over time. 
@@ -117,8 +116,8 @@ Table \ref{tab:6-2} gives the estimated odds ratios comparing group membership f
 \begin{table}[ht]
 \begin{center}
 \begin{tabular}{lccc}
-  \hline
- & Odds Ratio Estimate & 95\% Confidence Interval & $P>|z|$ \\ 
+  \thickhline
+ & Odds Ratio & 95\% CI & $P>|z|$ \\ 
   \hline
 Model 1: Group  1 & 0.84 & (0.58, 1.21) & 0.345 \\ 
   Model 1: Group  2 & 0.9 & (0.65, 1.25) & 0.542 \\ 
@@ -134,15 +133,14 @@ Model 1: Group  1 & 0.84 & (0.58, 1.21) & 0.345 \\
   Model 3: Group  3 & 1.01 & (0.71, 1.43) & 0.948 \\ 
   Model 3: Group  4 & 0.88 & (0.6, 1.29) & 0.52 \\ 
   Model 3: Group  5  (ref.) & - & - & - \\ 
-   \hline
+   \thickhline
 \end{tabular}
-\caption{Odds ratio estimates for maternal BPA exposure (in log base 2) for three mixture models. }
+\caption{Odds ratio estimates and confidence intervals for a one unit increase in maternal BPA exposure during pregnancy in log base 2 comparing each group to the reference group for the three mixture models (Model 1: independence, Model 2: exponential, Model 3: vertically shifted). }
 \end{center}
 \label{tab:6-2}
 \end{table}
 
 \section{Conclusion}
-To explore the population in terms of their heterogenous growth patterns over time, we used multivariate finite mixture models. Rather than averaging out all of the interesting growth patterns, mixture models allows for a finite number of relationships. However, mixture models used 'right out of the box' finds these relationships based on the feature that dominate the variability. If this feature is the intercept or vertical level, the estimation of the mixture model may not highlight the patterns over time, which get lost in the groups based on the vertical level (cite my paper). Therefore, we use a simple adjustment to remove the vertical level and only focus on how the children's growth changes over time.
+To explore the population in terms of their heterogenous growth patterns over time, we used multivariate finite mixture models. Rather than averaging out all of the interesting growth patterns, mixture models allows for a finite number of relationships. However, standard mixture models groups these relationships based on the feature that dominate the variability. If this feature is the level of the trajectory, the estimation of the mixture model may not highlight interesting patterns over time that are averaged over in groups based on the vertical level. Therefore, we use a simple adjustment to remove the vertical level and only focus on how the children's growth changes over time.
 
-TAKE AWAYS: THE MEAN CURVES MAY NOT DRASTICALLY CHANGE, BUT THE NUMBER OF GROUPS AND THE GROUP MEMBERSHIP DO CHANGE WHICH IMPACTS THE BASELINE FACTOR ESTIMATION. NEED TO SEPARATE THE FACTORS THE IMPACT LEVEL AND THOSE THAT IMPACT SHAPE. 
-
+For this data set, the mean functions do not drastically change between the standard model and the vertically shifted model, but the group membership changes. This moving of individuals between groups impacts the interpretation about baseline factors and their association with the probability of being in a particular group. The well studied association of pre-pregnancy BMI and child's BMI is supported with this data set at age 2 and thus the overall level of their growth curve \cite{whitaker1997}. However, this data set does not provide strong evidence for an association with  the shape of the growth pattern. This is an important distinction to make as genetic factors may impact early childhood BMI but not the growth trajectory over time. While this data set does not provide strong evidence to suggest that BPA is associated with the level or shape of the growth pattern, the shift in the estimates between Model 1 and Model 3 for the second group of late gainers highlights the importance of investigating the factors that impact level and those that impact shape separately.

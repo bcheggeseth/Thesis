@@ -2,6 +2,24 @@
 \usepackage[doi=true,url=false,eprint=false,isbn=false,firstinits=true]{biblatex}
 \usepackage{amsmath,amsfonts,graphicx,amsthm,pdflscape}
 
+\renewbibmacro{in:}{%
+  \ifentrytype{article}{}{%
+  \printtext{\bibstring{in}\intitlepunct}}}
+  
+  
+ \makeatletter
+\newtheorem*{rep@theorem}{\rep@title}
+\newcommand{\newreptheorem}[2]{%
+\newenvironment{rep#1}[1]{%
+ \def\rep@title{#2 \ref{##1}}%
+ \begin{rep@theorem}}%
+ {\end{rep@theorem}}}
+\newcommand{\thickhline}{%
+    \noalign {\ifnum 0=`}\fi \hrule height 1.5pt
+    \futurelet \reserved@a \@xhline
+}
+\makeatother
+
 % Double spacing, if you want it.
 % \def\dsp{\def\baselinestretch{2.0}\large\normalsize}
 % \dsp
@@ -12,6 +30,7 @@
 
 
 \newtheorem{theorem}{Theorem}
+\newreptheorem{theorem}{Theorem}
 \newcommand{\B}[0]{\mathbf}
 \newcommand{\BS}[0]{\boldsymbol}
 \setcounter{tocdepth}{2}
@@ -19,6 +38,7 @@
 
 \bibliography{Dissertation}
 
+\hyphenation{Tsah-kadsor Bio-metrika}
 %\hyphenation{mar-gin-al-ia}
 
 \begin{document}
@@ -57,17 +77,36 @@ To Paul, my partner in life.\\\vspace{12pt}
 \vfil\null
 \end{dedication}
 
-\tableofcontents
+\begin{KeepFromToc}
+  \tableofcontents
+\end{KeepFromToc}
+
 \clearpage
 \listoffigures
 \clearpage
 \listoftables
 
 \begin{acknowledgements}
-I thank my advisor, Nicholas Jewell, for asking questions to push me farther and for providing me opportunities to mature professionally. I would not be where I am without the love and support of my family. Lastly, my partner in life, Paul, made sure I kept my head held high.
+%Reflection about the moment
+
+%This dissertation would never have come to fruition without the support of many individuals, and it is with pleasure and gratitude that I acknowledge their efforts.
+
+%I would like to express my utmost gratitude to my dissertation advisor, Nicholas Jewell, for teaching me how to do good research by always asking thoughtful questions. Our weekly meetings push   to push me farther and for providing me opportunities to mature professionally.
+
+%Thank Alan Hubbard and Cari Kaufmann, as committee members and Bin Yu as chair of the qualifying exam committee. Deb and Barbara for mentoring
+
+%Department faculty for providing me with the statistical foundation and staff for the unending administrative and computing support. 
+
+%Other graduate students in my class, surviving together.
+
+% I would not be where I am without the love and support of my family. 
+ 
+% Lastly, my partner in life, Paul, made sure I kept my head held high.
 \end{acknowledgements}
 
 \end{frontmatter}
+
+
 
 \pagestyle{headings}
 
