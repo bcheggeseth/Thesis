@@ -47,7 +47,7 @@ $$||\B x - \B y||_{\infty}=\max_{j}|x_{j}-y_{j}|.$$
 
 Other distance measures are based on variants of the correlation coefficient. These do not satisfy the triangle inequality and are not considered metrics. One popular distance measure based on the Pearson correlation coefficient is defined as
 $$d(\B x,\B y) =1 - \frac{(\B x - \bar{x})^{T}(\B y - \bar{y})}{\|\B x - \bar{x}\|_{2}\|\B y - \bar{y}\|_{2}}$$
-where $\bar{x}$ represents the average of the elements in $\B x$. This range of this distance function is $[0,2]$. Perfect negative linear correlation results in the largest distance, perfect positive linear correlation results in the smallest, and no linear correlation is in the middle. The Pearson correlation coefficient can be replaced with its uncentered version to calculate the cosine angle distance,
+where $\bar{x}$ represents the average of the elements in $\B x$. This range of this distance function is $[0,2]$. Perfect negative linear correlation results in the largest distance, perfect positive linear correlation results in the smallest, and no linear correlation is in the middle. The Pearson correlation coefficient can be replaced with its uncentered version to calculate the cosine-angle distance,
 $$d(\B x,\B y) =1 - \frac{\B x ^{T}\B y }{\|\B x\|_{2}\|\B y \|_{2}}.$$
 When vectors are exactly the same, the angle between the vectors is 0, the distance equals 0. On the other hand, the maximum value of 2 is attained when two vectors are 180 degrees apart. Both of these distance measures are invariant to scaling such that $d(\B x, a\cdot \B x) = 0$ for $a>0$ and the Pearson correlation distance is additionally invariant to shifts such that $d(\B x, a\cdot \B x +b) = 0$ for $a>0$ and $a,b\in \mathbb{R}$. 
 
