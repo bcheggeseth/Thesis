@@ -5,40 +5,36 @@ In this chapter, I compare the three proposed methods presented in the last chap
 First, I describe the data-generating process used throughout the simulation study. Then, I discuss the specific details of the simulation implementation in terms of the variety of data conditions, methods used, and the simulation outcomes of interest. Lastly, I present the results and compare the performance of the methods.
 
 \section{Data-generating process}
-When deciding upon the data-generating process, it is important to choose a simple example that addresses the goals of the study and can generalize to other situations. This simulation study is based on a population with three trajectory shapes and three potential levels. Since complex functions can be locally approximated with linear functions, the three shapes used in the simulation are straight lines with different slopes---positive, negative, and zero. We restrict some shapes to particular levels to induce a relationship between level and shape. The five mean functions for generating the data with three shapes at different levels are below:   
+When deciding upon the data-generating process, it is important to choose a simple example that addresses the goals of the study and can generalize to other situations. This simulation study is based on a population with three trajectory shapes and three outcome levels. Since complex functions can be locally approximated with linear functions, the three shapes used in the simulation are straight lines with different slopes---positive, negative, and zero. We restrict some shapes to particular levels to induce a relationship between level and shape. The five mean functions for generating data with three shapes at different levels are  
 \begin{align*}
 \mu_{1}(t) &= -1 - t &&\text{ (negative slope, low level)}\\
 \mu_{2}(t) &= 11 - t&&\text{ (negative slope, high level)}\\
-\mu_{3}(t) &= 0&&\text{ (horizontal, middle level)}\\
+\mu_{3}(t) &= 0&&\text{ (zero slope, middle level)}\\
 \mu_{4}(t) &= -11 + t&&\text{ (positive slope, low level)}\\
 \mu_{5}(t) &= 1 + t&&\text{ (positive slope, high level)}
 \end{align*} 
-Individuals are randomly assigned to follow a particular mean function the probability of which depends on two baseline factors. The first factor $w_{1}$ is associated with the shape of the mean function and $w_{2}$ with the level of the function. Individuals are randomly assigned values of these two binary factors by simulating two tosses of a fair coin such that $P(w_{1}=1) = P(w_{1}=0) = 0.50$ and $P(w_{2}=1) = P(w_{2}=0)=0.50$. 
+Individuals follow these mean patterns with varying probabilities that depend on two factors. The first factor $w_{1}$ impacts the shape and $w_{2}$ impacts the level. Individuals are randomly assigned values of these two binary factors with the independent simulated tosses of a fair coin. 
 
-Let $S$ be a categorical random variable that indicates the shape group. The values it takes $S=1,2,3$ refer to the negative slope, horizontal, and positive slope groups, respectively. Conditional on the baseline factors, the probability of being in shape group $k$ equals
-$$P(S=k |w_{1}) = \frac{\exp(\eta_{0k}+\eta_{1k}w_{1})}{\sum^{3}_{l=1} \exp(\eta_{0l}+\eta_{1l}w_{1})}$$
-for $k=1,2,3$ where $\eta_{01}=2,\eta_{11} = -4,\eta_{02}=1.5,\eta_{12}=-2,\eta_{03}=\eta_{13} = 0$ and $w_{1}\in\{0,1\}$. Since the value of $w_{1}$ is determined by a coin toss, each shape group has about an equal marginal prior probability with the chosen parameter values. 
+Let $S$ be a categorical random variable that indicates the shape/slope group such that $S=1,2,3$ refers to the negative, zero, and positive slope groups, respectively. Conditional on the baseline factors, the probability of being in the $k$th shape group is
+$$P(S=k |w_{1}) = \frac{\exp(\gamma_{0k}+\gamma_{1k}w_{1})}{\sum^{3}_{l=1} \exp(\gamma_{0l}+\gamma_{1l}w_{1})}$$
+for $k=1,2,3$ where $\gamma_{01}=2,\gamma_{11} = -4,\gamma_{02}=1.5,\gamma_{12}=-2,\gamma_{03}=\gamma_{13} = 0$ and $w_{1}\in\{0,1\}$. Since the value of $w_{1}$ is determined by a fair coin toss, each shape group has about an equal frequency, marginally. 
 
-The second factor $w_{2}$ impacts the level. Let $L$ be a categorial random variable that indicates level group. The values it takes $L=1,2,3$ refer to the low, middle, and high group, respectively. Level and shape are not independent of each other due to the restrictions placed on the mean functions. Conditional on the shape group, all of the horizontal lines are in the middle level. For those in either the negative or positive slope groups, the chance of the high or low level is given by
+The second factor impacts the level. Let $L$ be a categorial random variable that indicates level group such that $L=1,2,3$ refers to the low, middle, and high group, respectively. Only those who follow the constant function have middle level outcome measures. For those in either the negative or positive slope groups, the chance of the high or low level is
 \begin{align*}
 P(L=k|S=1 \text{ or } S=3,w_{2}) & = \frac{\exp(\zeta_{0k}+\zeta_{1k} w_{2})}{\sum_{l\in\{1,3\} }\exp(\zeta_{0l}+\zeta_{1l}w_{2})}
 \end{align*}
-for $k=1,3$ and $w_{2}\in\{0,1\}$ where $\gamma_{01}=0,\zeta_{11}=0,\zeta_{03}=-3,\zeta_{13}=6$. Again, each level group has about the same margin probability with these parameter values.
+for $k=1,3$ and $w_{2}\in\{0,1\}$ where $\eta_{01}=0,\zeta_{11}=0,\zeta_{03}=-3,\zeta_{13}=6$. Again, each outcome level group has about the same marginal frequency.
 
-To summarize, individual trajectories are generated by first simulating two coin tosses to determine values for the two baseline binary factors. Then conditional on the factors, shape and level groups and thus the mean functions are randomly assigned by plugging the factors into the generalized logit functions above and drawing from multinomial distributions. Then, the assigned mean function is evaluated at five equidistant observation times ($t=1,3.25,5.5,7.75,10$) that span the period 1 to 10 units. Random noise is added to induce variability. 
-
-The random noise is made up of two components: individual-specific level perturbation and time-specific Gaussian measurement error. For individual $i$ ($i=1,...,n$) at the $j$th observation time ($j=1,..,5$) following the $l$th mean function, the observed outcome equals
+For each individual, the chosen mean function is evaluated at five equidistant observation times $t=1,3.25,5.5,7.75,10$ that span the period 1 to 10 units and random noise is added to induce variability. The random noise is made up of two components: individual-specific level perturbation and time-specific Gaussian measurement error. For individual $i$ ($i=1,...,n$)  following the $l$th mean function, the observed outcome at the $j$th observation time ($j=1,..,5$) is a realization of
 $$y_{ij} = \lambda_{i}+\mu_{l}(t_{j})+\epsilon_{ij}\quad\text{where}\quad \epsilon_{ij}\stackrel{i.i.d.}{\sim} N(0,\sigma_{\epsilon}^{2}), \lambda_{i}\stackrel{i.i.d.}{\sim} F_{\lambda}(0,\sigma_{\lambda}^{2})$$
-where $\sigma_{\epsilon}$  is the standard deviation of the measurement error and $\sigma_{\lambda}$ is the standard deviation and $F_{\lambda}$ is the probability distribution of the level perturbation.
- 
-The level perturbation can be viewed as a random intercept that induces exchangeable within-individual correlation between the random deviations from the mean. The distribution of the level perturbation as well as the standard deviations of the random noise are values that vary in the simulation to create different conditions on which to test the clustering methods. The values are chosen to alter the overlap of the groups and the signal to noise ratio and are discussed in the next section.
+where $\sigma_{\epsilon}$  is the standard deviation of the measurement error, $\sigma_{\lambda}$ is the standard deviation of the level perturbation, and $F_{\lambda}$ is the probability distribution of the level perturbation. This imposes an exchangeable correlation structure within an individual's outcome vector conditional on the mean function they follow. The distribution of the level perturbation as well as the standard deviations of the random noise are values that vary in the simulation to create different conditions on which to test the clustering methods. The values are chosen to alter the overlap of the groups and the signal to noise ratio and are discussed in the next section.
 
 \section{Implementation}
 In this section, I describe the random noise conditions, overview the clustering methods included in this study, and discuss the outcomes of interest used to compare the methods in the simulation. 
-\subsection{Simulation conditions}
-The first component of the random noise is the level perturbation.  To test the sensitivity of the methods to distributional assumptions, I use the uniform distribution and the Gaussian distribution to generate the level perturbations. To create conditions with differing amount of overlap between groups, I let $\sigma_{\lambda}=2$ or $3$ such that the vertical shift between the mean functions with the same shape is about 4 or 6 standard deviations. The second component is the measurement error, the magnitude of which influences the signal to noise ratio. I let $\sigma_{\epsilon}=0.5$ or $2$ to create two extreme conditions, weak and strong signals relative to noise.
 
-There are eight possible combinations of these three properties, representing eight conditions of the data-generating process in the simulation study. 
+\subsection{Simulation conditions}
+The first component of the random noise is the level perturbation.  To test the sensitivity of the methods to distributional assumptions, I use the uniform distribution and the Gaussian distribution to generate the level perturbations. To create conditions with differing amount of overlap between groups, I let $\sigma_{\lambda}=2$ or $3$ such that the vertical shift between the mean functions with the same shape is about 4 or 6 standard deviations. The second component is the measurement error, the magnitude of which influences the signal to noise ratio. I let $\sigma_{\epsilon}=0.5$ or $2$ to create two extreme conditions, weak and strong signals relative to noise. The eight possible combinations represent the conditions of the data-generating process in the simulation study. 
+
 \subsection{Clustering methods}
 For each condition, I generate a data set of $n=500$ individuals using the process described above and apply each cluster method to cluster the data into $K=2,3,4,$ and $5$ groups. Each method produces different output making direct comparisons difficult. 
 
