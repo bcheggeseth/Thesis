@@ -141,7 +141,7 @@ Lastly, the method that prevails amongst the competition is the vertically shift
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Wed Feb 27 13:38:21 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{ccc|cccccc}
   \thickhline  $F_{\lambda}$&$\sigma_{\epsilon}$&$\sigma_{\lambda}$&$K=2$&$K=3$&$K=4$&$K=5$&MR&ARI\\ \hline\multicolumn{9}{c}{\textbf{K-means on Original Data}}\\ Uniform & 0.50 &   2 &   0 &   0 &   0 & 500 & 0.42 & 0.25 \\ 
   Uniform & 2.00 &   2 & 492 &   0 &   0 &   8 & 0.42 & 0.25 \\ 
@@ -178,13 +178,13 @@ Lastly, the method that prevails amongst the competition is the vertically shift
    \thickhline\end{tabular}
 \caption{The number of times each value of $K$ was chosen and the average misclassification rate (MR) and average Adjusted Rand Index (ARI) when $K=3$ for 500 replications of standard clustering methods applied to data generated under different conditions for the $F_{\lambda}$ and the standard deviation of $\epsilon$ and $\lambda$.}
 \label{tab:freq1}
-\end{center}
+
 \end{table}
 
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Wed Feb 27 13:38:52 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{ccc|cccccc}
   \thickhline $F_{\lambda}$&$\sigma_{\epsilon}$&$\sigma_{\lambda}$&$K=2$&$K=3$&$K=4$&$K=5$&MR&ARI\\  \hline\multicolumn{9}{c}{\textbf{K-means on Difference Quotients}}\\ Uniform & 0.50 &   2 &   0 & 500 &   0 &   0 & 0.00 & 1.00 \\ 
   Uniform & 2.00 &   2 & 480 &  20 &   0 &   0 & 0.38 & 0.31 \\ 
@@ -205,13 +205,13 @@ Lastly, the method that prevails amongst the competition is the vertically shift
    \thickhline\end{tabular}
 \caption{The number of times each value of $K$ was chosen and the average misclassification rate (MR) and average Adjusted Rand Index (ARI) when $K=3$ for 500 replications of clustering methods intended to group by shape applied to data generated under different conditions for the $F_{\lambda}$ and the standard deviation of $\epsilon$ and $\lambda$.}
 \label{tab:freq2}
-\end{center}
+
 \end{table}
 
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Wed Feb 27 13:39:11 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{ccc|cccccc}
   \thickhline$F_{\lambda}$&$\sigma_{\epsilon}$&$\sigma_{\lambda}$&$K=2$&$K=3$&$K=4$&$K=5$&MR&ARI\\ \hline\multicolumn{9}{c}{\textbf{K-means on Derivative Splines Coefficients}}\\ Uniform & 0.50 &   2 & 0 & 500 & 0 & 0 & 0.00 & 1.00 \\ 
   Uniform & 2.00 &   2 & 15 & 189 & 164 & 132 & 0.39 & 0.27 \\ 
@@ -248,7 +248,7 @@ Lastly, the method that prevails amongst the competition is the vertically shift
    \thickhline\end{tabular}
 \caption{The number of times each value of $K$ was chosen and the average misclassification rate (MR) and average Adjusted Rand Index (ARI) when $K=3$ for 500 replications of proposed clustering methods applied to data generated under different conditions for the $F_{\lambda}$ and the standard deviation of $\epsilon$ and $\lambda$.}
 \label{tab:freq3}
-\end{center}
+
 \end{table}
 To compare the group representatives from all methods with the true mean shapes used to generate the data, we transformed the estimates when $K=3$ to coefficients of the derivative spline as previously described. There are two coefficients per group and I denote them as $\alpha_{11},\alpha_{21}$ for group 1, $\alpha_{12},\alpha_{22}$ for group 2, and $\alpha_{13},\alpha_{23}$ for group 3. Tables \ref{tab:mse1}, \ref{tab:mse2}, and \ref{tab:mse3} present the mean squared errors for the derivative spline coefficients under the simulation conditions for all clustering methods. When the clustering algorithm finds the shape groups correctly, the MSE is very close to zero for all coefficients. This occurs for the vertically shifted mixture under all conditions and both derivative-based methods and the exponential mixture model when the measurement error is small. Additionally, the coefficients in the multilayer mixture model have a small MSE only when the level groups are well separated.
 
@@ -257,7 +257,7 @@ To compare the group representatives from all methods with the true mean shapes 
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Wed Feb 27 13:39:30 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{ccc|cccccc}
   \thickhline $F_{\lambda}$&$\sigma_{\epsilon}$&$\sigma_{\lambda}$&$\alpha_{11}$&$\alpha_{21}$&$\alpha_{12}$&$\alpha_{22}$&$\alpha_{13}$&$\alpha_{23}$\\ \hline\multicolumn{9}{c}{\textbf{K-means on Original Data}}\\ Uniform & 0.50 &   2 & 0.71 & 0.71 & 0.09 & 0.09 & 0.72 & 0.72 \\ 
   Uniform & 2.00 &   2 & 0.78 & 0.77 & 0.06 & 0.06 & 0.80 & 0.80 \\ 
@@ -294,12 +294,12 @@ To compare the group representatives from all methods with the true mean shapes 
    \thickhline\end{tabular}
 \caption{Mean squared error for derivative spline coefficients when $K=3$ for 500 replications of standard clustering methods applied to data generated under different conditions for the distribution of $\lambda$ and the standard deviation of $\epsilon$ and $\lambda$.}
 \label{tab:mse1}
-\end{center}
+
 \end{table}
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Wed Feb 27 13:39:46 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{ccc|cccccc}
   \thickhline $F_{\lambda}$&$\sigma_{\epsilon}$&$\sigma_{\lambda}$&$\alpha_{11}$&$\alpha_{21}$&$\alpha_{12}$&$\alpha_{22}$&$\alpha_{13}$&$\alpha_{23}$\\  \hline\multicolumn{9}{c}{\textbf{K-means on Difference Quotients}}\\ Uniform & 0.50 &   2 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Uniform & 2.00 &   2 & 0.10 & 0.09 & 0.20 & 0.17 & 0.10 & 0.10 \\ 
@@ -320,12 +320,12 @@ To compare the group representatives from all methods with the true mean shapes 
    \thickhline\end{tabular}
 \caption{Mean squared error for derivative spline coefficients when $K=3$ for 500 replications of clustering methods intended to group by shape applied to data generated under different conditions for the distribution of $\lambda$ and the standard deviation of $\epsilon$ and $\lambda$.}
 \label{tab:mse2}
-\end{center}
+
 \end{table}
 % latex table generated in R 2.15.2 by xtable 1.7-0 package
 % Wed Feb 27 13:40:02 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{ccc|cccccc}
   \thickhline $F_{\lambda}$&$\sigma_{\epsilon}$&$\sigma_{\lambda}$&$\alpha_{11}$&$\alpha_{21}$&$\alpha_{12}$&$\alpha_{22}$&$\alpha_{13}$&$\alpha_{23}$\\  \hline\multicolumn{9}{c}{\textbf{K-means on Derivative Splines Coefficients}}\\ Uniform & 0.50 &   2 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 & 0.00 \\ 
   Uniform & 2.00 &   2 & 0.50 & 0.49 & 1.21 & 1.29 & 0.41 & 0.51 \\ 
@@ -362,7 +362,7 @@ To compare the group representatives from all methods with the true mean shapes 
    \thickhline\end{tabular}
 \caption{Mean squared error for derivative spline coefficients when $K=3$ for 500 replications of proposed clustering methods applied to data generated under different conditions for the distribution of $\lambda$ and the standard deviation of $\epsilon$ and $\lambda$.}
 \label{tab:mse3}
-\end{center}
+
 \end{table}
 I have determined that some of the methods discover the shape groups under conditions of small measurement error by comparing the group labels to the true generating labels comparing the estimates of the mean shapes with known generating values. Lastly, I want to know how the choice of method impacts the estimation of the relationship between baseline factors and group membership. For simplification, we present density plots of the estimated coefficients for group 1 and 2 for the factors $w_{1}$ and $w_{2}$ for only three methods---K-means on the original data, K-means on the difference quotients, and vertically shifted exponential mixture models---after setting $K=3$. As a reminder, the first baseline factor $w_{1}$ was used to generate shape groups and the second $w_{2}$ was used to generate level groups. 
 
@@ -373,23 +373,24 @@ On the other hand, the K-means on the difference quotients finds a relationship 
 Lastly, with the vertically shifting exponential mixture model (Figure \ref{fig:gamma3}), there is a significant relationship between group membership and $w_{1}$, the factor that was used to generate shape groups. The second factor is estimated to have zero relationship with the grouping.
 
 \begin{landscape}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[height=5.5in]{Chp5Gamma1}
-\label{fig:gamma1}
 \caption{Density plots of estimated multinomial coefficients from analysis after running K-means on original data under  simulation conditions. Coefficients for group 3 are fixed equal to 0. Solid: $w_{1}$, dashed: $w_{2}$. Thin: group 1, thick:  group 2.}
+\label{fig:gamma1}
 \end{figure}
-\begin{figure}[h]
+
+\begin{figure}[ht]
 \centering
 \includegraphics[height=5.5in]{Chp5Gamma2}
-\label{fig:gamma2}
 \caption{Density plots of estimated multinomial coefficients from analysis after running K-means on difference quotients under simulation conditions. Coefficients for group 3 are fixed equal to 0. Solid: $w_{1}$, dashed: $w_{2}$. Thin: group 1, thick:  group 2.}
+\label{fig:gamma2}
 \end{figure}
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[height=5.5in]{Chp5Gamma3}
-\label{fig:gamma3}
 \caption{Density plots of simultaneously estimated multinomial coefficients from the vertically shifted exponential mixture model under simulation conditions. Coefficients for group 3 are fixed equal to 0. Solid: $w_{1}$, dashed: $w_{2}$. Thin: group 1, thick:  group 2.}
+\label{fig:gamma3}
 \end{figure}
 \end{landscape}
 

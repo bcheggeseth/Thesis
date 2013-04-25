@@ -97,7 +97,7 @@ Table \ref{tab:dep1} lists bias estimates for the dependence-varying simulation 
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
 % Wed Oct 10 10:18:23 2012
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{lccccc}
    \thickhline \multicolumn{6}{c}{\textbf{Bias Estimates}}\\ $n$ & $\widehat{\gamma}_1$ & $\widehat{\beta}_1$ & $\widehat{\sigma}^2_1$ & $\widehat{\beta}_2$ & $\widehat{\sigma}^2_2$\\ 
    \hline$\rho=0.00$\\
@@ -118,13 +118,13 @@ Table \ref{tab:dep1} lists bias estimates for the dependence-varying simulation 
    \thickhline\end{tabular}
 \caption{Bias estimates (SE) of maximum likelihood parameter estimators when the covariance structure of a two-component Gaussian mixture is assumed to be conditionally independent based on 1000 replications under each mixture distribution with $m=5$, $\gamma_1=\gamma_2=0$, $\beta_{1}=1$, $\B R_1=\B I_{m}$, $\sigma_1^{2}=0.25$, $\beta_2=3$, $\B R_2=\B R(\rho)$ and $\sigma_2^{2}=1$ where $\B R(\rho)$ is the exchangeable correlation matrix with parameter $\rho$. Asymptotic estimates ($n=\infty$) are based on one replication with $n=100,000$. Values equal to zero represent values less than 0.001.}
 \label{tab:dep1}
-\end{center}
+
 \end{table}
 \begin{landscape}
 % latex table generated in R 2.15.1 by xtable 1.7-0 package
 % Wed Oct 10 10:18:23 2012
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{llccccccccc}
    \thickhline \multicolumn{11}{c}{\textbf{Bias Estimates}}\\ $\rho$ & $n$ & $\widehat{SE}_1(\widehat{\gamma}_1)$ & $\widehat{SE}_2(\widehat{\gamma}_1)$ & $\widehat{SE}_3(\widehat{\gamma}_1)$ & $\widehat{SE}_1(\widehat{\beta}_1)$ & $\widehat{SE}_2(\widehat{\beta}_1)$ & $\widehat{SE}_3(\widehat{\beta}_1)$ & $\widehat{SE}_1(\widehat{\sigma}^2_1)$ & $\widehat{SE}_2(\widehat{\sigma}^2_1)$ & $\widehat{SE}_3(\widehat{\sigma}^2_1)$ \\ 
    \hline$0.00$ & $100$ & 0.007 & 0.007 & 0.007 & 0.000 & 0.001 & -0.000 & -0.001 & 0.001 & -0.001 \\ 
@@ -149,14 +149,13 @@ Table \ref{tab:dep1} lists bias estimates for the dependence-varying simulation 
    \thickhline\end{tabular}
 \caption{Bias estimates of the three standard error estimators ($SE_1$, $SE_2$, $SE_3$) when the covariance structure of a two-component Gaussian mixture is assumed to be conditionally independent based on 1000 replications under each mixture distribution with $m=5$, $\gamma_1=\gamma_2=0$, $\beta_{1}=1$, $\B R_1=\B I_{m}$, $\sigma_1^{2}=0.25$, $\beta_2=3$, $\B R_2=\B R(\rho)$ and $\sigma_2^{2}=1$ where $\B R(\rho)$ is the exchangeable correlation matrix with parameter $\rho$. Approximate standard error is based on the estimated standard deviation of the simulation distribution. Values equal to zero represent values less than 0.001.}
 \label{tab:dep2}
-\end{center}
+
 \end{table}
 \end{landscape}
 Figure \ref{fig:2-1} shows that the relationship between the level of component separation and the magnitude of bias is complex. As in the previous simulation, sample sizes of $n=500$ and larger produce similar bias estimates so we only present the asymptotic results. When the level of separation is high, $S>2$, then the magnitude of the bias is small, but when there is some overlap, $S<2$, there is not a clear, consistent relationship between the value of $S$ and the magnitude of the estimated bias for all parameters. That is, for two sets of parameter values, such as $(\beta_{2}=3,\sigma^{2}_{2}=0.25)$ and $(\beta_{2}=5,\sigma^{2}_{2}=1)$, that have the same level of separation, $S = 2.836$, the magnitude of the bias for all parameter estimates is drastically different for the two settings. However, in general, the bias decreases as the level of separation increases for a fixed mean parameter. The only exception is that the estimator for the first component mean ($\widehat{\beta}_{1}$) has increased bias when $S=1.418$ as compared to $S=0.709$, but the bias then decreases when $S=2.836$. It appears that when there is high overlap between two components, there is a point at which the bias peaks and then starts to decrease as $\sigma_2$ increases even though the amount of overlap continues to increase. Lastly, similar to the parameter estimates, the greater amount of separation results in less bias in the standard errors with biases as large as 1.0 unit in the situation with the most overlap and as little as less than 0.001 when components are well separated. Again, the robust estimator again has the lowest bias. 
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[width=6.5in]{Chp2Figure1}
-\end{center}
 \caption{Asymptotic bias estimates of maximum likelihood parameter estimators when the covariance structure of a two-component Gaussian mixture is assumed to be conditionally independent based on one replication with $n=100,000$ under each mixture distribution with $m=5$, $\gamma_1=\gamma_2=0$, $\beta_{1}=1$, $\B R_1=\B I_{m}$, $\sigma_1^{2}=0.25$,  $\B R_2=\B R(\rho)$, and $\rho=0.99$ where $\B R(\rho)$ is the exchangeable correlation matrix with parameter $\rho$. The level of separation ($S$) is calculated using the true mixture distribution. For $\beta_{2} = 3$, variance parameters, $\sigma_{2}^{2}=0.25,1,4$ result in $S=2.836,1.418, 0.709$, respectively. For $\beta_{2} = 5$, variance parameters, $\sigma_{2}^{2}=0.25,1,4$ result in $S=5.671,2.836,1.418$, respectively. Values of $S\geq 2$ indicate almost completely separated components.}
 \label{fig:2-1}
 \end{figure}
@@ -164,10 +163,9 @@ Figure \ref{fig:2-1} shows that the relationship between the level of component 
 The simulations based on dependence and separation demonstrate the finite-sample and asymptotic bias in the ML estimators when the covariance structure is misspecified as conditional independence and the mixture components overlap. However, if two components are well separated, the misspecification of the dependence in the errors does not result in large biases and thus any finite-sample bias could be removed potentially conventional techniques such as bootstrapping with careful tracking of component labels \cite{grun2004}. Additionally, when there is no covariance misspecification or when components are well separated, all of the standard error estimates are similar and have little bias. However, when there is misspecification in the dependence structure, the estimates basely solely on the Hessian matrix or the score vector understate the true variability while the robust estimate has little bias. In cases where the true level of dependence is high, the bias in the Hessian estimator, $\widehat{SE}_{1}$, and the robust version, $\widehat{SE}_{3}$, can differ by as much as a relative factor of 2. In simulations not shown, using unequal prior probabilities result in similar conclusions. When the component proportions are unbalanced, the magnitude of bias increases when a majority of observations units originate from the misspecified component (here component 2). 
 
 Figure \ref{fig:2-2} shows the absolute bias of parameter estimates under the three different covariance assumptions when the data was generating with the exponential correlation structure for component 2. As expected, when the model is correctly specified, there is very little bias. I note that assuming the exchangeable structure, while incorrect, results in less bias than assuming conditional independence. As the RJ criteria gets closer to 1 from 1.97 to 1.02 to 0.99 using independence, exchangeable, and then exponential, the model structure gets closer to the true structure resulting in little bias in the parameter estimates.
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[width=5.5in]{Chp2Figure2}
-\end{center}
 \caption{Bias estimates of maximum likelihood parameter estimators when the covariance structure of a two-component Gaussian mixture is assumed to be conditionally independent, exchangeable, and exponential structure based on 1000 replications under each mixture distribution with $n=500$, $m=5$, $\gamma_1=\gamma_2=0$, $\beta_{1}=1$, $\B R_1=\B I_{m}$, $\sigma_1^{2}=0.25$, $\beta_2=3$, $\B R_2=\B R(r)$ and $\sigma_2^{2}=2$ where $\B R(r)$ is the exponential correlation matrix based on the observation times $(1,2,3,4,5)$ and $r=3$. Mean values of the RJ criteria are $RJ = 1.97, 1.02, 0.99$ for the three covariance assumptions, respectively.}
 \label{fig:2-2}
 \end{figure}
@@ -187,7 +185,7 @@ Parameter and standard errors are estimated for a four-component multivariate Ga
 % latex table generated in R 2.15.3 by xtable 1.7-0 package
 % Fri Mar 22 10:48:40 2013
 \begin{table}[ht]
-\begin{center}
+\centering
 \begin{tabular}{lccccccccc}
   \thickhline&\multicolumn{3}{c}{\textbf{Independence}}&\multicolumn{3}{c}{\textbf{Exchangeable}}&\multicolumn{3}{c}{\textbf{Exponential}}\\&Estimate&$\widehat{SE}_1$&$\widehat{SE}_3$&Estimate&$\widehat{SE}_1$&$\widehat{SE}_3$&Estimate&$\widehat{SE}_1$&$\widehat{SE}_3$\\\hline $\gamma_{10}$ & 0.83 & 0.20 & 0.46 & 0.12 & 0.18 & 0.26 & 0.42 & 0.23 & 0.44 \\ 
   $\gamma_{11}$ & -1.80 & 0.38 & 0.57 & 0.97 & 0.30 & 0.43 & -0.89 & 0.73 & 2.28 \\ 
@@ -224,13 +222,12 @@ Parameter and standard errors are estimated for a four-component multivariate Ga
    \thickhline\end{tabular}
 \caption{Parameter and standard error estimates ($\widehat{SE}_{1},\widehat{SE}_{3}$) for a random sample of 500 from NLSY79 assuming a four-component mixture model with quadratic mean and the following correlation structures: conditional independence, exchangeable, and exponential correlation. Values equal to zero represent values less than 0.01. Additionally, the RJ criteria was calculated each covariance assumption: $RJ=7.34, 3.02, 2.22$ under conditional independence, exchangeable, and exponential, respectively}
 \label{tab:dat}
-\end{center}
+
 \end{table}
 
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[width=6.5in]{Chp2Figure3}
-\end{center}
 \caption{Random sample of 500 body mass index (BMI) trajectories from NLSY79 and mean curves for the four components estimated using a Gaussian mixture model specified with a quadratic mean under the covariance assumptions: conditional independence, exchangeable, and exponential correlation. The labeled are consistent with the tables in the text: component 1 (solid), component 2 (dashed), component 3 (dotted), and component 4 (dashed-dot). Additionally, the RJ criteria was calculated for each covariance assumption: $RJ =7.34,3.02,2.22$ under conditional independence, exchangeable, and exponential, respectively.}
 \label{fig:2-3}
 \end{figure}
@@ -238,10 +235,9 @@ Parameter and standard errors are estimated for a four-component multivariate Ga
 Given that the repeated outcome is BMI, we expect some dependence in the error structure within individuals.  I consider the level of dependence in errors by plotting the estimated autocorrelation function by calculating the empirical variogram of the residuals from the conditional independence model \cite{diggle2002} for each estimated component by randomly assigned each individual to a component using posterior probabilities \cite{wang2005}. The estimated autocorrelation function of the residuals shows strong dependence between residuals within 5 to 10 years and the correlation decreases with increasing time lags (Figure \ref{fig:2-4}). This correlation structure is therefore neither consistent with conditional independence nor exchangeable correlation, but rather decreases to zero which is more consistent with the exponential correlation structure. We see that the robust standard estimators are almost twice those of estimates using the standard estimators under conditional independence, and the RJ criteria, which compares the conventional and robust estimates of the covariance matrix the parameters, suggests that the exponential correlation structure is the one closest to the truth. 
 
  In this data example, we see the influence of the covariance structure on the estimates, especially in terms of the regression parameters. With the simulation results and the RJ criteria, we expect the exponential correlation model fits the data the best out of the three structures. However, I note that I fixed the number of components to be four for the sake of consistency and this may not be the optimal number of components. In practice, this value is estimated from the data as mentioned earlier. This data application highlights the impact of covariance misspecification as well as the fact that the mean structure may not be the only aspect differing between individuals; the level of dependence and variability also distinguish groups of individuals. 
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[width=5.5in]{Chp2Figure4}
-\end{center}
 \caption{Smoothed sample autocorrelation of component residuals of estimated Gaussian mixture model specified with a quadratic mean and conditional independence with a random sample of 500 body mass index trajectories from NLSY79 randomly assigned to components based on estimated posterior probabilities. }
 \label{fig:2-4}
 \end{figure}

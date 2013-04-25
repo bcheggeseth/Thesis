@@ -16,10 +16,9 @@ Despite the interest in the shape of the change over time, too many researchers 
 
 Imagine measuring alcohol consumption over time for a sample of young adults. This cohort may contain individuals who never drink as well as those that have moderate or heavy drinking habits. Besides different levels of alcohol consumption, there may be a variety of behavior patterns over time such as escalation, reduction, or stabilization. All of these patterns can occur at each level of alcohol consumption. Figure \ref{fig:3-1} illustrates a possible scenario of four individuals, two of who drink heavily and two of who are low to moderate drinkers. Within both levels, one of the individuals has escalating behavior and the other is reducing alcohol consumption over time. We assume linear change for simplicity. The shape of the curve, the slope in this case, is independent of the consumption level. If K-means is applied to the observed vectors, two clusters are discovered that are determined by the level of consumption with the two heavy drinkers grouped together and the two moderate consumers in another group. Consequently, the mean trajectory for each group is a horizontal line, which disguises the fact that the alcohol consumption is not stable for any of the individuals. Knowing what factors impact the alcohol consumption level is important for public health, but the knowledge of what type of people have escalating or reducing behavior in a population informs what and when interventions need to be implemented. This is a trivial, highly simplified example, but it illustrates the type of results that occur in practice \cite{mccoy2010}.
 
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[width=4in]{Chp3Exp}
-\end{center}
 \caption{Graph of linear trajectories representing the hypothetical alcohol consumption of four individuals.}
 \label{fig:3-1}
 \end{figure}
@@ -35,8 +34,8 @@ I assume that there are $n$ subjects such that for subject $i$, we observe $m_{i
 If the outcome is measured at the same times for every subject such that $m_{i}=m$ and $\B t_{i}=\B t$ for all $i=1,...,n$, longitudinal data fit into a typical multivariate data framework where a partitioning method like K-means \cite{macqueen1967, hartigan1979} on the observed vector is typically appropriate to use. See Chapter \ref{chap:intro} for details of the iterative algorithm.
 
 I now illustrate how this algorithm fails to address all three of the questions previously posed. Using the simple alcohol consumption example, let $n=4$, and suppose the average number of drinks per week is collected over a ten year period, $\B t=(15,16,...,24,25)$. Let the observed outcome vectors be linear in trend as shown in Figure \ref{fig:3-1}. Note that there are two shape groups: increasing and decreasing. In this circumstance, the level and the shape are not strongly associated since there are different levels within each shape group. The K-means algorithm groups based on the squared Euclidean distance between individuals. The distances between these four subjects are listed in Table \ref{tab:3-1}. 
-\begin{table}[h]
-\begin{center}
+\begin{table}[ht]
+\centering
 \begin{tabular}{c|cccc}
 &Low Decreasing& High Decreasing&Low Increasing&High Increasing\\
 \hline
@@ -45,7 +44,6 @@ High Decreasing&275.0  &0 &  292.6 &17.6 \\
 Low Increasing& 17.6 &292.6  &0   &275.0   \\          
 High Increasing& 292.6 &17.6 &275.0   &0 
 \end{tabular}
-\end{center}
 \caption{Squared Euclidean distance matrix for the hypothetical alcohol consumption vectors of four individuals: high level but slowly decreasing, high level but slowly increasing, low level but slowly decreasing, and low level but slowly increasing. }
 \label{tab:3-1}
 \end{table}
@@ -53,10 +51,9 @@ High Increasing& 292.6 &17.6 &275.0   &0
 The level dominates such that the subjects with the same level (high or low) are clearly the most similar using this dissimilarity measure. The distance between those with same shape have a distance of about fifteen times that of distances across levels. Clustering using Euclidean distance thus detects distinct levels, and if the distinct shapes do not coincide with the distinct levels, the K-means algorithm fails at grouping individuals based on shape and detecting the number of trend patterns. The mean curves over time for the two groups end up being horizontal even though the alcohol consumption is not stable over time for any individual.
 
 Imagine if the shape of the trajectory were correlated with the vertical level where all of the heavy drinkers slowly decrease the number of drinks per week and the light drinkers increase over the years; then, K-means algorithm results in clusters based on level and thus on shape in this case (Figure \ref{fig:3-2}). The algorithm detects the shape groups only when the trajectories with similar shapes also have similar levels, which may be the case in some applications, but is not true for many data sets. I have focused on the K-means algorithm right now, but these conclusions hold for the PAM algorithm when Euclidean or squared Euclidean distance is used.
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[height=4in]{Chp3Exp2}
-\end{center}
 \caption{Graph of linear trajectories representing the hypothetical alcohol consumption of four individuals where shape and level are strongly associated.}
 \label{fig:3-2} 
 \end{figure}
@@ -104,10 +101,9 @@ for $i=1,2,3$ and $j=1,...,10$. The vectors of difference quotients for the thre
 $$P(\|\B d\B y_1-\B d\B y_2\|^2_2 < \|\B d\B y_2-\B d\B y_3\|^{2}_{2})$$
 by generating data for the three subjects 5000 times. I complete this simulation under many conditions specified by a combination of $a = 0.25, 1, 5$, $\Delta = 0.5,1,1.5,2,2.5,3$, and $\sigma = 0.5,1,1.5,2,2.5,3$. The estimated probabilities are plotted against the ratio, $\sigma/\Delta$, for different slopes of $f_{3}(t)$ (Figure \ref{fig:3-3}). 
 
-\begin{figure}
-\begin{center}
+\begin{figure}[ht]
+\centering
 \includegraphics[width=5in]{Chp3Deriv}
-\end{center}
 \caption{Empirical probability that the distance between $\B d\B y_{1}$ and $\B d\B y_{2}$, which share the same underlying horizontal function, is smaller than the distance between $\B d\B y_{1}$ and $\B d\B y_{3}$ for different ratios of standard deviation to length of time lags ($\sigma/\Delta$) and slopes of the linear function underlying $\B y_{3}$ based on 5000 replications.}
 \label{fig:3-3} 
 \end{figure}

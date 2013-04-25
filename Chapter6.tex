@@ -58,7 +58,7 @@ Figure \ref{fig:6-1} shows the clustering results for the three mixture models i
 
 It is interesting to note that the mean shapes do not drastically change between the three models even though group membership changes (right side of Figure \ref{fig:6-1}). Thus, the number of membership changes is relatively small in this case so as to not to change the shape of the means for this data set. Even though it is tempting to compare the starting levels of the mean curves, it is important to realize that the level was removed to focus on the shape in Model 3 and the artificial levels for presentation are based on the average BMI at age 2 within the groups. Thus in Model 3, group 1 includes more individuals with lower BMI at age 2 in comparison to the other models. 
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=6.5in]{Chp6BMI}
 \caption{Clustered BMI trajectories colored according to the group assignment made by maximizing the posterior probability and group mean functions for three mixture models (Model 1: independence, Model 2: exponential, Model 3: vertically shifted) with maternal pre-pregnancy BMI as the baseline factor.}
@@ -97,7 +97,7 @@ Model 1: Group  1 & 1.32 & (1.2, 1.45) & 0 \\
 
 Figure \ref{fig:6-2} shows the clustering results for the three mixture models including maternal BPA exposure during pregnancy as a baseline factor that impacts group membership. The chosen number of groups for each model is $K = 5$, $K=4$, and $K=5$ for Model 1, 2, and 3, respectively. The clustering look very similar to those from the models with pre-pregnancy BMI. The main differences occur with Model 3. The group means slightly differ in shape from those with maternal BMI. This is natural since all of the parameters include group membership are simultaneously estimated. Therefore, baseline factors have a minor influence on the group membership for a trajectory in the overlap between two groups. This change of group can be enough to change the mean curve.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=6.5in]{Chp6BPA}
 \caption{Clustered BMI trajectories colored according to the group assignment made by maximizing the posterior probability and group mean functions for three mixture models (Model 1: independence, Model 2: exponential, Model 3: vertically shifted) with maternal BPA exposure during pregnancy as the baseline factor.}
