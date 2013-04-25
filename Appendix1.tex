@@ -1,13 +1,13 @@
 \chapter{Standard errors derivations}\label{append:1}
 
-Let $\B y_{1},...,\B y_{n}$ be a sample of independent and identically distributed  $m$-variate random vectors drawn from mixture model
+Let $\B y_{1},...,\B y_{n}$ be a sample of independent $m$-variate random vectors drawn from mixture model
 $$f(\B y|\B x, \B w, \BS\theta) = \sum^{K}_{k=1}\pi_{k}(\B w, \BS\gamma)f_{k}(\B y|\B x, \BS \theta_{k})$$
-where $f_{k}(\B y|\B x, \BS \theta_{k})$ is the density for a multivariate Gaussian with mean $\B x\BS\beta_{k}$ and covariance matrix $\BS\Sigma_{k}$. The log likelihood is written as
+where $f_{k}(\B y|\B x, \BS \theta_{k})$ is the density for a multivariate Gaussian with mean $\B x\BS\beta_{k}$ and covariance matrix $\BS\Sigma_{k}$. The log-likelihood is written as
 $$L(\BS\theta)=\sum^{n}_{i=1}\log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)$$
-where the complete parameter vector is $\BS\theta=(\BS\gamma_{1}^{T},...,\BS\gamma_{K-1}^{T},\BS\theta^{T}_{1},...,\BS\theta^{T}_{K})^{T}$ and $\BS\theta_{k}^{T}$ includes mean and covariance parameters. The score vector is defined by $\B q(\BS\theta)=\sum_{i=1}^{n}\B q_{i}(\BS \theta)$, where
+where the complete parameter vector is $\BS\theta=(\BS\gamma_{1}^{T},...,\BS\gamma_{K-1}^{T},\BS\theta^{T}_{1},...,\BS\theta^{T}_{K})^{T}$ and $\BS\theta_{k}$ includes mean and covariance parameters. The score vector is defined by $\B q(\BS\theta)=\sum_{i=1}^{n}\B q_{i}(\BS \theta)$, where
 $$\B q_{i}(\BS\theta)=\frac{\partial \log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)}{\partial \BS\theta}=((\B q^{\gamma_{1}}_{i})^{T},...,(\B q^{\gamma_{K-1}}_{i})^{T},(\B q^{\theta_{1}}_{i})^{T},...,(\B q^{\theta_{K}}_{i})^{T})^{T}$$
 and the Hessian matrix defined by $\B Q(\BS\theta)=\sum_{i=1}^{n}\B Q_{i}(\BS\theta)$, where
-$$ \B Q_{i}(\BS\theta)=\frac{\partial^{2} \log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)}{\partial \BS\theta\partial \BS\theta'}=\left(\begin{array}{cccccc} \B Q^{\gamma_{1}\gamma_{1}}_{i}&\cdots&\B Q^{\gamma_{1}\gamma_{K-1}}_{i}&\B Q^{\gamma_{1}\theta_{1}}_{i}&\cdots&\B Q^{\gamma_{1}\theta_{K}}_{i}\\
+$$ \B Q_{i}(\BS\theta)=\frac{\partial^{2} \log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)}{\partial \BS\theta\partial \BS\theta^{T}}=\left(\begin{array}{cccccc} \B Q^{\gamma_{1}\gamma_{1}}_{i}&\cdots&\B Q^{\gamma_{1}\gamma_{K-1}}_{i}&\B Q^{\gamma_{1}\theta_{1}}_{i}&\cdots&\B Q^{\gamma_{1}\theta_{K}}_{i}\\
 \vdots&\ddots&\vdots&\vdots&\ddots&\vdots\\
 \B Q^{\gamma_{K-1}\gamma_{1}}_{i}&\cdots&\B Q^{\gamma_{K-1}\gamma_{K-1}}_{i}&\B Q^{\gamma_{K-1}\theta_{1}}_{i}&\cdots&\B Q^{\gamma_{K-1}\theta_{K}}_{i}\\
 \B Q^{\theta_{1}\gamma_{1}}_{i}&\cdots&\B Q^{\theta_{1}\gamma_{K-1}}_{i}&\B Q^{\theta_{1}\theta_{1}}_{i}&\cdots&\B Q^{\theta_{1}\theta_{K}}_{i}\\
@@ -23,12 +23,12 @@ Also, we define
 \begin{theorem}
 For the multivariate Gaussian mixture model, the contribution of the $i$th observation to the score vector with respect to the parameters, $\BS\gamma_{k}$ (k=1,...,K-1) and $\BS\theta_{k}$ $(k=1,..,K)$, is given by
 \begin{align*}
-\B q_{i}^{\gamma_{k}}=(\alpha_{ik}-\pi_{k}(\B w_{i},\BS\gamma_{k}))\B w_{i},\;\; \B q_{i}^{\theta_{k}}=\alpha_{ik}\B c_{ik}.
+\B q_{i}^{\gamma_{k}}=(\alpha_{ik}-\pi_{k}(\B w_{i},\BS\gamma))\B w_{i},\;\; \B q_{i}^{\theta_{k}}=\alpha_{ik}\B c_{ik}.
 \end{align*}
 The contribution of the $i$th observation to the Hessian matrix is given by
 \begin{align*}
-\B Q_{i}^{\gamma_{k}\gamma_{k}}&=[\alpha_{ik}(1-\alpha_{ik})-\pi_{k}(\B w_{i},\BS\gamma_{k})(1-\pi_{k}(\B w_{i},\BS\gamma_{k}))]\B w_{i}\B w_{i}^{T}\\
-\B Q_{i}^{\gamma_{k}\gamma_{l}}&=-[\alpha_{ik}\alpha_{il}-\pi_{k}(\B w_{i},\BS\gamma_{k})\pi_{l}(\B w_{i},\BS\gamma_{l})]\B w_{i}\B w_{i}^{T}
+\B Q_{i}^{\gamma_{k}\gamma_{k}}&=[\alpha_{ik}(1-\alpha_{ik})-\pi_{k}(\B w_{i},\BS\gamma)(1-\pi_{k}(\B w_{i},\BS\gamma))]\B w_{i}\B w_{i}^{T}\\
+\B Q_{i}^{\gamma_{k}\gamma_{l}}&=-[\alpha_{ik}\alpha_{il}-\pi_{k}(\B w_{i},\BS\gamma)\pi_{l}(\B w_{i},\BS\gamma)]\B w_{i}\B w_{i}^{T}
 \end{align*}
 \begin{align*}
 \B Q_{i}^{\gamma_{k}\theta_{k}}=\alpha_{ik}(1-\alpha_{ik})\B w_{i}\B c_{ik}^{T},&\quad \B Q_{i}^{\gamma_{k}\theta_{l}}=-\alpha_{ik}\alpha_{il}\B w_{i}\B c_{il}^{T}\\
@@ -78,15 +78,15 @@ where $\B J$ is an $m\times m$ matrix of 1's, $\BS \Lambda_{ik} = \BS\Sigma_{ik}
 \end{theorem}
 
 \begin{proof}
-I follow a procedure similar to Boldea and Magnus \cite{boldea2009}. Let $g(\B  z)=\sum_{j=1}^{K}\exp(\B  z^{T}\BS \gamma_{j})$. Then $\pi_{k}(\B w,\BS\gamma)=\frac{\exp( \B  z^{T}\BS\gamma_{k})}{g(\B  z)}$. Taking the logarithm of both sides, we get
+I follow a procedure similar to Boldea and Magnus \cite{boldea2009}. Let $g(\B  w)=\sum_{j=1}^{K}\exp(\B  w^{T}\BS \gamma_{j})$. Then $\pi_{k}(\B w,\BS\gamma)=\frac{\exp( \B  w^{T}\BS\gamma_{k})}{g(\B  w)}$. Taking the logarithm of both sides, we get
 \begin{align}
 \log \pi_{k}(\B w,\BS\gamma)=\B w^{T}\BS\gamma_{k} - \log g(\B w)
 \label{wts}
 \end{align}
 Note that $\partial\log g(\B w)/\partial \BS \gamma_{j}=\pi_{j}(\B w,\BS\gamma) \B w$. Then,
 \begin{align}
-\frac{d\log\pi_{k}(\B w,\BS\gamma)}{d\BS\gamma_{j}}&=I(j=k)\B w-\pi_{j}(\B w,\BS\gamma_{j})\B w\quad\text{ for }j=1,...,K-1\nonumber\\
-\frac{d^{2}\log\pi_{k}(\B w_{i},\BS\gamma)}{d\BS\gamma_{j}d\BS\gamma_{j}}&=[-I(i=j)\pi_{j}(\B w,\BS\gamma_{j})+\pi_{i}(\B w,\BS\gamma_{i})\pi_{j}(\B w,\BS\gamma_{j})]\B w\B w^{T}\quad\text{ for }i,j=1,...,K-1
+\frac{d\log\pi_{k}(\B w,\BS\gamma)}{d\BS\gamma_{j}}&=I(j=k)\B w-\pi_{j}(\B w,\BS\gamma)\B w\quad\text{ for }j=1,...,K-1\nonumber\\
+\frac{d^{2}\log\pi_{k}(\B w,\BS\gamma)}{d\BS\gamma_{j}d\BS\gamma_{l}^{T}}&=[-I(j=l)\pi_{j}(\B w,\BS\gamma)+\pi_{j}(\B w,\BS\gamma)\pi_{l}(\B w,\BS\gamma)]\B w\B w^{T}\quad\text{ for }j,l=1,...,K-1
 \label{logpi}
 \end{align}
 Let $\phi_{ik}$ and $\alpha_{ik}$ be defined as in \eqref{phi}. Then since $f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)=\sum^{K}_{k=1}\phi_{ik}$, we obtain
@@ -121,15 +121,15 @@ d^{2}\log f_{k}(\B y|\B x,\BS\theta_{k})&=-\frac{1}{2}\tr(d\BS\Sigma_{ik}^{-1}d\
 \end{align*}
 and hence, using \eqref{logpi} and the definitions \eqref{phi}-\eqref{bs2},
 \begin{align*}
-d\log \phi_{ik}&=d\log \pi_{k}(\B w_{i},\BS\gamma_k)+(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
+d\log \phi_{ik}&=d\log \pi_{k}(\B w_{i},\BS\gamma)+(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
 &\quad+\frac{1}{2}(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})\\
 &=\B w_{i} d\BS \gamma_{k} -\pi_{k}(\B w_{i},\BS\gamma_k)\B w_{i}d\BS\gamma_{\cdot}+\B b^{T}_{ik}d(\B x_{i}\BS \beta_{k})-\frac{1}{2}\tr(\B B_{ik}d\BS\Sigma_{ik})
 \end{align*}
 and
 \begin{align*}
-d^{2}\log \phi_{ik}&=d^{2}\log \pi_{k}(\B w_{i},\BS\gamma_k)-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-2(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x\BS\beta_{k})\\
+d^{2}\log \phi_{ik}&=d^{2}\log \pi_{k}(\B w_{i},\BS\gamma)-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-2(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x\BS\beta_{k})\\
 &\quad-(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})+\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
-&=-d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma_{\cdot})\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot}+d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma_{\cdot})\pi_{\cdot\cdot}(\B w_{i},\BS\gamma_{\cdot\cdot})\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot\cdot}\\
+&=-d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma)\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot}+d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma)\pi_{\cdot\cdot}(\B w_{i},\BS\gamma)\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot\cdot}\\
 &\quad-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-2\B b_{ik}^{T}(d\BS\Sigma_{ik})\BS\Sigma_{ik}d(\B x\BS\beta_{k})\\
 &\quad-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}-2\B B_{ik})d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}
 \end{align*}
@@ -145,12 +145,12 @@ If $\BS\Sigma_{ik}=\nu_{k}^{2}\B J+\sigma_{k}^{2}\B R_{ik}$, then $\BS\theta_{k}
 $$d\BS\Sigma_{ik}=d\nu_{k}^{2}\B J + d\sigma_{k}^{2}\B R_{ik} +\sigma_{k}^{2}\B R^{'}_{ik}d\rho_{k}.$$
 Using these calculations, we can rewrite the previously equations with the definitions of $\B c_{ik}$ and $\B C_{ik}$ in the the theorem,
 \begin{align}\label{dlogphi2}
-d\log \phi_{ik}&=\B w_{i} d\BS \gamma_{k} -\pi_{k}(\B w_{i},\BS\gamma_k)\B w_{i}d\BS\gamma_{\cdot}+\B c^{T}_{ik}d\BS\theta_{k} 
+d\log \phi_{ik}&=\B w_{i} d\BS \gamma_{k} -\pi_{k}(\B w_{i},\BS\gamma)\B w_{i}d\BS\gamma_{\cdot}+\B c^{T}_{ik}d\BS\theta_{k} 
 \end{align}
 and
 \begin{align}\label{d2logphi2}
 d^{2}\log \phi_{ik}
-&=-d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma_{\cdot})\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot}+d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma_{\cdot})\pi_{\cdot\cdot}(\B w_{i},\BS\gamma_{\cdot\cdot})\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot\cdot}-d\BS\theta_{k}^{T}\B C_{ik}d\BS\theta_{k}
+&=-d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma)\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot}+d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma)\pi_{\cdot\cdot}(\B w_{i},\BS\gamma)\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot\cdot}-d\BS\theta_{k}^{T}\B C_{ik}d\BS\theta_{k}
 \end{align}
 Inserting \eqref{dlogphi2} in \eqref{dlogf}, and \eqref{d2logphi2} and \eqref{dlogphi2} in \eqref{d2logf} completes the proof.
 \end{proof}
