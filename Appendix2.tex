@@ -15,12 +15,12 @@ We now prove the ascending property of the CEM algorithm used to estimate parame
     \end{align*}
     Note that 
     \begin{align*}
- L(\BS\theta^{(t)},\BS\eta)&=\sum^{n}_{i=1}\log\left[\pi_{\eta_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}|\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta_{i}},(\sigma^{(t)}_{j})^{2}\B I)\right]\\
- &\leq \sum^{n}_{i=1}\max_{\eta_{i}}\log\left[\pi_{\eta_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}|\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta_{i}},(\sigma^{(t)}_{j})^{2}\B I)\right]\\
-  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t+1)}_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta^{(t+1)}_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}|\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta^{(t+1)}_{i}},(\sigma^{(t)}_{j})^{2}\B I)\right]\\
+ L(\BS\theta^{(t)},\BS\eta)&=\sum^{n}_{i=1}\log\left[\pi_{\eta_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}|\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta_{i}},(\sigma^{2}_{j})^{(t)}\B I)\right]\\
+ &\leq \sum^{n}_{i=1}\max_{\eta_{i}}\log\left[\pi_{\eta_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}|\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta_{i}},(\sigma^{2}_{j})^{(t)}\B I)\right]\\
+  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t+1)}_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta^{(t+1)}_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}|\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta^{(t+1)}_{i}},(\sigma^{2}_{j})^{(t)}\B I)\right]\\
   &= L(\BS\theta^{(t)},\BS\eta^{(t+1)})
     \end{align*}
-for all $\BS\eta$. This is true because in the algorithm, $$\eta^{(t+1)}_{i} = \arg \max_{\eta_{i}} \pi_{\eta_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta_{i}},(\sigma^{(t)}_{j})^{2}\B I).$$
+for all $\BS\eta$. This is true because in the algorithm, $$\eta^{(t+1)}_{i} = \arg \max_{\eta_{i}} \pi_{\eta_{i}}(\B w_{i},\BS \gamma^{(t)})\sum_{j:c(j)=\eta_{i}}\pi_{j|c(j)}^{(t)}f(\B y_{i}\lambda_{j}^{(t)}\B 1+\B x_{i}\BS\beta^{(t)}_{\eta_{i}},(\sigma^{2}_{j})^{(t)}\B I).$$
    Thus, we have $    L(\BS\theta^{(t)},\BS\eta^{(t+1)})\geq L(\BS\theta^{(t)},\BS\eta^{(t)})$. To prove the other part of the inequality, note that
        \begin{align*}
  L(\BS\theta,\BS\eta^{(t+1)})  &= \sum^{n}_{i=1}\log\left[\pi_{\eta^{(t+1)}_{i}}(\B w_{i},\BS \gamma)\sum_{j:c(j)=\eta^{(t+1)}_{i}}\pi_{j|c(j)}f(\B y_{i}|\lambda_{j}\B 1+\B x_{i}\BS\beta_{\eta^{(t+1)}_{i}},\sigma_{j}^{2}\B I)\right]\\

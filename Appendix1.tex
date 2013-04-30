@@ -101,36 +101,36 @@ d^{2}\log f(\B y_{i}|\B x_{i},\B w_{i},\BS\theta)&=\left(\frac{d^{2} f(\B y_{i}|
 \end{align}
 To evaluate these, we first need the first- and second-order derivatives of $\log \phi_{ik}$.  Since, 
 \begin{align*}
-\log f_{k}(\B y|\B x,\BS\theta_{k})=-\frac{m}{2}\log(2\pi)-\frac{1}{2}\log |\BS\Sigma_{ik}^{-1}|-(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})
+\log f_{k}(\B y_i|\B x_{i},\BS\theta_{k})=-\frac{m}{2}\log(2\pi)-\frac{1}{2}\log |\BS\Sigma_{ik}^{-1}|-(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}(\B y_i-\B x_{i}\BS\beta_{k})
 \end{align*}
 we find 
 \begin{align*}
-d\log f_{k}(\B y|\B x,\BS\theta_{k})&=-\frac{1}{2}d\log|\BS\Sigma_{ik}|+(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})\\
-&\quad-\frac{1}{2}(\B y-\B x\BS \beta_{k})^{T}d\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})\\
-&=-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})+(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})\\
-&\quad+\frac{1}{2}(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})\\
+d\log f_{k}(\B y_i|\B x_{i},\BS\theta_{k})&=-\frac{1}{2}d\log|\BS\Sigma_{ik}|+(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})\\
+&\quad-\frac{1}{2}(\B y_i-\B x_{i}\BS \beta_{k})^{T}d\BS\Sigma_{ik}^{-1}(\B y_i-\B x_{i}\BS\beta_{k})\\
+&=-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})+(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})\\
+&\quad+\frac{1}{2}(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y_i-\B x_{i}\BS\beta_{k})\\
 \end{align*}
 and
 \begin{align*}
-d^{2}\log f_{k}(\B y|\B x,\BS\theta_{k})&=-\frac{1}{2}\tr(d\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})+(\B y-\B x\BS \beta_{k})^{T}d\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})\\
-&\quad-(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x\BS\beta_{k})\\
-&\quad-(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})\\
-&=\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})\\
-&\quad-2(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x\BS\beta_{k})\\
-&\quad-(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})\\
+d^{2}\log f_{k}(\B y_i|\B x_{i},\BS\theta_{k})&=-\frac{1}{2}\tr(d\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})-d(\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})+(\B y_i-\B x_{i}\BS \beta_{k})^{T}d\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})\\
+&\quad-(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS\beta_{k})\\
+&\quad-(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y_i-\B x_{i}\BS\beta_{k})\\
+&=\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})-d(\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})\\
+&\quad-2(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS\beta_{k})\\
+&\quad-(\B y_i-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y_i-\B x_{i}\BS\beta_{k})\\
 \end{align*}
 and hence, using \eqref{logpi} and the definitions \eqref{phi}-\eqref{bs2},
 \begin{align*}
-d\log \phi_{ik}&=d\log \pi_{k}(\B w_{i},\BS\gamma)+(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
-&\quad+\frac{1}{2}(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})\\
+d\log \phi_{ik}&=d\log \pi_{k}(\B w_{i},\BS\gamma)+(\B y_{i}-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
+&\quad+\frac{1}{2}(\B y_{i}-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y_{i}-\B x_{i}\BS\beta_{k})\\
 &=\B w_{i} d\BS \gamma_{k} -\pi_{k}(\B w_{i},\BS\gamma)\B w_{i}d\BS\gamma_{\cdot}+\B b^{T}_{ik}d(\B x_{i}\BS \beta_{k})-\frac{1}{2}\tr(\B B_{ik}d\BS\Sigma_{ik})
 \end{align*}
 and
 \begin{align*}
-d^{2}\log \phi_{ik}&=d^{2}\log \pi_{k}(\B w_{i},\BS\gamma)-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-2(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x\BS\beta_{k})\\
-&\quad-(\B y-\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y-\B x\BS\beta_{k})+\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
+d^{2}\log \phi_{ik}&=d^{2}\log \pi_{k}(\B w_{i},\BS\gamma)-d(\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})-2(\B y_{i}-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS\beta_{k})\\
+&\quad-(\B y_{i}-\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}(\B y_{i}-\B x_{i}\BS\beta_{k})+\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik})\\
 &=-d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma)\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot}+d\BS\gamma_{\cdot}^{T}\pi_{\cdot}(\B w_{i},\BS\gamma)\pi_{\cdot\cdot}(\B w_{i},\BS\gamma)\B w_{i}\B w_{i}^{T}d\BS\gamma_{\cdot\cdot}\\
-&\quad-d(\B x\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x\BS \beta_{k})-2\B b_{ik}^{T}(d\BS\Sigma_{ik})\BS\Sigma_{ik}d(\B x\BS\beta_{k})\\
+&\quad-d(\B x_{i}\BS \beta_{k})^{T}\BS\Sigma_{ik}^{-1}d(\B x_{i}\BS \beta_{k})-2\B b_{ik}^{T}(d\BS\Sigma_{ik})\BS\Sigma_{ik}d(\B x_{i}\BS\beta_{k})\\
 &\quad-\frac{1}{2}\tr(\BS\Sigma_{ik}^{-1}-2\B B_{ik})d\BS\Sigma_{ik}\BS\Sigma_{ik}^{-1}d\BS\Sigma_{ik}
 \end{align*}
 For specific structures of $\BS\Sigma_{ik}$, we substitute in derivative of $\BS\Sigma_{ik}$.\\
